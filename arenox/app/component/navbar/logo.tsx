@@ -9,7 +9,7 @@ export default function Logo() {
 					<img
 						src="./public/large-logo.jpg"
 						alt="logo"
-						className="h-8 w-auto"
+						className="h-10 w-auto box-shadow rounded-md"
 					/>
 				</a>
 			</div>

@@ -1,3 +1,4 @@
+import Hero from "~/component/home/page";
 
 export function meta() {
 	return [
@@ -11,8 +12,9 @@ export function meta() {
 
 export default function Home() {
 	return (
-		<div className="relative mt-13">
-			<h1>Welcome to our home page darling!</h1>
+		
+		<div className="relative">
+			<Hero/>
 		</div>
 	);
 }

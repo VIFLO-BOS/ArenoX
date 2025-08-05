@@ -10,6 +10,7 @@ import {
 import type { Route } from "./+types/root";
 import "./app.css";
 import Navbar from "./component/navbar/page";
+import { MotionConfig } from "motion/react";
 
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
@@ -36,11 +37,13 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<Meta />
 				<Links />
 			</head>
-			<body>
-				<Navbar />
-				{children}
-				<ScrollRestoration />
-				<Scripts />
+			<body className="container px-8 mx-auto">
+				<MotionConfig transition={{ duration: 0.5 , ease: "easeInOut" }}>
+					<Navbar />
+					{children}
+					<ScrollRestoration />
+					<Scripts />
+				</MotionConfig>
 			</body>
 		</html>
   );

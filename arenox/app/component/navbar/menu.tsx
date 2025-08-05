@@ -1,18 +1,14 @@
 import { useState } from "react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import { navigationItems } from "./nav-menu";
-import { Dialog, DialogPanel } from "@headlessui/react";
 import Logo from "./logo";
 import Main_menu from "./main_menu";
 
 export const NavbarMenu = () => {
-	const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 	return (
-		<div className="w-full h-full">
+		<div className="container mx-auto">
 			<header className="fixed inset-x-0 top-0 z-50">
 				<nav
 					arial-label="Global"
-					className="flex items-center justify-between p-3 lg:px-6"
+					className="flex items-center justify-between py-5 px-5 sm:px-10 lg:px-15 xl:px-20"
 				>
 					<Logo />
 					<Main_menu/>

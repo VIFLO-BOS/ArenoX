@@ -1,0 +1,10 @@
+{
+	"cSpell.words": ["arenox"],
+	"editor.fontSize": 14,
+	"files.autoSave": "afterDelay",
+	"editor.formatOnSave": true,
+	"editor.tabSize": 3,
+	"editor.formatOnPaste": true,
+	"editor.autoIndentOnPaste": true,
+	"editor.bracketPairColorization.independentColorPoolPerBracketType": true
+}

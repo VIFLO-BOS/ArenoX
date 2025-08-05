@@ -1,11 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..900;1,100..900&family=Roboto+Serif:ital,opsz,wght@0,8..144,100..900;1,8..144,100..900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap");
+
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif,
-    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+	--font-sans: "Roboto", "RobotoMono", ui-sans-serif, system-ui, sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+		"Noto Color Emoji";
+	--font-nunito: "Nunito", "Roboto", san-serif, system-ui;
+}
+
+* {
+	box-sizing: border-box;
+	font-family: var(--font-sans);
+	color: rgb(0, 0, 0);
+	text-shadow: 0px 0px 0.5px rgba(0, 0, 0, 0.007) 6;
 }
 
 html,
 body {
-  background: linear-gradient(to right, rgb(224, 232, 240),rgb(255, 255, 255));
+	background: linear-gradient(
+		to right,
+		rgb(224, 232, 240),
+		rgb(255, 255, 255)
+	);
+}
+
+p {
+	font-family: var(--font-);
+}
+nav {
+	background: linear-gradient(
+		to right,
+		rgb(139, 188, 236),
+		rgb(255, 255, 255)
+	);
+}
+
+.bg-deepblue{
+	background-color: rgb(2, 2, 88);
 }
