@@ -20,24 +20,28 @@
 
 html,
 body {
-	background: linear-gradient(
+	/* background: linear-gradient(
 		to right,
 		rgb(224, 232, 240),
 		rgb(255, 255, 255)
-	);
+	); */
 }
 
 p {
-	font-family: var(--font-);
+	font-family: var(--font-nunito);
 }
 nav {
 	background: linear-gradient(
 		to right,
 		rgb(139, 188, 236),
 		rgb(255, 255, 255)
-	);
+	); 
 }
 
 .bg-deepblue{
 	background-color: rgb(2, 2, 88);
 }
+button{
+	cursor: pointer;
+}
+

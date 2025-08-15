@@ -1,4 +1,4 @@
-import Hero from "~/component/home/page";
+import HomePage from "~/component/home/page";
 
 export function meta() {
 	return [
@@ -14,7 +14,7 @@ export default function Home() {
 	return (
 		
 		<div className="relative">
-			<Hero/>
+			<HomePage/>
 		</div>
 	);
 }

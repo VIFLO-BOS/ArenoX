@@ -9,9 +9,10 @@ import {
 
 import type { Route } from "./+types/root";
 import "./app.css";
+import "../node_modules/bootstrap-icons/font/bootstrap-icons.min.css";
 import Navbar from "./component/navbar/page";
 import { MotionConfig } from "motion/react";
-
+import { Footer } from "./footer/page";
 export const links: Route.LinksFunction = () => [
   { rel: "preconnect", href: "https://fonts.googleapis.com" },
   {
@@ -33,14 +34,15 @@ export function Layout({ children }: { children: React.ReactNode }) {
 				<meta
 					name="viewport"
 					content="width=device-width, initial-scale=1"
-				/>
+        />
 				<Meta />
 				<Links />
 			</head>
-			<body className="container px-8 mx-auto">
+			<body >
 				<MotionConfig transition={{ duration: 0.5 , ease: "easeInOut" }}>
 					<Navbar />
-					{children}
+          {children}
+          <Footer/>
 					<ScrollRestoration />
 					<Scripts />
 				</MotionConfig>

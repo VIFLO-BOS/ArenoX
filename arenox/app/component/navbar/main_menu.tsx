@@ -29,9 +29,9 @@ export default function Main_menu() {
 			<div className="hidden lg:flex lg:gap-x-4">
 				{navigationItems.map((item, index) => (
 					<motion.a
-						key={item.name}
+						key={index}
 						href={item.pathname}
-						className="text-sm/6 font-semibold text-gray-900"
+						className="text-sm/6 font-semibold text-black"
 						initial={bouncqNavmenu.initial}
 						animate={bouncqNavmenu.animate}
 						transition={{
@@ -44,7 +44,7 @@ export default function Main_menu() {
 			</div>
 
 			<div className="hidden lg:flex lg:flex-1 lg:justify-end">
-				<a href="#" className="text-sm/6 font-semibold text-gray-900">
+				<a href="#" className="text-sm/6 font-semibold text-black">
 					Log in <span aria-hidden="true">&rarr;</span>
 				</a>
 			</div>

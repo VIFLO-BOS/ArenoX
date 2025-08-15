@@ -1,17 +1,25 @@
 import React from "react";
 import { motion } from "motion/react";
+import CategoriesCourses from "~/component/home/course_section";
+import Hero_sections from "./hero_sections";
+import Freelance_section from "./feature_course_section";
+import About_section from "./about_section";
+import Testimonial_section from "./testimonial_section";
+import Team_section from "./team_section";
+import { Partnership_section } from "./partnership_section";
+import Newsletter_section from "./newsletter_section";
 
-interface LoadingType{
+interface LoadingType {
 	lazy: String;
 	eager: String;
 }
-export default function Hero() {
+export default function HomePage() {
 
 	return (
 		<>
-			<div className="relative isolate px-0 pt-15 lg:px-8">
+			<div className="relative isolate px-0 pt-15 ">
 				{/* clipPath start here.. */}
-				{/* <div
+				<div
 					aria-hidden="true"
 					className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80">
 					<div
@@ -21,51 +29,18 @@ export default function Hero() {
 						}}
 						className="relative left-[calc(50%-11rem)] aspect-1155/678 w-144.5 -translate-x-1/2 rotate-30 bg-linear-to-tr from-[#fd5d00] to-[#1100ff]  opacity-30 sm:left-[calc(50%-30rem)] sm:w-288.75"
 					/>
-				</div> */}
-
+				</div>
 				{/* clipPath end here.. */}
-
-				<motion.div className="min-h-6 py-20 sm:py-20 lg:py-20  flex align-items- justify-between gap-5 border-amber-600">
-					<div className="max-w-2xl pr-0 lg:pr-20">
-						<div className="headings">
-							<h1 className="font-bold text-4xl sm:text-5xl lg:text-6xl text-center lg:text-left">
-								Ignite Your Future with Skills that Matter
-							</h1>
-							<p className="mt-10 text-center lg:text-left">
-								Join thousands of learners who are mastering
-								tech, business, and creative skills through
-								expert-led online courses designed for
-								real-world success.
-							</p>
-						</div>
-						<div className="text-center flex  gap-5 mt-8">
-							<button
-								className="bg-blue-700 hover:bg-deepblue !text-white  shadow-sm shadow-gray-400 shadow  hover:bg-blue-800 font-semibold rounded-sm text-sm md:text-1xl p-1 md:py-1.5 lg:py-2 xl:py-2.5 mt-2 w-30 transition duration-500 ease-in-out"
-								type="button">
-								Get Started
-							</button>
-							
-							<button 
-								className="bg-orange-400 hover:bg-orange-500 shadow-sm shadow-gray-400 !text-white font-semibold rounded-sm p-1 md:py-1.5 lg:py-2 xl:py-2.5 mt-2 text-sm md:text-1xl w-40 transition duration-500 ease-in-out "
-								type="button">
-							
-								Browse All Courses
-							</button>
-						</div>
-					</div>
-
-					<div className="hidden lg:flex">
-						<img
-							className="object-cover w-130 h-auto rounded-xl drop-shadow-xl"
-							src="public/images/student-img/stud-2.jpg"
-							alt=""
-							loading="eager"
-						/>
-					</div>
-				</motion.div>
-
+				<Hero_sections />
+				<CategoriesCourses />
+				<Partnership_section/>
+				<Freelance_section />
+				<About_section />
+				<Testimonial_section /> 
+				<Team_section />
+				<Newsletter_section />
 				{/* second clipPath start here.. */}
-				{/* <div
+				<div
 					aria-hidden="true"
 					className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]">
 					<div
@@ -75,7 +50,7 @@ export default function Hero() {
 						}}
 						className="relative left-[calc(50%+3rem)] aspect-1155/678 w-144.5 -translate-x-1/2 bg-linear-to-tr to-[#1100ff] from-[#fd5d00] opacity-100 sm:left-[calc(50%+36rem)] sm:w-288.75"
 					/>
-				</div> */}
+				</div>
 			</div>
 			{/* second clipPath start here.. */}
 		</>
