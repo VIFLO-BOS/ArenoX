@@ -35,10 +35,11 @@ export function Layout({ children }: { children: React.ReactNode }) {
 					name="viewport"
 					content="width=device-width, initial-scale=1"
         />
+        {/* <meta http-equiv="refresh" content="0; URL=/" /> */}
 				<Meta />
 				<Links />
 			</head>
-			<body >
+      <body className="bg-gradient-to-br from-blue-50 via-white to-blue-100">
 				<MotionConfig transition={{ duration: 0.5 , ease: "easeInOut" }}>
 					<Navbar />
           {children}

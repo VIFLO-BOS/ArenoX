@@ -1,35 +1,38 @@
 {
-  "name": "arenox Learning platform",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "build": "react-router build",
-    "dev": "react-router dev",
-    "start": "react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
-  },
-  "dependencies": {
-    "@headlessui/react": "^2.2.4",
-    "@heroicons/react": "^2.2.0",
-    "@react-router/node": "^7.5.3",
-    "@react-router/serve": "^7.5.3",
-    "bootstrap-icons": "^1.13.1",
-    "isbot": "^5.1.27",
-    "motion": "^12.23.12",
-    "react": "^19.1.0",
-    "react-dom": "^19.1.0",
-    "react-router": "^7.5.3",
-    "swiper": "^11.2.10"
-  },
-  "devDependencies": {
-    "@react-router/dev": "^7.5.3",
-    "@tailwindcss/vite": "^4.1.4",
-    "@types/node": "^20",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.1.2",
-    "tailwindcss": "^4.1.4",
-    "typescript": "^5.8.3",
-    "vite": "^6.3.3",
-    "vite-tsconfig-paths": "^5.1.4"
-  }
+	"name": "arenox Learning platform",
+	"homepage": "https://viflo-bos.github.io/ArenoX/",
+	"private": true,
+	"type": "module",
+	"scripts": {
+		"build": "react-router build",
+		"dev": "react-router dev",
+		"start": "react-router-serve ./build/server/index.js",
+		"typecheck": "react-router typegen && tsc"
+	},
+	"dependencies": {
+		"@headlessui/react": "^2.2.4",
+		"@heroicons/react": "^2.2.0",
+		"@react-router/node": "^7.5.3",
+		"@react-router/serve": "^7.5.3",
+		"bootstrap-icons": "^1.13.1",
+		"isbot": "^5.1.27",
+		"motion": "^12.23.12",
+		"react": "^19.1.0",
+		"react-dom": "^19.1.0",
+		"react-router": "^7.5.3",
+		"swiper": "^11.2.10"
+	},
+	"devDependencies": {
+		"@react-router/dev": "^7.5.3",
+		"@tailwindcss/vite": "^4.1.4",
+		"@types/node": "^20",
+		"@types/react": "^19.1.2",
+		"@types/react-dom": "^19.1.2",
+		"gh-pages": "^6.3.0",
+		"tailwindcss": "^4.1.4",
+		"typescript": "^5.8.3",
+		"vite": "^6.3.3",
+		"vite-plugin-gh-pages": "^1.0.1",
+		"vite-tsconfig-paths": "^5.1.4"
+	}
 }

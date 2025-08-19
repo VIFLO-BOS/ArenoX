@@ -14,8 +14,8 @@
 * {
 	box-sizing: border-box;
 	font-family: var(--font-sans);
-	color: rgb(0, 0, 0);
-	text-shadow: 0px 0px 0.5px rgba(0, 0, 0, 0.007) 6;
+	color:#000;
+	text-shadow: 0px 0px 0.5px rgba(0, 0, 0, 0.041) 6;
 }
 
 html,
@@ -25,6 +25,7 @@ body {
 		rgb(224, 232, 240),
 		rgb(255, 255, 255)
 	); */
+	background-color: var(--bg-black)
 }
 
 p {
@@ -33,9 +34,10 @@ p {
 nav {
 	background: linear-gradient(
 		to right,
-		rgb(139, 188, 236),
+		rgb(247, 248, 248),
 		rgb(255, 255, 255)
-	); 
+	);
+	
 }
 
 .bg-deepblue{

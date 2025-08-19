@@ -39,7 +39,8 @@ export default function Courses() {
    ];
 
    return (
-      <div className="bg-white py-15">
+      <div className="bg-white py-10">
+         
          <div className="container mx-auto px-10">
             <div className="mb-10">
                <h1 className="font-semibold text-4xl pb-4 text-center">Find Your Perfect Learning Path</h1>

@@ -19,8 +19,8 @@ export default function Freelance_section() {
                </div>
             </div>
 
-            <div className="container mx-auto mt-20 ">
-               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 p-6">
+            <div className="container mx-auto">
+               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3  p-6">
 
                   {/* Card 1 */}
                   <div className="bg-white rounded-xl max-w-xs mx-auto shadow-md hover:scale-105 transition duration-500 flex flex-col h-full">

@@ -7,7 +7,6 @@ import About_section from "./about_section";
 import Testimonial_section from "./testimonial_section";
 import Team_section from "./team_section";
 import { Partnership_section } from "./partnership_section";
-import Newsletter_section from "./newsletter_section";
 
 interface LoadingType {
 	lazy: String;
@@ -38,7 +37,6 @@ export default function HomePage() {
 				<About_section />
 				<Testimonial_section /> 
 				<Team_section />
-				<Newsletter_section />
 				{/* second clipPath start here.. */}
 				<div
 					aria-hidden="true"

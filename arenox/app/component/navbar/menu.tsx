@@ -8,7 +8,7 @@ export const NavbarMenu = () => {
 			<header className="fixed inset-x-0 top-0 z-50">
 				<nav
 					arial-label="Global"
-					className="flex items-center justify-between py-5 px-9 lg:px-15.5"
+					className="flex items-center justify-between py-5 px-9 lg:px-15.5 backdrop-filter backdrop-blur-2xl"
 				>
 					<Logo />
 					<Main_menu/>
