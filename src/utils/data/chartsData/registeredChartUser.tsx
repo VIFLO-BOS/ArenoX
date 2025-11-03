@@ -1,27 +1,26 @@
 interface ChartData {
-name:string;
-value:number;
+  name: string;
+  value: number;
+  [key: string]: any;
 }
 
-interface renderCustomizedLabelProps{
+interface renderCustomizedLabelProps {
   cx: number;
-   cy:number;
-  midAngle:number;
-  innerRadius:number;
-  outerRadius:number;
-  percent:number;
+  cy: number;
+  midAngle: number;
+  innerRadius: number;
+  outerRadius: number;
+  percent: number;
 }
 
-export const data:ChartData[] = [
+export const data: ChartData[] = [
   { name: "Total-Registered", value: 2458 },
   { name: "Total-Active-Users", value: 1200 },
   { name: "Total-Inactive-Users", value: 358 },
-
 ];
 
-
 const radian: number = Math.PI / 180;
-export const colors:string[] = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+export const colors: string[] = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
 export const renderCustomizedLabel = ({
   cx,
@@ -47,5 +46,3 @@ export const renderCustomizedLabel = ({
     </text>
   );
 };
-
-
