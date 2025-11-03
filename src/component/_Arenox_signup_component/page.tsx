@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+// import { usePathname } from "next/navigation";
 import React from "react";
 
 export default function SignUnPage() {
-	const pathname = usePathname();
-	const IssignIn = pathname === "/signin";
-	const Issignup = pathname === "/signup";
+	// const pathname = usePathname();
+	// const IssignIn = pathname === "/signin";
+	// const Issignup = pathname === "/signup";
 	return (
 		<div className="flex-grow flex items-center justify-center bg-[linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.8)),url('https://i.pinimg.com/1200x/e7/bf/23/e7bf23137788c366a62be0baa10056ea.jpg')] bg-cover bg-center h-screen px-4 lg:px-20 text-white">
 			<div>.</div>
