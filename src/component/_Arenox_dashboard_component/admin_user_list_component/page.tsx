@@ -13,8 +13,25 @@ interface sortConfig {
 }
 export default function Admin_user_list() {
   // Page Loading State
-  // const [loading, setLoading] = useState(false);
-  // const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  if (window.onload) {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }
+
+  try {
+    // Simulate data fetching
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  } catch (err) {
+    console.error(err);
+    setError("Failed to load user data.");
+  }
 
   // this is for the all form modal
   const [isCreateModalform, setisCreateModalOpen] = useState(false);
@@ -224,7 +241,6 @@ export default function Admin_user_list() {
                         </td>
                         <td className="flex items-center px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
                           <span className="w-10 h-10 bg-indigo-100 text-indigo-500 text-medium rounded-full flex items-center justify-center mr-3">
-                            
                             {u.firstname
                               .split(" ")
                               .map((n) => n[0])
@@ -234,10 +250,7 @@ export default function Admin_user_list() {
                                 .map((x) => x[0])
                                 .join("")}
                           </span>
-                          <span>
-                              
-                          {u.firstname + " " + u.lastname}
-                            </span>
+                          <span>{u.firstname + " " + u.lastname}</span>
                         </td>
                         <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
                           {u.email}
