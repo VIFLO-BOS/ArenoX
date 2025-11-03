@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, easeInOut } from "framer-motion";
+import { motion} from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
 export default function Contact_hero_section() {

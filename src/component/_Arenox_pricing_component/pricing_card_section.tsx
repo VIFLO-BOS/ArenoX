@@ -1,4 +1,4 @@
-import Image from "next/image";
+// import Image from "next/image";
 import React from "react";
 import { motion, easeIn, easeInOut } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";

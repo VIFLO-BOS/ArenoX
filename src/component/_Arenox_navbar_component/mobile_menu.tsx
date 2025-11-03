@@ -1,13 +1,10 @@
-import React, { useState } from "react";
-import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
-
+import React from "react";
+import { Menu, MenuButton } from "@headlessui/react";
 import { navigationItems } from "./nav-menu";
 import { Dialog, DialogPanel } from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, easeInOut } from "framer-motion";
-import { fadeUp } from "@/utils/animation/fadeUpProps";
 
 interface MobileMenuProps {
   mobileMenuOpen: boolean;

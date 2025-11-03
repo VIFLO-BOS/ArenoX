@@ -13,8 +13,8 @@ interface sortConfig {
 }
 export default function Admin_user_list() {
   // Page Loading State
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState<string | null>(null);
 
   // this is for the all form modal
   const [isCreateModalform, setisCreateModalOpen] = useState(false);

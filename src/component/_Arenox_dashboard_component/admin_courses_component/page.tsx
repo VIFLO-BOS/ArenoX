@@ -63,7 +63,7 @@ export default function Admin_courses() {
   // delete functionalities
   const [coursesToTable, setcourseToTable] = useState(coursesDetails);
   const handleDelete = (id: number) => {
-    const dataToDelete = coursesToTable.filter((item) => item.id === id);
+    // const dataToDelete = coursesToTable.filter((item) => item.id === id);
     // console.log(dataToDelete);
     // const confirmDelete = window.confirm(
     //   `Are you sure you want to delete this user ${dataToDelete[0].title.toLocaleUpperCase()}?`
