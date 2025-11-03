@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 256 256" fill="none" id="my-svg">
+  <defs><pattern id="a" patternUnits="userSpaceOnUse" width="80" height="80" patternTransform="scale(3.19) rotate(0)"><rect x="0" y="0" width="100%" height="100%" fill="hsla(0,0%,100%,1)"/><path d="M-20.133 4.568C-13.178 4.932-6.452 7.376 0 10c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(189, 100%, 48%, 1)" fill="none"/><path d="M-20.133 24.568C-13.178 24.932-6.452 27.376 0 30c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(208, 100%, 48%, 1)" fill="none"/><path d="M-20.133 44.568C-13.178 44.932-6.452 47.376 0 50c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(279, 100%, 50%, 1)" fill="none"/><path d="M-20.133 64.568C-13.178 64.932-6.452 67.376 0 70c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(265, 100%, 50%, 1)" fill="none"/></pattern>
+    <linearGradient id="gradient1">
+      <stop class="stop1" offset="0%" stop-color="#8f66ff"/>
+      <stop class="stop2" offset="100%" stop-color="#3d12ff"/>
+    </linearGradient>
+  </defs>
+  
+  <g id="group" transform="translate(0,0) scale(1)">
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M85.333 53.333C85.333 41.551 94.885 32.000 106.667 32.000H149.333C161.116 32.000 170.667 41.551 170.667 53.333V64.000H181.333V224.000H74.667V64.000H85.333V53.333ZM149.333 53.333V64.000H106.667V53.333H149.333Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M53.333 64.000C35.660 64.000 21.333 78.327 21.333 96.000V192.000C21.333 209.674 35.660 224.000 53.333 224.000V64.000Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M202.667 224.000C220.340 224.000 234.667 209.674 234.667 192.000V96.000C234.667 78.327 220.340 64.000 202.667 64.000V224.000Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

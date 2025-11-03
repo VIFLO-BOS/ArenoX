@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 256 256" fill="none" id="my-svg">
+  <defs><pattern id="a" patternUnits="userSpaceOnUse" width="80" height="80" patternTransform="scale(3.19) rotate(0)"><rect x="0" y="0" width="100%" height="100%" fill="hsla(0,0%,100%,1)"/><path d="M-20.133 4.568C-13.178 4.932-6.452 7.376 0 10c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(189, 100%, 48%, 1)" fill="none"/><path d="M-20.133 24.568C-13.178 24.932-6.452 27.376 0 30c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(208, 100%, 48%, 1)" fill="none"/><path d="M-20.133 44.568C-13.178 44.932-6.452 47.376 0 50c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(279, 100%, 50%, 1)" fill="none"/><path d="M-20.133 64.568C-13.178 64.932-6.452 67.376 0 70c6.452 2.624 13.036 5.072 20 5 6.967-.072 13.56-2.341 20-5 6.44-2.659 13.033-4.928 20-5 6.964-.072 13.548 2.376 20 5s13.178 5.068 20.133 5.432" stroke-width="30" stroke="hsla(265, 100%, 50%, 1)" fill="none"/></pattern>
+    <linearGradient id="gradient1">
+      <stop class="stop1" offset="0%" stop-color="#8f66ff"/>
+      <stop class="stop2" offset="100%" stop-color="#3d12ff"/>
+    </linearGradient>
+  </defs>
+  
+  <g id="group" transform="translate(0,0) scale(1)">
+    <path d="M22.460 27.230C24.266 23.616 27.960 21.333 32.000 21.333H224.000C228.041 21.333 231.733 23.616 233.540 27.230C235.347 30.843 234.958 35.168 232.533 38.400L217.333 58.667H38.667L23.467 38.400C21.043 35.168 20.653 30.843 22.460 27.230Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M46.667 69.334L109.738 153.428C115.274 150.802 121.466 149.333 128.000 149.333C134.534 149.333 140.726 150.802 146.262 153.428L152.667 144.889L145.106 134.809L93.415 69.334H46.667Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M159.333 136.000L208.514 70.426L208.533 70.400L209.333 69.334H162.585L134.795 104.534L153.600 128.356L159.333 136.000Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M148.994 69.334L128.000 95.926L107.006 69.334H148.994Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M128.000 224.000C145.674 224.000 160.000 209.674 160.000 192.000C160.000 174.326 145.674 160.000 128.000 160.000C110.326 160.000 96.000 174.326 96.000 192.000C96.000 209.674 110.326 224.000 128.000 224.000Z" fill="url(#a)" stroke-width="14" id="filled" stroke="none" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>
