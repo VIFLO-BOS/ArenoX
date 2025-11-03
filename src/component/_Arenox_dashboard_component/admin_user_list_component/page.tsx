@@ -4,7 +4,6 @@ import Admin_modal from "../admin_modals/admin_modal";
 import Create_user_form from "../admin_modals/userForm";
 import { userData, User } from "@/utils/data/fetchdata/userData";
 import Edit_user_form from "../admin_modals/editUserForm";
-import UserRegistrationChart from "./userListCharts/resgisterCharts";
 import View_user_modal from "../admin_modals/viewUserPage";
 
 interface sortConfig {
@@ -131,10 +130,7 @@ export default function Admin_user_list() {
     <>
       <div className="min-h-screen">
         <div className="mx-auto">
-          {/* USER LIST CHART  */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <UserRegistrationChart />
-          </div>
+        
           {/* MAIN TABLE */}
           <div className="bg-white backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg mb-5">
             <div className="p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center justify-between">
