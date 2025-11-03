@@ -59,7 +59,9 @@ export default function Testimonial_section() {
             <SwiperSlide>
               <div className="bg-white/5 flex flex-col justify-between rounded-2xl p-6 shadow mx-auto h-100">
                 <div className="flex justify-center mb-4">
-                  <img
+                  <Image
+                    width={400}
+                    height={200}
                     className="w-32 h-32 object-cover rounded-2xl"
                     src="/images/mentor/07.jpg"
                     alt="images"
@@ -80,7 +82,9 @@ export default function Testimonial_section() {
             <SwiperSlide>
               <div className="bg-white/5 flex flex-col justify-between rounded-2xl p-6 shadow mx-auto h-100">
                 <div className="flex justify-center mb-4">
-                  <img
+                  <Image
+                    width={400}
+                    height={200}
                     className="w-32 h-32 object-cover rounded-2xl"
                     src="/images/mentor/06.jpg"
                     alt="images"

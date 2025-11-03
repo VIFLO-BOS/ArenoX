@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export default function Team_section() {
@@ -13,10 +14,12 @@ export default function Team_section() {
 						{/* Card 1 */}
 						<div className="flex flex-col justify-between items-center bg-white hover:bg-blue-100 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-500">
 							<div>
-								<img
+								<Image
 									src="/images/mentor/01.jpg"
 									alt="John Doe"
 									className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
+									width={400}
+									height={200}
 								/>
 								<h3 className="text-xl font-semibold text-gray-800">
 									John Doe
@@ -49,9 +52,11 @@ export default function Team_section() {
 						{/* Card 2 */}
 						<div className="flex flex-col justify-between items-center bg-white hover:bg-blue-100 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-500">
 							<div>
-								<img
+								<Image
 									src="/images/mentor/02.jpg"
 									alt="Jane Smith"
+									width={400}
+									height={200}
 									className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
 								/>
 								<h3 className="text-xl font-semibold text-gray-800">
@@ -85,9 +90,11 @@ export default function Team_section() {
 						{/* Card 3 */}
 						<div className="flex flex-col justify-between items-center bg-white hover:bg-blue-100 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-500">
 							<div className="">
-								<img
+								<Image
 									src="/images/mentor/03.jpg"
 									alt="Michael Lee"
+									width={400}
+									height={200}
 									className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
 								/>
 								<h3 className="text-xl font-semibold text-gray-800">
@@ -121,9 +128,11 @@ export default function Team_section() {
 						{/* Card 4 */}
 						<div className="flex flex-col justify-between items-center bg-white hover:bg-blue-100 rounded-xl shadow-lg p-6 hover:shadow-xl transition-all duration-500">
 							<div className="">
-								<img
+								<Image
 									src="/images/mentor/04.jpg"
 									alt="Sophia Johnson"
+									width={400}
+									height={200}
 									className="w-32 h-32 mx-auto rounded-full mb-4 object-cover"
 								/>
 								<h3 className="text-xl font-semibold text-gray-800">

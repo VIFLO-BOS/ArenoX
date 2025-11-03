@@ -9,7 +9,7 @@ interface AdminMessageProp {
 }
 
 export default function Admin_message() {
-  const mockMessages = [
+  const mockMessages: AdminMessageProp[] = [
     {
       id: 1,
       name: "Aisha Bello",

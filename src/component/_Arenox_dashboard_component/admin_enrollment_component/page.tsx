@@ -206,7 +206,9 @@ export default function Admin_enrollment() {
               {/* Sort */}
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as any)}
+                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                  setSortBy(e.target.value as "name" | "course" | "status" | "date")
+                }
                 className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
               >
                 <option value="name">Sort by Name</option>

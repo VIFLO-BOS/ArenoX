@@ -1,3 +1,4 @@
+import Image from "next/image";
 import React from "react";
 
 export default function Dashboard() {
@@ -46,9 +47,11 @@ export default function Dashboard() {
 
 				{/* Profile */}
 				<div className="p-4 border-t flex items-center gap-3">
-					<img
+					<Image
 						src="https://via.placeholder.com/40"
 						alt="Profile"
+						width={400}
+									height={200}
 						className="w-10 h-10 rounded-full"
 					/>
 					<div>

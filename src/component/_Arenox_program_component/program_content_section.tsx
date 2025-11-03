@@ -148,9 +148,11 @@ export default function Program_content_section() {
 							className="bg-white shadow-md rounded-lg border-b-2 border-orange-500 hover:scale-105 transition-transform duration-300 flex flex-col cursor-pointer"
 						>
 							{/* Image */}
-							<img
+							<Image
 								src={item.url}
 								alt={item.name}
+								width={400}
+								height={200}
 								className="w-full h-32 sm:h-36 md:h-40 object-cover rounded-t-lg"
 								loading="lazy"
 							/>

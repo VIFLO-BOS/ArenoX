@@ -3,6 +3,7 @@ import { motion, easeInOut } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
 import "swiper/css/navigation";
+import Image from "next/image";
 
 export default function About_hero_section() {
   const bgImages = [
@@ -112,7 +113,7 @@ export default function About_hero_section() {
           </div>
 
           <div className="max-w-xl mx-auto">
-            <img
+            <Image
               src="https://i.pinimg.com/736x/7c/46/87/7c468743c488b287cf8324c1db6a0c41.jpg"
               alt="Student team member"
               loading="lazy"

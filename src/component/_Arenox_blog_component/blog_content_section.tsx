@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-img-element */
 import { Button } from "@headlessui/react";
 import Image from "next/image";
 import React from "react";
@@ -75,9 +74,11 @@ export default function Blog_content_section() {
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: index * 0.8 }}
-								variants={fadeUp}
+                variants={fadeUp}
               >
-                <img
+                <Image
+                  width={400}
+                  height={200}
                   src={item.url}
                   alt={item.name}
                   className="w-full h-40 object-cover rounded-t-md"
@@ -89,7 +90,9 @@ export default function Blog_content_section() {
                   </h1>
                   <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
                     <div className="flex items-center gap-2">
-                      <img
+                      <Image
+                        width={40}
+                        height={20}
                         src={item.url}
                         loading="lazy"
                         alt="author"
