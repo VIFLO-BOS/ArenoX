@@ -13,6 +13,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
+    "types": ["node"],
     "plugins": [
       {
         "name": "next"
@@ -29,7 +30,9 @@
     ".next/types/**/*.ts",
     "src/component/_Arenox_courses_component/courses.jsx",
     "src/utils/data/fetchdata/userData.tsx",
-    "src/utils/data/json/courses.json"
+    "src/utils/data/json/courses.json",
+    "src/app/models/admin/admin.ts",
+    "src/app/api/routes/admin.ss"
   ],
   "exclude": ["node_modules"]
 }
