@@ -22,16 +22,13 @@ type UserData = {
 
 export async function POST(req: NextRequest) {
   try {
-    // Connect to database
     const { db } = await connect();
     const userCollection = db.collection("users");
 
-    // parse form data (fixes the JSON error);
     const formData = await req.formData();
 
     const userData = Object.fromEntries(formData) as unknown as UserData;
 
-    // Fixed validation: typeof first, then length/regex
     if (userData.fullName) {
       const names = userData.fullName.trim().split(/\s+/);
       console.log(names);
