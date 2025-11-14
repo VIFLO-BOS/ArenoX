@@ -21,6 +21,8 @@ type UserData = {
 };
 
 export async function POST(req: NextRequest) {
+  
+console.log("Database URL check:", process.env.DATABASE_URL);
   try {
     const { db } = await connect();
     const userCollection = db.collection("users");

@@ -26,14 +26,14 @@ export default function Right_menu() {
 							<Link
 								href="/signin"
 								className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden">
-								Login
+								Sign-In
 							</Link>
 						</MenuItem>
 						<MenuItem>
 							<a
 								href="#"
 								className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden">
-								Sign-Out
+								Sign-Up
 							</a>
 						</MenuItem>
 					</div>

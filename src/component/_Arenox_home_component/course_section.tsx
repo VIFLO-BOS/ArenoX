@@ -61,8 +61,8 @@ export default function Courses_categories_section() {
            >
              {/* Image */}
              <Image
-               width={50}
-               height={50}
+               width={400}
+               height={400}
                src={item.url}
                alt={item.name}
                className="w-full h-32 md:h-36 object-cover rounded-t-md"

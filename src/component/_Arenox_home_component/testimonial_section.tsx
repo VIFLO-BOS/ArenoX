@@ -36,8 +36,8 @@ export default function Testimonial_section() {
               <div className="bg-white/5 flex flex-col justify-between rounded-2xl p-6 shadow mx-auto h-100">
                 <div className="flex justify-center mb-4">
                   <Image
-                    width={50}
-                    height={50}
+                    width={400}
+                    height={400}
                     className="w-32 h-32 object-cover rounded-2xl"
                     src="/images/mentor/05.jpg"
                     alt="images"
@@ -61,7 +61,7 @@ export default function Testimonial_section() {
                 <div className="flex justify-center mb-4">
                   <Image
                     width={400}
-                    height={200}
+                    height={400}
                     className="w-32 h-32 object-cover rounded-2xl"
                     src="/images/mentor/07.jpg"
                     alt="images"
@@ -84,7 +84,7 @@ export default function Testimonial_section() {
                 <div className="flex justify-center mb-4">
                   <Image
                     width={400}
-                    height={200}
+                    height={400}
                     className="w-32 h-32 object-cover rounded-2xl"
                     src="/images/mentor/06.jpg"
                     alt="images"

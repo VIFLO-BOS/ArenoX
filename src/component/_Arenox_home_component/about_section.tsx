@@ -12,11 +12,11 @@ export default function About_section() {
         {/* Left: Illustration */}
         <div className="flex justify-center">
           <Image
-            width={50}
-            height={50}
+            width={1400}
+            height={400}
             src="/images/student-img/team-1.jpg"
             alt="Learning Illustration"
-            className="w-full max-w-md rounded-xl shadow-lg"
+            className="w-full  rounded-lg shadow-lg"
             loading="lazy"
           />
         </div>

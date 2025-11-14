@@ -12,8 +12,8 @@ export const Partnership_section = () => {
             <div className="flex flex-wrap justify-center lg:justify-self-start items-center gap-10 opacity-80 hover:opacity-100 transition">
               {/* Partner Logo 1 */}
               <Image
-                width={50}
-                height={50}
+                width={400}
+                height={400}
                 src="/images/companies/microsoft.svg"
                 alt="Partner 1"
                 className="w-20 h-10 object-contain grayscale hover:grayscale-0 transition"
@@ -21,8 +21,8 @@ export const Partnership_section = () => {
 
               {/* Partner Logo 2 */}
               <Image
-                width={50}
-                height={50}
+                width={400}
+                height={400}
                 src="/images/companies/google.svg"
                 alt="Partner 2"
                 className="w-20 h-10 object-contain grayscale hover:grayscale-0 transition"
@@ -30,8 +30,8 @@ export const Partnership_section = () => {
 
               {/* Partner Logo 3 */}
               <Image
-                width={50}
-                height={50}
+                width={400}
+                height={400}
                 src="/images/companies/airbnb.svg"
                 alt="Partner 3"
                 className="w-20 h-10 object-contain grayscale hover:grayscale-0 transition"
@@ -39,8 +39,8 @@ export const Partnership_section = () => {
 
               {/* Partner Logo 4 */}
               <Image
-                width={50}
-                height={50}
+                width={400}
+                height={400}
                 src="/images/companies/fedex.svg"
                 alt="Partner 4"
                 className="w-20 h-10 object-contain grayscale hover:grayscale-0 transition"
@@ -48,8 +48,8 @@ export const Partnership_section = () => {
 
               {/* Partner Logo 5 */}
               <Image
-                width={50}
-                height={50}
+                width={400}
+                height={400}
                 src="/images/companies/hubspot.svg"
                 alt="Partner 5"
                 className="w-20 h-10 object-contain grayscale hover:grayscale-0 transition"
@@ -57,8 +57,8 @@ export const Partnership_section = () => {
 
               {/* Partner Logo 6 */}
               <Image
-                width={50}
-                height={50}
+                width={400}
+                height={400}
                 src="/images/companies/walmart.svg"
                 alt="Partner 5"
                 className="w-20 h-10 object-contain grayscale hover:grayscale-0 transition"

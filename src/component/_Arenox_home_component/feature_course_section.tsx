@@ -50,7 +50,7 @@ export default function Feature_Course_section() {
                  src={course.courseImageUrl}
                  alt={course.title}
                  width={400}
-                 height={200}
+                 height={400}
                  className="w-full h-40 object-cover rounded-t-lg"
                />
                <div

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { motion} from "framer-motion";
+import { motion } from "framer-motion";
 import Hero_sections from "./hero_sections";
 import Courses_categories_section from "./course_section";
 import { Partnership_section } from "./partnership_section";
@@ -12,7 +12,6 @@ import Testimonial_section from "./testimonial_section";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
 export default function HomePage() {
-
   return (
     <>
       <div className="relative isolate px-0">
@@ -33,7 +32,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <Hero_sections />
@@ -41,7 +40,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.1 }}
+          viewport={{ amount: 0.1 }}
           variants={fadeUp}
         >
           <Courses_categories_section />
@@ -49,7 +48,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <Partnership_section />
@@ -57,7 +56,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <Feature_Course_section />
@@ -65,7 +64,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <About_section />
@@ -73,7 +72,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <Testimonial_section />
@@ -81,7 +80,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <Team_section />
@@ -89,7 +88,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{  amount: 0.2 }}
+          viewport={{ amount: 0.2 }}
           variants={fadeUp}
         >
           <Newsletter_section />
