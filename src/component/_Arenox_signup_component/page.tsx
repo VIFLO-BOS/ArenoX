@@ -28,7 +28,6 @@ export default function SignUpPage() {
           formRef.current.reset();
         }
 
-        // setUserRole(" ");
 
       } else {
         const errorData = await response.json();

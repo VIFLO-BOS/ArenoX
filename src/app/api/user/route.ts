@@ -4,8 +4,6 @@ import { UserData} from "@/utils/types/apiRouteTypes";
 
 
 export async function POST(req: NextRequest) {
-  
-console.log("Database URL check:", process.env.DATABASE_URL);
   try {
     const { db } = await connect();
     const userCollection = db.collection("users");
@@ -83,6 +81,7 @@ console.log("Database URL check:", process.env.DATABASE_URL);
         user: { _id: result.insertedId, ...userData },
       },
       { status: 201 }
+      
     );
   } catch (error: unknown) {
     console.error("Error creating user:", error);
