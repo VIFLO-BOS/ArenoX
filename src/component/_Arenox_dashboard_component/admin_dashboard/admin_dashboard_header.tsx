@@ -10,7 +10,6 @@ export default function Admin_dashboard_header() {
           <p className="text-gray-600">Welcome back,</p>
           <p className="font-medium text-gray-800">Admin</p>
         </div>
-
         <div className="flex items-center justify-end gap-4 w-full lg:w-auto">
           <div className="flex items-center gap-3">
             <div className="relative">

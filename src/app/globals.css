@@ -1,15 +1,16 @@
 @import "tailwindcss";
 
 html {
-	scroll-behavior: smooth;
-	scrollbar-width:thin; /* Firefox */
+  scroll-behavior: smooth;
+  scrollbar-width: thin; /* Firefox */
 }
 
 .bg-deepblue {
-	background: #01012e;
+  background: #01012e;
 }
 
 .text-deepblue {
-	color: #01012e;
+  color: #01012e;
+  
 }
 

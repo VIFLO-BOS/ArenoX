@@ -1,18 +1,61 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
+import toast from "react-hot-toast";
 
-export default function SignUpPage() {  
-  const [userRole, setUserRole] = useState<string>("Admin");  
+export default function SignUpPage() {
+  const [userRole, setUserRole] = useState<string>(" ");
   const roles: string[] = ["Admin", "Student", "Instructor"];
+  const formRef = useRef<HTMLFormElement>(null);
 
-  console.log(userRole);  
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
 
+    const formData = new FormData(e.currentTarget);
+    formData.set("role", userRole);
+
+    try {
+      const response = await fetch("/api/user", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        toast.success(result.message || "Registration successful !");
+
+        if (formRef.current) {
+          formRef.current.reset();
+        }
+
+        // setUserRole(" ");
+
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message);
+      }
+
+
+    } catch (error) {
+      console.log("an error has occured", error);
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An unknown error occurred.");
+      }
+    }
+  };
+
+  const [counter,setcounter] = useState(0);
+  const showtoast = () =>{
+    setcounter(counter + 1);
+    toast('hey here am working' + " "+ counter);
+  }
   return (
     <div className="flex-grow flex items-center justify-center bg-[linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.8)),url('https://i.pinimg.com/1200x/e7/bf/23/e7bf23137788c366a62be0baa10056ea.jpg')] bg-cover bg-center h-screen px-4 lg:px-20 text-white">
       <form
-        action="/api/user"
-        method="POST"
+        ref={formRef}
+        onSubmit={handleSubmit}
         className="ring-1 ring-black/5 shadow-md rounded-2xl p-4 px-8 w-full max-w-sm backdrop-filter backdrop-blur-lg bg-white/10"
       >
         <h2 className="text-xl text-center font-semibold mb-2">
@@ -24,14 +67,17 @@ export default function SignUpPage() {
           <label className="text-xs">Select Account Type:</label>
           <div className="flex items-center gap-3">
             {roles.map((item) => (
-              <div key={item} className="flex items-center gap-2 cursor-pointer">
+              <div
+                key={item}
+                className="flex items-center gap-2 cursor-pointer"
+              >
                 <input
                   type="radio"
                   id={item}
-                  name="role"  
-                  value={item}  
-                  checked={userRole === item}  
-                  onChange={() => setUserRole(item)}  
+                  name="role"
+                  value={item}
+                  checked={userRole === item}
+                  onChange={() => setUserRole(item)}
                 />
                 <label htmlFor={item}>{item}</label>
               </div>
@@ -41,28 +87,26 @@ export default function SignUpPage() {
 
         <input
           type="text"
-          name="fullName"  
+          name="fullName"
           placeholder="Full name"
-          required
+          
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
-       
         <input
           type="email"
-          name="email"  
+          name="email"
           placeholder="you@example.com"
-          required
+          
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
-       
         <input
           type="password"
-          name="password"  
+          name="password"
           placeholder="••••••••"
-          required
-          minLength={8}  
+          
+          minLength={8}
           maxLength={12}
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
@@ -74,10 +118,10 @@ export default function SignUpPage() {
         <div className="flex items-center my-4">
           <input
             id="terms"
-            name="agreeToTerms"  
+            name="agreeToTerms"
             type="checkbox"
             className="mr-2"
-            required  
+            
           />
           <label htmlFor="terms" className="text-sm text-gray-200">
             I agree to the Terms and Privacy
@@ -91,7 +135,8 @@ export default function SignUpPage() {
           Create Account
         </button>
 
-        
+        <p onClick={showtoast}>toat</p>
+
         <div className="flex items-center my-4">
           <hr className="flex-grow border-gray-300" />
           <span className="px-2 text-gray-400 text-sm">or</span>
@@ -100,11 +145,17 @@ export default function SignUpPage() {
 
         {/* Social Logins - Add onClick handlers for real functionality */}
         <div className="flex space-x-3">
-          <button type="button" className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0">
+          <button
+            type="button"
+            className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0"
+          >
             <i className="bi bi-google">&nbsp;</i>
             Google
           </button>
-          <button type="button" className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0">
+          <button
+            type="button"
+            className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0"
+          >
             <svg
               className="w-5 h-5 mr-2"
               fill="currentColor"
@@ -116,7 +167,6 @@ export default function SignUpPage() {
           </button>
         </div>
 
-      
         <p className="text-center text-sm text-gray-500 mt-2">
           I have an account already? &nbsp;
           <Link href="/signin" className="text-blue-600 hover:underline">

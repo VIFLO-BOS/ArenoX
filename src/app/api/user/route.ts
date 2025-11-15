@@ -1,24 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db";
-type Permission = {
-  manageUsers?: boolean;
-  manageCourses?: boolean;
-  managePayments?: boolean;
-  viewReport?: boolean;
-};
-type UserData = {
-  fullName?: string;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
-  role?: string;
-  status?: string;
-  permission?: Permission;
-  createdAt?: Date;
-  agreeToTerms?: boolean;
-  [key: string]: unknown;
-};
+import { UserData} from "@/utils/types/apiRouteTypes";
+
 
 export async function POST(req: NextRequest) {
   

@@ -1,20 +1,37 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
+import { Toaster } from "react-hot-toast";
 
 export const metadata: Metadata = {
-	title: "ArenoX Learning Plartform",
-	description: "This is an online African Learning Plartform",
+  title: "ArenoX Learning Plartform",
+  description: "This is an online African Learning Plartform",
 };
 
 export default function RootLayout({
-	children,
+  children,
 }: Readonly<{
-	children: React.ReactNode;
+  children: React.ReactNode;
 }>) {
-	return (
-		<html lang="en">
-			<body>{children}</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <body>
+        {children}
+        <Toaster
+          position="top-right"
+          reverseOrder={true}
+          gutter={5}
+          toastOptions={{
+            duration: 2000,
+            removeDelay: 1000,
+            style: {
+              background: "#ffffffe3",
+              padding: "2px",
+              borderRadius: "5px",
+            },
+          }}
+        />
+      </body>
+    </html>
+  );
 }
