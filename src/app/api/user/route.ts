@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db";
-import { UserData} from "@/utils/types/apiRouteTypes";
-
+import { UserData } from "@/utils/types/apiRouteTypes";
+import { redirect } from "next/navigation";
 
 export async function POST(req: NextRequest) {
   try {
@@ -75,21 +75,24 @@ export async function POST(req: NextRequest) {
 
     const result = await userCollection.insertOne(userData);
 
-    return NextResponse.json(
-      {
-        message: "User created successfully",
-        user: { _id: result.insertedId, ...userData },
-      },
-      { status: 201 }
-      
-    );
+    if (result) {
+      return () => {
+        NextResponse.json(
+          {
+            message: "User created successfully",
+            user: { _id: result.insertedId, ...userData },
+          },
+          { status: 201 }
+        );
+      redirect("/signin");
+      };
+    }
   } catch (error: unknown) {
     console.error("Error creating user:", error);
     return NextResponse.json(
       {
-        // Fixed: Use NextResponse, no 'res'
         message: "An error occurred during user creation.",
-        error: (error as Error).message, // Optional debug
+        error: (error as Error).message, 
       },
       { status: 500 }
     );

@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -28,13 +29,11 @@ export default function SignUpPage() {
           formRef.current.reset();
         }
 
-
+        redirect("/signin");
       } else {
         const errorData = await response.json();
         toast.error(errorData.message);
       }
-
-
     } catch (error) {
       console.log("an error has occured", error);
       if (error instanceof Error) {
@@ -45,11 +44,6 @@ export default function SignUpPage() {
     }
   };
 
-  const [counter,setcounter] = useState(0);
-  const showtoast = () =>{
-    setcounter(counter + 1);
-    toast('hey here am working' + " "+ counter);
-  }
   return (
     <div className="flex-grow flex items-center justify-center bg-[linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.8)),url('https://i.pinimg.com/1200x/e7/bf/23/e7bf23137788c366a62be0baa10056ea.jpg')] bg-cover bg-center h-screen px-4 lg:px-20 text-white">
       <form
@@ -88,7 +82,6 @@ export default function SignUpPage() {
           type="text"
           name="fullName"
           placeholder="Full name"
-          
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
@@ -96,7 +89,6 @@ export default function SignUpPage() {
           type="email"
           name="email"
           placeholder="you@example.com"
-          
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
@@ -104,7 +96,6 @@ export default function SignUpPage() {
           type="password"
           name="password"
           placeholder="••••••••"
-          
           minLength={8}
           maxLength={12}
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
@@ -120,7 +111,6 @@ export default function SignUpPage() {
             name="agreeToTerms"
             type="checkbox"
             className="mr-2"
-            
           />
           <label htmlFor="terms" className="text-sm text-gray-200">
             I agree to the Terms and Privacy
@@ -133,8 +123,6 @@ export default function SignUpPage() {
         >
           Create Account
         </button>
-
-        <p onClick={showtoast}>toat</p>
 
         <div className="flex items-center my-4">
           <hr className="flex-grow border-gray-300" />

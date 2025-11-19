@@ -25,9 +25,23 @@ export default function RootLayout({
             duration: 2000,
             removeDelay: 1000,
             style: {
-              background: "#ffffffe3",
-              padding: "2px",
+              background:"#fff",
+              paddingLeft: "2px",
+              paddingRight: "2px",
               borderRadius: "5px",
+              fontSize: "12px"
+            },
+
+            success: {
+              style: {
+                color: "#28a745",
+              },
+            },
+
+            error: {
+              style: {
+                color: "#dc3545",
+              },
             },
           }}
         />

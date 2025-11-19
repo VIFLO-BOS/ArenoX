@@ -11,6 +11,7 @@ interface sortConfig {
   dir: "asc" | "desc";
 }
 export default function Admin_user_list() {
+
   // Page Loading State
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -124,7 +125,6 @@ export default function Admin_user_list() {
       openViewUserModal();
     }
   };
-  console.log(userDataToView);
 
   return (
     <>
