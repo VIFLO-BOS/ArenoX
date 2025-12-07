@@ -1,46 +1,57 @@
 "use client";
 import Link from "next/link";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import React, { useRef, useState } from "react";
 import toast from "react-hot-toast";
+import { signUp } from "@/app/lib/actions/auth-action";
 
 export default function SignUpPage() {
-  const [userRole, setUserRole] = useState<string>(" ");
-  const roles: string[] = ["Admin", "Student", "Instructor"];
   const formRef = useRef<HTMLFormElement>(null);
+  const router = useRouter();
+  const [error,seterror] =useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    formData.set("role", userRole);
+    const fullName = formData.get("fullName") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const agreeToTerms = formData.get("agreeToTerms");
 
     try {
-      const response = await fetch("/api/user", {
-        method: "POST",
-        body: formData,
-      });
+      if (!fullName || !email || !password) {
+        toast.error("Please fill in all required fields");
+        setIsLoading(false);
+        return;
+      }
 
-      if (response.ok) {
-        const result = await response.json();
-        toast.success(result.message || "Registration successful !");
+      if (!agreeToTerms) {
+        toast.error("You must agree to the Terms and Privacy");
+        setIsLoading(false);
+        return;
+      }
 
+      const result = await signUp(email, password, fullName);
+
+      if (!result) {
+        toast.error("Registration failed");
+      } else {
+        toast.success("Registration successful! Redirecting to sign in...");
         if (formRef.current) {
           formRef.current.reset();
         }
-
-        redirect("/signin");
-      } else {
-        const errorData = await response.json();
-        toast.error(errorData.message);
+        setTimeout(() => {
+          router.push("/signin");
+        }, 1000);
       }
     } catch (error) {
-      console.log("an error has occured", error);
-      if (error instanceof Error) {
-        toast.error(error.message);
-      } else {
-        toast.error("An unknown error occurred.");
-      }
+      console.error("Sign-up error:", error);
+      toast.error(error instanceof Error ? error.message : "An error occurred");
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -55,41 +66,18 @@ export default function SignUpPage() {
           Create your account
         </h2>
 
-        {/* Roles */}
-        <div className="py-2">
-          <label className="text-xs">Select Account Type:</label>
-          <div className="flex items-center gap-3">
-            {roles.map((item) => (
-              <div
-                key={item}
-                className="flex items-center gap-2 cursor-pointer"
-              >
-                <input
-                  type="radio"
-                  id={item}
-                  name="role"
-                  value={item}
-                  checked={userRole === item}
-                  onChange={() => setUserRole(item)}
-                />
-                <label htmlFor={item}>{item}</label>
-              </div>
-            ))}
-          </div>
-        </div>
-
         <input
           type="text"
           name="fullName"
           placeholder="Full name"
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
         <input
           type="email"
           name="email"
           placeholder="you@example.com"
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
 
         <input
@@ -98,8 +86,9 @@ export default function SignUpPage() {
           placeholder="••••••••"
           minLength={8}
           maxLength={12}
-          className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
+        <p></p>
         <p className="text-gray-400 text-sm">
           Use 8+ characters with a mix of letters, numbers, and symbols.
         </p>
@@ -119,9 +108,38 @@ export default function SignUpPage() {
 
         <button
           type="submit"
-          className="w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg mb-4"
+          disabled={isLoading}
+          className={`w-full flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-lg mb-4 ${
+            isLoading ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Create Account
+          {isLoading ? (
+            <span className="flex items-center">
+              <svg
+                className="animate-spin h-5 w-5 mr-2"
+                viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+              >
+                <circle
+                  className="opacity-25"
+                  cx="12"
+                  cy="12"
+                  r="10"
+                  stroke="currentColor"
+                  strokeWidth="4"
+                ></circle>
+                <path
+                  className="opacity-75"
+                  fill="currentColor"
+                  d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                ></path>
+              </svg>
+              Creating account...
+            </span>
+          ) : (
+            "Create Account"
+          )}
         </button>
 
         <div className="flex items-center my-4">

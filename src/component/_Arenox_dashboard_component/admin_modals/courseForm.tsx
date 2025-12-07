@@ -60,8 +60,8 @@ export default function Course_form_modal({ onClose }: courseFormModalProps) {
           </button>
         </div>
 
-        <div className="w-100">
-          <div className="flex flex-col gap-3">
+        <div className="w-">
+          <div className="flex flex-col gap-3 lg:grid lg:grid-cols-2">
             <input
               type="text"
               name="title"
@@ -72,9 +72,9 @@ export default function Course_form_modal({ onClose }: courseFormModalProps) {
             <select
               name="category"
               required
-              className="w-full py-2 px-1 rounded border-b  border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+              className="w-full py-1 rounded border-b text-gray-500/90 border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
             >
-              <option value="">Course Category</option>
+              <option value="">choose category</option>
               <option value="Data Science">Data Science</option>
               <option value="Design">Design </option>
               <option value="Development">Development</option>
@@ -87,7 +87,7 @@ export default function Course_form_modal({ onClose }: courseFormModalProps) {
               name="instructor"
               required
               placeholder="Instructor"
-              className="w-full  p-1 rounded border-b text-gray-400 border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+              className="w-full  p-1 rounded border-b border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
             />
             <input
               type="text"
@@ -111,11 +111,19 @@ export default function Course_form_modal({ onClose }: courseFormModalProps) {
               className="w-full  p-1 rounded border-b border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
             />
             <input
-              type="text"
-              name="language"
+                type="text"
+                name="language"
+                required
+                placeholder="Language"
+                className="w-full  p-1 rounded border-b border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+            />
+            <textarea
+              name="description"
               required
-              placeholder="Language"
-              className="w-full  p-1 rounded border-b border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
+              placeholder="Course Description"
+              cols={30}
+              rows={4}
+              className="w-full h-32 p-2 rounded border border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition "
             />
           </div>
         </div>

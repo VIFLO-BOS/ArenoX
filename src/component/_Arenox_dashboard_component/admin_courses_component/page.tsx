@@ -1,53 +1,68 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Admin_modal from "../admin_modals/admin_modal";
 import Course_form_modal from "../admin_modals/courseForm";
 import Edit_course_form from "../admin_modals/editCourseForm";
 import View_book_modal from "../admin_modals/viewCoursePage";
-import { coursesDetails } from "@/utils/data/coursesData/courses";
-
-export interface coursesDetails {
-  id: number;
-  category: string;
-  bgColor: string;
-  title: string;
-  paragraph: string;
-  description: string;
-  courseImageUrl: string;
-  tutor: {
-    name: string;
-    imageUrl: string;
-    designation: string;
-    experience: string;
-    credentials: string;
-    bio: string;
-    contact: {
-      email: string;
-      phone: string;
-      whatsapp: string;
-      linkedin: string;
-      instagram: string;
-      facebook: string;
-      x: string;
-      website: string;
-      location: string;
-    };
-    experiences: string[];
-    skills: string[];
-    languages: string[];
-    availability: string;
-  };
-  rating: number;
-  hrs: number;
-  price: number;
-  cta: string;
-}
+import toast from "react-hot-toast";
+import { course } from "@/utils/types/course/course";
 
 interface sortConfig {
-  key: keyof coursesDetails | null;
+  key: keyof course | null;
   dir: "asc" | "desc";
 }
 export default function Admin_courses() {
+  // this is to fetch the data
+  const [courses, setcourses] = useState<course[]>([]);
+  const [coursesToTable, setcourseToTable] = useState<course[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchCourse() {
+      try {
+        const res = await fetch("/api/data/courses");
+        const result = await res.json();
+        if (!cancelled) {
+          setcourses(result.data || []);
+          setcourseToTable(result.data || []);
+        }
+      } catch (error) {
+        if (!cancelled) {
+          if (error instanceof Error) {
+            toast.error(error.message);
+          } else {
+            toast.error("An unknown error occurred during fetch!");
+          }
+        }
+      }
+    }
+    fetchCourse();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  // Page Loading State
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  if (window.onload) {
+    setLoading(true);
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  }
+
+  try {
+    // Simulate data fetching
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+  } catch (err) {
+    console.error(err);
+    setError("Failed to load user data.");
+  }
+
   const [isCreateCourseForm, setisCreateCourseForm] = useState(false);
   const [isEditCourseForm, setisEditCourseForm] = useState(false);
   const [isviewCourseModal, setisviewCourseModal] = useState(false);
@@ -61,18 +76,10 @@ export default function Admin_courses() {
   };
 
   // delete functionalities
-  const [coursesToTable, setcourseToTable] = useState(coursesDetails);
-  const handleDelete = (id: number) => {
-    // const dataToDelete = coursesToTable.filter((item) => item.id === id);
-    // console.log(dataToDelete);
-    // const confirmDelete = window.confirm(
-    //   `Are you sure you want to delete this user ${dataToDelete[0].title.toLocaleUpperCase()}?`
-    // );
-
+  const handleDelete = (id: string) => {
+    // const courseToDelete = courses.filter((item) => item.id === id);
     if (id) {
       setcourseToTable(coursesToTable.filter((item) => item.id !== id));
-    } else {
-      setcourseToTable(coursesToTable);
     }
   };
 
@@ -93,8 +100,8 @@ export default function Admin_courses() {
     return (
       item.title.toLowerCase().includes(query.toLocaleLowerCase()) ||
       item.category.toLowerCase().includes(query.toLocaleLowerCase()) ||
-      item.tutor.name.toLowerCase().includes(query.toLocaleLowerCase()) ||
-      item.rating.toString().includes(query.toLocaleLowerCase())
+      item.instructor.toLowerCase().includes(query.toLocaleLowerCase()) ||
+      item.level.includes(query.toLocaleLowerCase())
     );
   });
 
@@ -105,7 +112,7 @@ export default function Admin_courses() {
   });
 
   // handling sort functions
-  const handleSort = (key: keyof coursesDetails) => {
+  const handleSort = (key: keyof course) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.dir === "asc") {
       direction = "desc";
@@ -121,7 +128,7 @@ export default function Admin_courses() {
     const data = [...filteredData];
 
     data.sort((a, b) => {
-      const key = sortConfig.key as keyof coursesDetails;
+      const key = sortConfig.key as keyof course;
       const A = (a[key] ?? "").toString().toLowerCase();
       const B = (b[key] ?? "").toString().toLowerCase();
       if (A < B) return sortConfig.dir === "asc" ? -1 : 1;
@@ -133,16 +140,14 @@ export default function Admin_courses() {
 
   // function to view user details
   //  get the user data
-  const [courseDataToView, setcourseDataToView] =
-    useState<coursesDetails | null>(null);
-  const handleViewCourseForm = (id: number) => {
+  const [courseDataToView, setcourseDataToView] = useState<course | null>(null);
+  const handleViewCourseForm = (id: string) => {
     const selectCourses = sortedData.find((item) => item.id === id);
     if (selectCourses) {
       setcourseDataToView(selectCourses);
       openviewCourseForm();
     }
   };
-  console.log(courseDataToView);
   return (
     <>
       <div className="bg-white backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg mb-5">
@@ -187,13 +192,16 @@ export default function Admin_courses() {
                   Instructor
                 </th>
                 <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Rating
+                  Level
                 </th>
                 <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Time
+                  Duration
                 </th>
                 <th className="p-4 text-gray-600 text-left text-xs font-semibold">
                   Price
+                </th>
+                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
+                  Langauge
                 </th>
                 <th className="p-4 text-gray-600 text-center text-xs font-semibold">
                   Actions
@@ -201,65 +209,100 @@ export default function Admin_courses() {
               </tr>
             </thead>
             <tbody>
-              {sortedData.map((c) => (
-                <tr key={c.id} className="hover:bg-gray-50">
-                  <td className="px-4 py-2 whitespace-normal text-left border-b-gray-200 text-gray-600">
-                    {c.id}
-                  </td>
+              {loading ? (
+                <tr>
                   <td
-                    className="flex items-center px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600"
-                    onClick={() => handleSort("title")}
+                    colSpan={7}
+                    className="p-8 whitespace-normal text-center text-gray-500 italic animate-pulse"
                   >
-                    <span className="w-10 h-10 bg-indigo-100 text-indigo-500 text-medium rounded-full flex items-center justify-center mr-3">
-                      {c.title
-                        .split(" ")
-                        .slice(0, 3)
-                        .map((n) => n[0])
-                        .join("")}
-                    </span>
-                    <span>{c.title}</span>
-                  </td>
-                  <td
-                    className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600"
-                    onClick={() => handleSort("category")}
-                  >
-                    {c.category}
-                  </td>
-                  <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                    {c.tutor.name}
-                  </td>
-                  <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                    {c.rating}
-                  </td>
-                  <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                    {c.hrs}hrs
-                  </td>
-                  <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                    ${c.price}
-                  </td>
-
-                  <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 flex items-center space-x-2">
-                    <button
-                      className="p-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-200 transition"
-                      onClick={() => handleViewCourseForm(c.id)}
-                    >
-                      <i className="bi bi-eye"></i>
-                    </button>
-                    <button
-                      className="p-2 rounded-md bg-orange-50 text-orange-600 hover:bg-orange-200 transition"
-                      onClick={() => openEditCourseForm()}
-                    >
-                      <i className="bi bi-pencil"></i>
-                    </button>
-                    <button
-                      className="p-2 rounded-md bg-red-50 text-red-600 hover:bg-red-200 transition"
-                      onClick={() => handleDelete(c.id)}
-                    >
-                      <i className="bi bi-trash"></i>
-                    </button>
+                    Loading...
                   </td>
                 </tr>
-              ))}
+              ) : error ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="p-8 whitespace-normal text-center text-red-600"
+                  >
+                    {error}
+                  </td>
+                </tr>
+              ) : sortedData.length === 0 ? (
+                <tr>
+                  <td
+                    colSpan={7}
+                    className="p-8  whitespace-normal text-center text-gray-500"
+                  >
+                    No courses found.
+                  </td>
+                </tr>
+              ) : sortedData.length > 0 ? (
+                sortedData &&
+                sortedData.map((c, idx) => (
+                  <tr key={idx} className="hover:bg-gray-50">
+                    <td className="px-4 py-2 whitespace-normal text-left border-b-gray-200 text-gray-600">
+                      {idx + 1}
+                    </td>
+                    <td
+                      className="flex items-center px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600"
+                      onClick={() => handleSort("title")}
+                    >
+                      <span className="w-10 h-10 bg-indigo-100 text-indigo-500 text-medium rounded-full flex items-center justify-center mr-3">
+                        {c.title
+                          .split(" ")
+                          .slice(0, 3)
+                          .map((n) => n[0])
+                          .join("")}
+                      </span>
+                      <span>{c.title}</span>
+                    </td>
+                    <td
+                      className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600"
+                      onClick={() => handleSort("category")}
+                    >
+                      {c.category}
+                    </td>
+                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
+                      {c.instructor}
+                    </td>
+                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
+                      {c.level}
+                    </td>
+                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
+                      {c.duration}hrs
+                    </td>
+
+                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
+                      ${c.price}
+                    </td>
+                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
+                      Language
+                    </td>
+                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 flex items-center space-x-2">
+                      <button
+                        className="p-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-200 transition"
+                        onClick={() => handleViewCourseForm(c.id)}
+                      >
+                        <i className="bi bi-eye"></i>
+                      </button>
+                      <button
+                        className="p-2 rounded-md bg-orange-50 text-orange-600 hover:bg-orange-200 transition"
+                        onClick={() => openEditCourseForm()}
+                      >
+                        <i className="bi bi-pencil"></i>
+                      </button>
+                      <button
+                        className="p-2 rounded-md bg-red-50 text-red-600 hover:bg-red-200 transition"
+                        onClick={() => handleDelete(c.id)}
+                      >
+                        <i className="bi bi-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                "No data found"
+              )}
             </tbody>
             <tfoot className="mt-2">
               <tr>
@@ -267,19 +310,17 @@ export default function Admin_courses() {
                   <div className="flex items-center justify-between">
                     <span className="text-sm text-gray-500">
                       Showing {currentPage * itemsPerPage - itemsPerPage + 1} to{" "}
-                      {Math.min(
-                        currentPage * itemsPerPage,
-                        coursesDetails.length
-                      )}{" "}
-                      of {coursesDetails.length} users
+                      {Math.min(currentPage * itemsPerPage, courses.length)} of{" "}
+                      {courses.length} courses
                     </span>
-                    <div className="flex flex-wrap lg:flex-row items-center justify-between gap-3">
+                    
+                    <div className="flex flex-wrap items-center justify-between gap-3">
                       <button
                         onClick={() =>
                           setCurrentPage((prev) => Math.max(prev - 1, 1))
                         }
                         disabled={currentPage === 1}
-                        className="px-4 py-2 bg-blue-500 hover:bg-blue-500 text-white rounded-md disabled:opacity-50"
+                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50"
                       >
                         {"<"}
                       </button>
@@ -290,7 +331,7 @@ export default function Admin_courses() {
                           )
                         }
                         disabled={currentPage === totalPages}
-                        className="px-4 py-2 bg-blue-500 hover:bg-blue-500 text-white rounded-md disabled:opacity-50"
+                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50"
                       >
                         {">"}
                       </button>

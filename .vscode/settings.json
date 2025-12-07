@@ -3,7 +3,7 @@
   "editor.formatOnSave": true,
   "files.autoSave": "afterDelay",
   "editor.defaultFormatter": "vscode.typescript-language-features",
-  "editor.tabSize": 4,
+  "editor.tabSize": 6,
   "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },

@@ -5,8 +5,8 @@ import { navigationItems } from "./nav-menu";
 import Mobile_menu from "./mobile_menu";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import Right_menu from "./rightmenu";
 import { usePathname } from "next/navigation";
+import RightMenu from "./rightmenu-client";
 
 interface mainMenuProps {
   scrolledEffect?: boolean;
@@ -97,7 +97,7 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
 
       {/* Right-side menu */}
       <div className=" flex items-center flex-1 justify-end gap-6">
-        <Right_menu />
+        <RightMenu session={null} />
         {/* Mobile hamburger */}
         <div className="flex lg:hidden">
           <button

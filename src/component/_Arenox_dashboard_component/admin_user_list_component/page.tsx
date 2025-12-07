@@ -1,16 +1,43 @@
 "use client";
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import Admin_modal from "../admin_modals/admin_modal";
 import Create_user_form from "../admin_modals/userForm";
-import { userData, User } from "@/utils/data/fetchdata/userData";
+import { UserType } from "@/utils/data/fetchdata/userData";
 import Edit_user_form from "../admin_modals/editUserForm";
 import View_user_modal from "../admin_modals/viewUserPage";
+import toast from "react-hot-toast";
 
 interface sortConfig {
-  key: keyof User | null;
+  key: keyof UserType | null;
   dir: "asc" | "desc";
 }
 export default function Admin_user_list() {
+  const [Users, setUsers] = useState<UserType[]>([]);
+  const [DataToTable, setDataToTable] = useState<UserType[]>([]);
+
+  useEffect(() => {
+    let cancelled = false;
+    async function fetchUser() {
+      try {
+        const res = await fetch("/api/data/users");
+        const result = await res.json();
+        setUsers(result.data || null);
+        setDataToTable(result.data || null);
+      } catch (error) {
+        if (!cancelled) {
+          if (error instanceof Error) {
+            toast.error(error.message);
+          } else {
+            toast.error("an unknown error occured while fetching users!");
+          }
+        }
+      }
+    }
+    fetchUser();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
   // Page Loading State
   const [loading, setLoading] = useState(false);
@@ -47,17 +74,14 @@ export default function Admin_user_list() {
   };
 
   // delete functions
-  const [DataToTable, setDataToTable] = useState(userData);
-  const handleDelete = (id: number) => {
-    const dataToDelete = userData.filter((item) => item.id === id);
+  const handleDelete = (id: string) => {
+    const dataToDelete = Users.filter((item) => item.id === id);
     const confirmDelete = window.confirm(
       `Are you sure you want to delete this user ${dataToDelete[0].firstname} ${dataToDelete[0].lastname}`
     );
 
     if (confirmDelete) {
-      setDataToTable(userData.filter((item) => item.id !== id));
-    } else {
-      setDataToTable(userData);
+      setDataToTable(Users.filter((item) => item.id !== id));
     }
   };
 
@@ -89,7 +113,7 @@ export default function Admin_user_list() {
   });
 
   // handling sort functions
-  const handleSort = (key: keyof User) => {
+  const handleSort = (key: keyof UserType) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.dir === "asc") {
       direction = "desc";
@@ -105,7 +129,7 @@ export default function Admin_user_list() {
     const data = [...filteredData];
 
     data.sort((a, b) => {
-      const key = sortConfig.key as keyof User;
+      const key = sortConfig.key as keyof UserType;
       const A = (a[key] ?? "").toString().toLowerCase();
       const B = (b[key] ?? "").toString().toLowerCase();
       if (A < B) return sortConfig.dir === "asc" ? -1 : 1;
@@ -117,8 +141,8 @@ export default function Admin_user_list() {
 
   // function to view user details
   //  get the user data
-  const [userDataToView, setuserDataToView] = useState<User | null>(null);
-  const handleViewUser = (id: number) => {
+  const [userDataToView, setuserDataToView] = useState<UserType | null>(null);
+  const handleViewUser = (id: string) => {
     const selectUser = sortedData.find((item) => item.id === id);
     if (selectUser) {
       setuserDataToView(selectUser);
@@ -130,7 +154,6 @@ export default function Admin_user_list() {
     <>
       <div className="min-h-screen">
         <div className="mx-auto">
-        
           {/* MAIN TABLE */}
           <div className="bg-white backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg mb-5">
             <div className="p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center justify-between">
@@ -227,13 +250,14 @@ export default function Admin_user_list() {
                       </td>
                     </tr>
                   ) : sortedData.length > 0 ? (
-                    sortedData.map((u) => (
+                    sortedData &&
+                    sortedData.map((u, idx) => (
                       <tr
-                        key={u.id}
+                        key={idx}
                         className="hover:bg-blue-50/50 transition duration-150"
                       >
                         <td className="px-4 py-2 whitespace-normal font-medium text-gray-700 text-left border-b-gray-200">
-                          {u.id}
+                          {idx + 1}
                         </td>
                         <td className="flex items-center px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
                           <span className="w-10 h-10 bg-indigo-100 text-indigo-500 text-medium rounded-full flex items-center justify-center mr-3">
@@ -295,9 +319,9 @@ export default function Admin_user_list() {
                           {currentPage * itemsPerPage - itemsPerPage + 1} to{" "}
                           {Math.min(
                             currentPage * itemsPerPage,
-                            userData.length
+                            Users.length
                           )}{" "}
-                          of {userData.length} users
+                          of {Users.length} users
                         </span>
                         <div className="flex flex-wrap items-center justify-between gap-3">
                           <button

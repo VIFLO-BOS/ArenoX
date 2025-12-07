@@ -1,7 +1,7 @@
 import { MongoClient, Db } from "mongodb";
 
 const url = process.env.DATABASE_URL ?? "";
-const dbName = process.env.DB_NAME || "arenox-database"; // <-- define this
+const dbName = process.env.DB_NAME || "arenox-database"; 
 
 if (!url) {
   throw new Error("Please provide a database URL in your .env file");

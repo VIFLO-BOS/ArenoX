@@ -1,4 +1,5 @@
 "use client";
+import { session } from "@/app/lib/sessions";
 import Admin_dashboard_header from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header";
 import Admin_dashboard_sidebar from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_sidebar";
 import React, { useState, useEffect } from "react";
@@ -30,6 +31,7 @@ export default function Admin_Dashboard_Layout({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+
   return (
     <div className="flex justify-between gap-50 bg-gray-100">
       <Admin_dashboard_sidebar
@@ -43,7 +45,7 @@ export default function Admin_Dashboard_Layout({
           isSidebarOpen ? "ml-56" : "ml-20"
         }`}
       >
-        <Admin_dashboard_header />
+        <Admin_dashboard_header/>
         {children}
         <div id="modal-root"></div>
       </main>

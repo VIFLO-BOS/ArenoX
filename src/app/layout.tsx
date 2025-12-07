@@ -3,16 +3,19 @@ import "./globals.css";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import { Toaster } from "react-hot-toast";
 
+
 export const metadata: Metadata = {
   title: "ArenoX Learning Plartform",
   description: "This is an online African Learning Plartform",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+
+
   return (
     <html lang="en">
       <body>
