@@ -35,9 +35,9 @@ export default function Courses_categories_section() {
      <div className="bg-white py-8 px-3 md:px-6 lg:px-20">
        {/* Header */}
        <motion.div
-         initial={{ opacity: 0, y: -20 }}
+         initial={{ opacity: 0, x: -30 }}
          animate={{ opacity: 1, x: 0 }}
-         transition={{ duration: 2}}
+         transition={{ duration: 2.5}}
          className="max-w-5xl mx-auto text-center mb-8"
        >
          <h1 className="font-semibold text-3xl md:text-4xl !text-black">
@@ -56,7 +56,7 @@ export default function Courses_categories_section() {
              key={index}
              initial={{ opacity: 0, x: -20 }}
              animate={{ opacity: 1, x: 0 }}
-             transition={{ delay: index * 0.5 }}
+             transition={{ delay: index * 0.1 }}
              className="bg-white shadow-md rounded-md border-b-2 border-orange-500 hover:scale-105 transition-transform duration-300 ease-in-out cursor-pointer flex flex-col"
            >
              {/* Image */}

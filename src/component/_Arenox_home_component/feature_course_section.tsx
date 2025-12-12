@@ -16,7 +16,7 @@ export default function Feature_Course_section() {
 
    return (
      <div className="py-10 px-3 md:px-6 lg:px-20 bg-blue-100">
-       <div className="max-w-6xl mx-auto text-center md:text-left">
+       <div className="mx-auto text-center md:text-left">
          <h1 className=" text-4xl md:text-5xl font-semibold mb-4">
            Popular Courses Loved by Learners
          </h1>

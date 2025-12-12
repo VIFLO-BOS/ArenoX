@@ -116,7 +116,7 @@ export default function footer_content() {
         className="flex justify-between px-15 mt-8 border-t border-gray-700 pt-4 text-center text-xs text-gray-400"
       >
         <p>Design & Develop by ArenixCommunication</p>
-        <p> © {new Date().getFullYear()} ArenoX. All rights reserved.</p>
+        <p></p>
       </motion.div>
     </footer>
   );

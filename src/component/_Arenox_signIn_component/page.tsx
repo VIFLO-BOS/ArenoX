@@ -1,22 +1,34 @@
 "use client";
-import { signIn } from "@/app/lib/auth-client";
+import { getAuthClient } from "@/app/lib/auth-client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import {useForm} from "react-hook-form";
+import {zodResolver} from "@hookform/resolvers/zod";
+import{signInSchema,SignInValues} from "@/app/model/signInSchema"
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+
   const router = useRouter();
+
+  const { register, handleSubmit, formState: { errors } } = useForm<SignInValues>({
+    resolver: zodResolver(signInSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+      rememberMe: false,
+    }
+  });
 
   const handleSocialAuth = async (provider: "google" | "github") => {
     setIsLoading(true);
     setError("");
 
     try {
-      await signIn.social({
+      const authClient = getAuthClient();
+      await authClient.signIn.social({
         provider: provider,
         callbackURL: "/",
       });
@@ -30,21 +42,21 @@ export default function SignInPage() {
     }
   };
 
-  const handleEmailAuth = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleEmailAuth = async (data: SignInValues) => {
     setIsLoading(true);
     setError("");
-    const trimEmail = email.trim()
+    const trimEmail = data.email.trim()
     try {
-      if(!trimEmail || !password){
+      if(!trimEmail || !data.password){
         setError("Please provide both email and password.");
-        toast.error(error);
+        toast.error("Please provide both email and password.");
         setIsLoading(false);
         return;
       }
-      await signIn.email({
+      const authClient = getAuthClient();
+      await authClient.signIn.email({
         email: trimEmail,
-        password,
+        password: data.password,
         callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
@@ -73,7 +85,7 @@ export default function SignInPage() {
     <div className="flex-grow flex items-center justify-center bg-[linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.8)),url('https://i.pinimg.com/1200x/e7/bf/23/e7bf23137788c366a62be0baa10056ea.jpg')] bg-cover bg-center h-screen px-4 lg:px-20 text-white">
       <form
         className="ring-1 ring-black/5 shadow-md rounded-2xl p-4 px-8 w-full max-w-sm backdrop-filter backdrop-blur-lg bg-white/10"
-        onSubmit={handleEmailAuth}
+        onSubmit={handleSubmit(handleEmailAuth)}
       >
         <h2 className="text-xl text-center font-semibold mb-2">Welcome back</h2>
         <p className="text-center text-gray-200 mb-6">
@@ -86,16 +98,21 @@ export default function SignInPage() {
           type="email"
           placeholder="you@example.com"
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-          onChange={(e) => setEmail(e.target.value)}
+          {...register("email")}
         />
-
+        {errors.email && (
+          <p className="text-red-400 text-sm mb-3">{errors.email.message}</p>
+        )}
         {/* Password */}
         <input
           type="password"
           placeholder="••••••••"
           className="w-full mb-4 px-4 py-2 border rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
-          onChange={(e) => setPassword(e.target.value)}
+          {...register("password")}
         />
+        {errors.password && (
+          <p className="text-red-400 text-sm mb-3">{errors.password.message}</p>
+        )}
         <div className="flex items-center justify-between mb-4">
           <div>
             <a href="#" className="text-sm text-blue-600 hover:underline">
@@ -105,7 +122,12 @@ export default function SignInPage() {
 
           {/* Remember Me */}
           <div className="flex items-center ">
-            <input id="remember" type="checkbox" className="mr-2" />
+            <input
+              id="remember"
+              type="checkbox"
+              className="mr-2"
+              {...register("rememberMe")}
+            />
             <label htmlFor="remember" className="text-sm text-gray-200">
               Remember me
             </label>
@@ -167,6 +189,7 @@ export default function SignInPage() {
         {/* Social Logins */}
         <div className="flex space-x-3">
           <button
+            type="button"
             className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0"
             onClick={() => handleSocialAuth("google")}
           >
@@ -174,6 +197,7 @@ export default function SignInPage() {
             Google
           </button>
           <button
+            type="button"
             className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0"
             onClick={() => handleSocialAuth("github")}
           >

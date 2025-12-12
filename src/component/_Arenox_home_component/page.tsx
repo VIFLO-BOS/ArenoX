@@ -40,7 +40,7 @@ export default function HomePage() {
         <motion.div
           initial="hidden"
           whileInView="visible"
-          viewport={{ amount: 0.1 }}
+          viewport={{ amount: 0.05 }}
           variants={fadeUp}
         >
           <Courses_categories_section />

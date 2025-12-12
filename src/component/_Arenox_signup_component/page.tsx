@@ -1,55 +1,66 @@
 "use client";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
-import { signUp } from "@/app/lib/actions/auth-action";
+import { signUp } from "@/app/lib/auth-action";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { signUpSchema, SignUpValues } from "@/app/model/signUpSchema";
 
 export default function SignUpPage() {
-  const formRef = useRef<HTMLFormElement>(null);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<SignUpValues>({
+    resolver: zodResolver(signUpSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      agreeToTerms: false as unknown as true,
+    },
+  });
   const router = useRouter();
-  const [error,seterror] =useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
+  const handleFormSubmit = async (data: SignUpValues) => {
     setIsLoading(true);
 
-    const formData = new FormData(e.currentTarget);
-    const fullName = formData.get("fullName") as string;
-    const email = formData.get("email") as string;
-    const password = formData.get("password") as string;
-    const agreeToTerms = formData.get("agreeToTerms");
+    const { firstName, lastName, email, password, agreeToTerms } = data;
+    const fullName = `${firstName} ${lastName}`;
 
     try {
       if (!fullName || !email || !password) {
         toast.error("Please fill in all required fields");
-        setIsLoading(false);
         return;
       }
 
       if (!agreeToTerms) {
         toast.error("You must agree to the Terms and Privacy");
-        setIsLoading(false);
         return;
       }
 
       const result = await signUp(email, password, fullName);
 
-      if (!result) {
-        toast.error("Registration failed");
-      } else {
-        toast.success("Registration successful! Redirecting to sign in...");
-        if (formRef.current) {
-          formRef.current.reset();
-        }
-        setTimeout(() => {
-          router.push("/signin");
-        }, 1000);
+      if (result.error) {
+        toast.error(result.error?.message || "Registration failed");
+        return;
       }
+
+      toast.success("Registration successful! Redirecting...");
+
+      reset();
+
+      setTimeout(() => {
+        router.push("/signin");
+      }, 1000);
     } catch (error) {
       console.error("Sign-up error:", error);
-      toast.error(error instanceof Error ? error.message : "An error occurred");
+      toast.error("An unexpected error occurred");
     } finally {
       setIsLoading(false);
     }
@@ -58,8 +69,7 @@ export default function SignUpPage() {
   return (
     <div className="flex-grow flex items-center justify-center bg-[linear-gradient(rgba(0,0,0,0.25),rgba(0,0,0,0.8)),url('https://i.pinimg.com/1200x/e7/bf/23/e7bf23137788c366a62be0baa10056ea.jpg')] bg-cover bg-center h-screen px-4 lg:px-20 text-white">
       <form
-        ref={formRef}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(handleFormSubmit)}
         className="ring-1 ring-black/5 shadow-md rounded-2xl p-4 px-8 w-full max-w-sm backdrop-filter backdrop-blur-lg bg-white/10"
       >
         <h2 className="text-xl text-center font-semibold mb-2">
@@ -68,26 +78,53 @@ export default function SignUpPage() {
 
         <input
           type="text"
-          name="fullName"
-          placeholder="Full name"
+          placeholder="First name"
+          {...register("firstName")}
           className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
-
+        {errors.firstName && (
+          <p className="text-red-400 text-sm mb-3">
+            {errors.firstName.message}
+          </p>
+        )}
+        <input
+          type="text"
+          placeholder="Last name"
+          {...register("lastName")}
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+        />
+        {errors.lastName && (
+          <p className="text-red-400 text-sm mb-3">{errors.lastName.message}</p>
+        )}
         <input
           type="email"
-          name="email"
           placeholder="you@example.com"
+          {...register("email")}
           className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
-
+        {errors.email && (
+          <p className="text-red-400 text-sm mb-3">{errors.email.message}</p>
+        )}
         <input
           type="password"
-          name="password"
-          placeholder="••••••••"
-          minLength={8}
-          maxLength={12}
+          placeholder="password"
+          {...register("password")}
           className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
         />
+        {errors.password && (
+          <p className="text-red-400 text-sm mb-3">{errors.password.message}</p>
+        )}
+        <input
+          type="password"
+          placeholder="confirmPassword"
+          {...register("confirmPassword")}
+          className="w-full mb-4 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 outline-none"
+        />
+        {errors.confirmPassword && (
+          <p className="text-red-400 text-sm mb-3">
+            {errors.confirmPassword.message}
+          </p>
+        )}
         <p></p>
         <p className="text-gray-400 text-sm">
           Use 8+ characters with a mix of letters, numbers, and symbols.
@@ -97,8 +134,8 @@ export default function SignUpPage() {
         <div className="flex items-center my-4">
           <input
             id="terms"
-            name="agreeToTerms"
             type="checkbox"
+            {...register("agreeToTerms")}
             className="mr-2"
           />
           <label htmlFor="terms" className="text-sm text-gray-200">
