@@ -63,9 +63,16 @@ export default function Admin_user_list() {
   // this is for the all form modal
   const [isCreateModalform, setisCreateModalOpen] = useState(false);
   const [isEditModalform, setisEditModalOpen] = useState(false);
+  const [userToEdit, setUserToEdit] = useState<UserType | null>(null);
   const [isViewUserModal, setisViewUserModal] = useState(false);
   const openCreateModalForm = () => setisCreateModalOpen(true);
-  const openEditModalForm = () => setisEditModalOpen(true);
+  const openEditModalForm = (id?: string) => {
+    if (id) {
+      const user = Users.find((u) => u.id === id) || null;
+      setUserToEdit(user);
+    }
+    setisEditModalOpen(true);
+  };
   const openViewUserModal = () => setisViewUserModal(true);
   const closeModal = () => {
     setisCreateModalOpen(false);
@@ -292,7 +299,7 @@ export default function Admin_user_list() {
                             <i className="bi bi-eye"></i>
                           </button>
                           <button
-                            onClick={() => openEditModalForm()}
+                            onClick={() => openEditModalForm(u.id)}
                             className="p-2 rounded-md bg-orange-50 text-orange-600 hover:bg-orange-200 transition"
                           >
                             <i className="bi bi-pencil"></i>
@@ -317,10 +324,7 @@ export default function Admin_user_list() {
                         <span className="text-sm text-gray-500">
                           Showing{" "}
                           {currentPage * itemsPerPage - itemsPerPage + 1} to{" "}
-                          {Math.min(
-                            currentPage * itemsPerPage,
-                            Users.length
-                          )}{" "}
+                          {Math.min(currentPage * itemsPerPage, Users.length)}{" "}
                           of {Users.length} users
                         </span>
                         <div className="flex flex-wrap items-center justify-between gap-3">
@@ -358,7 +362,7 @@ export default function Admin_user_list() {
         <Create_user_form onClose={closeModal} />
       </Admin_modal>
       <Admin_modal isOpen={isEditModalform} onClose={closeModal}>
-        <Edit_user_form onClose={closeModal} />
+        <Edit_user_form onClose={closeModal} user={userToEdit} />
       </Admin_modal>
       <Admin_modal isOpen={isViewUserModal} onClose={closeModal}>
         <View_user_modal

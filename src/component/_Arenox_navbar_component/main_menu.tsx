@@ -97,7 +97,7 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
 
       {/* Right-side menu */}
       <div className=" flex items-center flex-1 justify-end gap-6">
-        <RightMenu session={null} />
+        <RightMenu  />
         {/* Mobile hamburger */}
         <div className="flex lg:hidden">
           <button

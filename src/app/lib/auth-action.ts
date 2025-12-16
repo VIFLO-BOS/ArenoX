@@ -1,4 +1,4 @@
-import { getAuthClient } from "./auth-client";
+import { authClient } from "./auth-client";
 
 /**
  * Email Sign Up
@@ -9,7 +9,6 @@ export const signUp = async (
   password: string,
   name: string
 ) => {
-  const authClient = getAuthClient();
   const { data, error } = await authClient.signUp.email({
     email,
     password,
@@ -28,7 +27,6 @@ export const signUp = async (
  * Social Auth (Works for both Sign Up and Sign In)
  */
 export const signInWithSocial = async (provider: "google" | "github") => {
-  const authClient = getAuthClient();
   const { data, error } = await authClient.signIn.social({
     provider,
     callbackURL: "/",
@@ -48,7 +46,6 @@ export const signInWithSocial = async (provider: "google" | "github") => {
  * Email Sign In
  */
 export const signIn = async (email: string, password: string) => {
-  const authClient = getAuthClient();
   const { data, error } = await authClient.signIn.email({
     email,
     password,

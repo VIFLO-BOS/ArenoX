@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 export  async function GET() {
   try {
     const { db } = await connect();
-    const courses = db.collection("courses");
+    const courses = db.collection("course");
 
     const data = await courses.find({}).toArray();
     if (data) {
@@ -13,10 +13,10 @@ export  async function GET() {
     }
   } catch (error) {
     if (error instanceof Error) {
-      console.error("error fetching courses:", error)
+      console.error("error fetching course:", error)
       toast(error.message);
     } else {
-      toast("an unknow error has occured while fetching courses!");
+      toast("an unknow error has occured while fetching course!");
     }
   }
 }

@@ -1,11 +1,21 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
-// import { Session } from "better-auth";
 import Image from "next/image";
-import Link from "next/link";
+import { useSession ,signOut} from "@/app/lib/auth-client";
+import { useRouter } from "next/navigation";
 
 
+export default function Admin_dashboard_header({ session: serverSession }: { session: any }) {
+  const { data: clientSession } = useSession();
+  const session = serverSession || clientSession;
+  const user = session?.user;
+  const router = useRouter();
 
-export default function Admin_dashboard_header() {
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/")
+  }
+
+  
   return (
     <div className="bg-white shadow-md py-4.5 rounded-br-lg rounded-bl-lg mb-5 w-full">
       <header className="flex flex-wrap items-center justify-between gap-4 px-4">
@@ -35,7 +45,7 @@ export default function Admin_dashboard_header() {
               />
               <div className="hidden md:flex items-center gap-1 text-start">
                 <span className="font-medium text-gray-800 text-sm">
-                  Bankole Olaniyi
+                  {user?.name}
                 </span>
                 <i className="bi bi-chevron-down text-gray-500 text-xs"></i>
               </div>
@@ -46,12 +56,12 @@ export default function Admin_dashboard_header() {
             >
               <div className="py-1">
                 <MenuItem>
-                  <Link
-                    href="/signin"
+                  <button
+                    onClick={handleSignOut}
                     className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 outline-none"
                   >
                     Sign-Out
-                  </Link>
+                  </button>
                 </MenuItem>
               </div>
             </MenuItems>

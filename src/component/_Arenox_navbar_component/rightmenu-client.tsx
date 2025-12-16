@@ -1,13 +1,37 @@
+// rightmenu-client.tsx
 "use client";
-import type { RightMenuClientProps } from "@/utils/types/session";
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
+import { useSession, signOut } from "@/app/lib/auth-client";
+import { useRouter } from "next/navigation";
 
-export default function RightMenu({ session }: RightMenuClientProps) {
+export default function RightMenu({ session: serverSession }: { session: any }) {
+  const { data: clientSession } = useSession();
+  const session = serverSession || clientSession;
+  const user = session?.user;
+  const router = useRouter();
+
+  const handleSignOut = async () => {
+    await signOut();
+    router.push("/");
+  };
+
+  const getDashboardLink = (role?: string) => {
+    switch (role) {
+      case "admin":
+        return "/dashboard/admin";
+      case "instructor":
+        return "/dashboard/instructor";
+      case "student":
+      default:
+        return "/dashboard/student"; 
+    }
+  };
+
   return (
     <div className="flex items-center ">
-      {session && (
+      {user && (
         <Menu as="div" className="relative inline-block">
           <MenuButton className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md  px-2 py-1   text-sm font-semibold  text-black  outline-0 transition-all duration-300">
             <Image
@@ -24,23 +48,39 @@ export default function RightMenu({ session }: RightMenuClientProps) {
           <MenuItems
             transition
             modal={false}
-            className="absolute right-0 z-10 mt-2 w-25 origin-top-right rounded-md bg-white outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 transition-all ease-in-out duration-200"
           >
             <div className="py-1">
               <MenuItem>
                 <Link
-                  href="/dashboard"
+                  href={getDashboardLink(user.role)}
                   className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
                 >
                   Dashboard
                 </Link>
+              </MenuItem>
+              <MenuItem>
+                <Link
+                  href="/profile"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                >
+                  Profile
+                </Link>
+              </MenuItem>
+              <MenuItem>
+                <button
+                  onClick={handleSignOut}
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                >
+                  Sign Out
+                </button>
               </MenuItem>
             </div>
           </MenuItems>
         </Menu>
       )}
 
-      {!session && (
+      {!user && (
         <Menu as="div" className="relative inline-block">
           <MenuButton className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md  px-2 py-1   text-sm font-semibold  text-black  outline-0 transition-all duration-300">
             <Image
@@ -57,7 +97,7 @@ export default function RightMenu({ session }: RightMenuClientProps) {
           <MenuItems
             transition
             modal={false}
-            className="absolute right-0 z-10 mt-2 w-25 origin-top-right rounded-md bg-white outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 transition data-closed:scale-95 data-closed:transform data-closed:opacity-0 data-enter:duration-100 data-enter:ease-out data-leave:duration-75 data-leave:ease-in"
+            className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 transition-all ease-in-out duration-200"
           >
             <div className="py-1">
               <MenuItem>

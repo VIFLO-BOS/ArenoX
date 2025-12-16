@@ -1,13 +1,13 @@
 "use client";
 
 import { createAuthClient } from "better-auth/react";
+import { auth } from "./auth";
 
-export const getAuthClient = () => {
-  if (typeof window === "undefined") {
-    throw new Error("getAuthClient() can only be used on the client");
-  }
+export const authClient = createAuthClient({
+  baseURL:
+    typeof window === "undefined"
+      ? "http://localhost:3000"
+      : window.location.origin,
+});
 
-  return createAuthClient({
-    baseURL: window.location.origin,
-  });
-};
+export const { signIn, signUp, useSession, signOut } = authClient;

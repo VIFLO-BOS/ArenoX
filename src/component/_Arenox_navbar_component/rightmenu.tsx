@@ -1,13 +1,21 @@
-"use server";
+import RightMenu from "@/component/_Arenox_navbar_component/rightmenu-client";
+import Admin_dashboard_header from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header";
 import { getSession } from "@/app/lib/sessions";
-import RightMenu from "./rightmenu-client";
 
-export default async function Right_menu() {
+export default async function Gen_session() {
   const session = await getSession();
 
-  // The auth lib may return an object like `{ session: {...}, user: {...} }`.
-  // Normalize to pass the inner session object (or null) to the client component.
-  const clientSession = session && (session.session ?? session);
+  console.log("RightMenu Session:", JSON.stringify(session, null, 2));
 
-  return <RightMenu session={clientSession} />;
+  // Handle case where session might be null or undefined
+  if (!session) {
+    return <div>Session not found. Please log in.</div>;
+  }
+
+  return (
+    <>
+      <RightMenu session={session} />
+      <Admin_dashboard_header session={session} />
+    </>
+  );
 }

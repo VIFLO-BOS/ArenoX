@@ -1,54 +1,24 @@
-"use client";
-import { session } from "@/app/lib/sessions";
-import Admin_dashboard_header from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header";
-import Admin_dashboard_sidebar from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_sidebar";
-import React, { useState, useEffect } from "react";
+import { headers } from "next/headers";
+import { auth } from "@/app/lib/auth";
+import { redirect } from "next/navigation";
+import { AdminShell } from "./adminShell";
 
-interface AdminDashboardLayoutProps {
-  children: React.ReactNode;
-}
-
-export default function Admin_Dashboard_Layout({
+export default async function AdminLayout({
   children,
-}: AdminDashboardLayoutProps) {
-  const [isSidebarOpen, setSidebarOpen] = useState(true);
-  const [isMobile, setIsMobile] = useState(false);
+}: {
+  children: React.ReactNode;
+}) {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth < 768) {
-        setIsMobile(true);
-        setSidebarOpen(false);
-      } else {
-        setIsMobile(false);
-        setSidebarOpen(true);
-      }
-    };
+  if (!session?.user) redirect("/signin");
 
-    window.addEventListener("resize", handleResize);
-    handleResize(); // call on mount
+  const role = session?.user.role;
 
-    return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  if (role !== "admin") redirect("/dashboard/user");
 
+  if (role !== "admin" && role !== "student") redirect("/dashboard/instructor");
 
-  return (
-    <div className="flex justify-between gap-50 bg-gray-100">
-      <Admin_dashboard_sidebar
-        isSidebarOpen={isSidebarOpen}
-        setisSidebarOpen={setSidebarOpen}
-        isMobile={isMobile}
-        setIsMobile={setIsMobile}
-      />
-      <main
-        className={`overflow-x-hidden flex-1 transition-all duration-300 px-4 ${
-          isSidebarOpen ? "ml-56" : "ml-20"
-        }`}
-      >
-        <Admin_dashboard_header/>
-        {children}
-        <div id="modal-root"></div>
-      </main>
-    </div>
-  );
+  return <AdminShell>{children}</AdminShell>;
 }

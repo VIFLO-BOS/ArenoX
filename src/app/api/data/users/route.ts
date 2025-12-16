@@ -5,7 +5,7 @@ import { toast } from "react-hot-toast";
 export async function GET(){
     try{
         const {db} = await connect();
-        const users = db.collection("users");
+        const users = db.collection("user");
         const data = await users.find({}).toArray();
 
         if(data){
@@ -14,10 +14,10 @@ export async function GET(){
 
     }catch(error) {
         if(error instanceof Error){
-            console.error("error fetching users:",error)
+            console.error("error fetching user:",error)
         toast(error.message);
         }else{
-            toast("unknown error occurred while fetching users")
+            toast("unknown error occurred while fetching user")
         }
     }
 }

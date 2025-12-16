@@ -2,9 +2,9 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowRight, Home, RefreshCw } from "lucide-react";
+import { ErrorProps } from "@/utils/types/ErrorPage";
 
-
-export default function ErrorPage({ error }: {error?: any}) {
+export default function ErrorPage({ error }: ErrorProps) {
   <style jsx>{`
     @keyframes bounce {
       0%,
@@ -28,7 +28,7 @@ export default function ErrorPage({ error }: {error?: any}) {
         <div className="max-w-4xl w-full filter backdrop-blur-3xl rounded bg-gray-100/5 ring ring-amber-100/5">
           <div className="flex flex-col items-center justify-center p-8">
             <h1 className="text-5xl  sm:text-6xl   md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-pink-400 to-red-400 tracking-tighter  animate-pulse">
-              {error.code}
+              {error?.code}
             </h1>
 
             {/* Subtitle */}
@@ -50,7 +50,7 @@ export default function ErrorPage({ error }: {error?: any}) {
                 <div className="flex justify-center">
                   <div className="bg-gray-800 bg-opacity-50 backdrop-blur-lg rounded-3xl p-4 border border-gray-700">
                     <div className="text-gray-300 text-sm">
-                      <code className="text-purple-400">Error 404:</code>{" "}
+                      <code className="text-purple-400">Error {error?.code}:</code>{" "}
                       Destination unreachable
                     </div>
                   </div>

@@ -7,6 +7,16 @@ const mongodb = await connect();
 
 export const auth = betterAuth({
   database: mongodbAdapter(mongodb.db),
+  user: {
+    additionalFields: {
+      role: {
+        type: "string",
+        required: false,
+        defaultValue: "student",
+        input: false,
+      },
+    },
+  },
   emailAndPassword: {
     enabled: true,
   },

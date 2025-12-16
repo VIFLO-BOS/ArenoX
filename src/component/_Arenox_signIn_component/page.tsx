@@ -1,5 +1,5 @@
 "use client";
-import { getAuthClient } from "@/app/lib/auth-client";
+import { authClient } from "@/app/lib/auth-client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
@@ -27,7 +27,6 @@ export default function SignInPage() {
     setError("");
 
     try {
-      const authClient = getAuthClient();
       await authClient.signIn.social({
         provider: provider,
         callbackURL: "/",
@@ -53,7 +52,6 @@ export default function SignInPage() {
         setIsLoading(false);
         return;
       }
-      const authClient = getAuthClient();
       await authClient.signIn.email({
         email: trimEmail,
         password: data.password,
@@ -61,7 +59,7 @@ export default function SignInPage() {
         fetchOptions: {
           onSuccess: () => {
             toast.success("login successfully");
-            router.push("/");
+            router.push("/dashboard");
           },
           onError: (ctx) => {
             setError(ctx.error.message);
