@@ -10,7 +10,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 
-export default function Instructor_Dashboard2() {
+export default function aInstructor_Dashboard2() {
 	return (
     <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
