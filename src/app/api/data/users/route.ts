@@ -1,23 +1,26 @@
 import { NextResponse } from "next/server";
 import connect from "@/app/lib/db";
-import { toast } from "react-hot-toast";
 
-export async function GET(){
-    try{
-        const {db} = await connect();
-        const users = db.collection("user");
-        const data = await users.find({}).toArray();
+export async function GET() {
+  try {
+    const { db } = await connect();
+    const usersCollection = db.collection("user");
+    const data = await usersCollection.find({}).toArray();
 
-        if(data){
-            return NextResponse.json({status: "success", data}, {status: 200})
-        }
+    return NextResponse.json(
+      { status: "success", data: data },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error fetching users:", error);
 
-    }catch(error) {
-        if(error instanceof Error){
-            console.error("error fetching user:",error)
-        toast(error.message);
-        }else{
-            toast("unknown error occurred while fetching user")
-        }
-    }
+    return NextResponse.json(
+      {
+        status: "error",
+        message:
+          error instanceof Error ? error.message : "Internal Server Error",
+      },
+      { status: 500 }
+    );
+  }
 }
