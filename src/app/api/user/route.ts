@@ -1,6 +1,5 @@
 import connect from "@/app/lib/db";
 import { NextResponse } from "next/server";
-import React from "react";
 
 export async function PATCH(req: Request) {
   try {
