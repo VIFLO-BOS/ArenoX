@@ -1,10 +1,13 @@
 "use client"
-import { useSession,signOut } from "@/app/lib/auth-client";
+import { useSession,signOut, authClient } from "@/app/lib/auth-client";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import React from "react";
 
-export default function Student_Dashboard({session:serverSession}: {session: any}) {
+type Session = typeof authClient.$Infer.Session;
+
+
+export default function Student_Dashboard({session:serverSession}: {session: Session | null;}) {
   const { data: clientSession } = useSession();
     const session = serverSession || clientSession;
     const user = session?.user;
@@ -51,7 +54,7 @@ export default function Student_Dashboard({session:serverSession}: {session: any
             <li className="flex items-center gap-2 text-gray-700">
               <i className="bi bi-question-circle"></i> Help & Support
             </li>
-            <li className="flex items-center gap-2 text-gray-700">
+            <li className="flex items-center gap-2 text-gray-700" onClick={handleSignOut}>
               <i className="bi bi-power"></i>Logout
             </li>
           </ul>
@@ -67,7 +70,7 @@ export default function Student_Dashboard({session:serverSession}: {session: any
             className="w-10 h-10 rounded-full"
           />
           <div>
-            <p className="font-medium">Sarah Johnson</p>
+            <p className="font-medium">{user?.name}</p>
             <p className="text-sm text-gray-500">Premium Student</p>
           </div>
         </div>

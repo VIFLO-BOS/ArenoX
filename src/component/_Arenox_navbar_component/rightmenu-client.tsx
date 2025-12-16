@@ -3,10 +3,12 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession, signOut } from "@/app/lib/auth-client";
+import { useSession, signOut,authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 
-export default function RightMenu({ session: serverSession }: { session: any }) {
+type Session = typeof authClient.$Infer.Session;
+
+export default function RightMenu({ session: serverSession }: { session: Session | null }) {
   const { data: clientSession } = useSession();
   const session = serverSession || clientSession;
   const user = session?.user;

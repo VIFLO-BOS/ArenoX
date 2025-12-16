@@ -1,27 +1,37 @@
 import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
-import { useSession ,signOut} from "@/app/lib/auth-client";
+import { authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 
+type Session = typeof authClient.$Infer.Session;
 
-export default function Admin_dashboard_header({ session: serverSession }: { session: any }) {
-  const { data: clientSession } = useSession();
+export default function Admin_dashboard_header({
+  session: serverSession,
+}: {
+  session: Session | null;
+}) {
+  const { data: clientSession } = authClient.useSession();
+
   const session = serverSession || clientSession;
   const user = session?.user;
   const router = useRouter();
 
   const handleSignOut = async () => {
-    await signOut();
-    router.push("/")
-  }
+    await authClient.signOut({
+      fetchOptions: {
+        onSuccess: () => {
+          router.push("/");
+        },
+      },
+    });
+  };
 
-  
   return (
     <div className="bg-white shadow-md py-4.5 rounded-br-lg rounded-bl-lg mb-5 w-full">
       <header className="flex flex-wrap items-center justify-between gap-4 px-4">
         <div className="hidden lg:flex items-center gap-2">
           <p className="text-gray-600">Welcome back,</p>
-          <p className="font-medium text-gray-800">Admin</p>
+          <p className="font-medium text-gray-800">{user?.name}</p>
         </div>
         <div className="flex items-center justify-end gap-4 w-full lg:w-auto">
           <div className="flex items-center gap-3">
@@ -57,8 +67,8 @@ export default function Admin_dashboard_header({ session: serverSession }: { ses
               <div className="py-1">
                 <MenuItem>
                   <button
-                    onClick={handleSignOut}
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 outline-none"
+                    onClick={handleSignOut} 
+                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 outline-none w-full text-left"
                   >
                     Sign-Out
                   </button>
