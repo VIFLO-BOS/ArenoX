@@ -19,7 +19,7 @@ export default function RightMenu({ session: serverSession }: { session: Session
     router.push("/");
   };
 
-  const getDashboardLink = (role?: string | nullg) => {
+  const getDashboardLink = (role?: string | null) => {
     switch (role) {
       case "admin":
         return "/dashboard/admin";
