@@ -19,7 +19,7 @@ export default function RightMenu({ session: serverSession }: { session: Session
     router.push("/");
   };
 
-  const getDashboardLink = (role?: string) => {
+  const getDashboardLink = (role?: string | nullg) => {
     switch (role) {
       case "admin":
         return "/dashboard/admin";
@@ -55,7 +55,7 @@ export default function RightMenu({ session: serverSession }: { session: Session
             <div className="py-1">
               <MenuItem>
                 <Link
-                  href={getDashboardLink(user.role)}
+                  href={getDashboardLink(user?.role)}
                   className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
                 >
                   Dashboard
