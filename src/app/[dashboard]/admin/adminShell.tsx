@@ -2,16 +2,18 @@
 import Admin_dashboard_header from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header";
 import Admin_dashboard_sidebar from "@/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_sidebar";
 import React, { useState, useEffect } from "react";
+import { authClient } from "@/app/lib/auth-client"; // 1. Added import
 
 interface AdmiShell {
   children: React.ReactNode;
 }
 
-export const AdminShell= ({
-  children,
-}: AdmiShell) => {
+export const AdminShell = ({ children }: AdmiShell) => {
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
+
+  // 2. Fetch the session on the client side
+  const { data: session } = authClient.useSession();
 
   useEffect(() => {
     const handleResize = () => {
@@ -30,7 +32,6 @@ export const AdminShell= ({
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
-
   return (
     <div className="flex justify-between gap-50 bg-gray-100">
       <Admin_dashboard_sidebar
@@ -44,10 +45,11 @@ export const AdminShell= ({
           isSidebarOpen ? "ml-56" : "ml-20"
         }`}
       >
-        <Admin_dashboard_header/>
+        {/* 3. Pass the session prop here to satisfy the TypeScript requirement */}
+        <Admin_dashboard_header session={session} />
         {children}
         <div id="modal-root"></div>
       </main>
     </div>
   );
-}
+};
