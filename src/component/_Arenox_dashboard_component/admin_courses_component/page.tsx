@@ -313,7 +313,7 @@ export default function Admin_courses() {
                       {Math.min(currentPage * itemsPerPage, courses.length)} of{" "}
                       {courses.length} courses
                     </span>
-                    
+
                     <div className="flex flex-wrap items-center justify-between gap-3">
                       <button
                         onClick={() =>
@@ -351,7 +351,7 @@ export default function Admin_courses() {
       </Admin_modal>
       <Admin_modal isOpen={isviewCourseModal} onClose={closeModal}>
         <View_book_modal
-          courseDataToView={courseDataToView}
+          courseDataToView={courseDataToView as any}
           editBook={openEditCourseForm}
           onClose={closeModal}
         />

@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import { coursesDetails } from "../admin_courses_component/page";
+import { coursesDetails } from "@/utils/types/course/course";
 
 interface viewBookModalProps {
   onClose: () => void;
@@ -14,19 +14,17 @@ export default function View_Course_modal({
 }: viewBookModalProps) {
   if (!courseDataToView) return null;
 
-  return ( 
-  <div
+  return (
+    <div
       className="w-full max-w-6xl bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-4 overflow-y-auto max-h-[90vh] transition-all duration-500"
       style={{ scrollbarWidth: "thin" }}
     >
-      {" "}
       <button
         onClick={onClose}
         className="text-slate-500 hover:text-red-600 transition text-2xl fixed top-3 right-4 "
       >
         ✕
       </button>
-
       <div className="flex flex-col justify-center p-6 max-w-4xl mx-auto">
         <div className="flex flex-col items-center justify-center border-b border-b-gray-400">
           <div className="w-full max-w-md center">
@@ -62,7 +60,9 @@ export default function View_Course_modal({
             </h3>
             <div className="space-y-3 text-sm">
               <p>
-                <span className="text-slate-800 block font-bold">Course Title</span>
+                <span className="text-slate-800 block font-bold">
+                  Course Title
+                </span>
                 <span className="font-normal text-slate-600 text-wrap">
                   {courseDataToView.title}
                 </span>
@@ -74,13 +74,17 @@ export default function View_Course_modal({
                 </span>
               </p>
               <p>
-                <span className="text-slate-800 block font-bold">Paragraph</span>
+                <span className="text-slate-800 block font-bold">
+                  Paragraph
+                </span>
                 <span className="font-normal text-slate-600 text-wrap">
                   {courseDataToView.paragraph}
                 </span>
               </p>
               <p>
-                <span className="text-slate-800 block font-bold">Description</span>
+                <span className="text-slate-800 block font-bold">
+                  Description
+                </span>
                 <span className="font-normal text-slate-600 text-wrap">
                   {courseDataToView.description}
                 </span>
@@ -126,13 +130,17 @@ export default function View_Course_modal({
                 </div>
                 <div>
                   <p className="">
-                    <span className="text-slate-800 block font-bold">Name:</span>
+                    <span className="text-slate-800 block font-bold">
+                      Name:
+                    </span>
                     <span className="font-normal text-slate-600 text-wrap">
                       {courseDataToView.tutor.name}
                     </span>
                   </p>
                   <p className="">
-                    <span className="text-slate-800 block font-bold">Designation:</span>
+                    <span className="text-slate-800 block font-bold">
+                      Designation:
+                    </span>
                     <span className="font-normal text-slate-600 text-wrap">
                       {courseDataToView.tutor.designation}
                     </span>
@@ -142,13 +150,17 @@ export default function View_Course_modal({
             </div>
             <div className="space-y-3 text-sm mt-3 pr-5">
               <p>
-                <span className="text-slate-800 block font-bold">Years of Expertise</span>
+                <span className="text-slate-800 block font-bold">
+                  Years of Expertise
+                </span>
                 <span className="font-normal text-slate-600 text-wrap">
                   {courseDataToView.tutor.experience}
                 </span>
               </p>
               <p>
-                <span className="text-slate-800 block font-bold">Crendentials</span>
+                <span className="text-slate-800 block font-bold">
+                  Crendentials
+                </span>
                 <span className="font-normal text-slate-600 text-wrap">
                   {courseDataToView.tutor.credentials}
                 </span>
@@ -156,13 +168,13 @@ export default function View_Course_modal({
               <p>
                 <span className="text-slate-800 block font-bold">Bio</span>
                 <span className="font-normal text-slate-600 text-wrap text-justify">
-                  {courseDataToView.tutor.bio.split('  ')}
+                  {courseDataToView.tutor.bio.split("  ")}
                 </span>
               </p>
               <p>
                 <span className="text-slate-800 block font-bold">Skills</span>
                 <span className="font-normal text-slate-600 text-wrap text-justify">
-                  {courseDataToView.tutor.skills.join(', ')}
+                  {courseDataToView.tutor.skills.join(", ")}
                 </span>
               </p>
               <p>
@@ -170,13 +182,15 @@ export default function View_Course_modal({
                   Working Experiences
                 </span>
                 <span className="font-normal text-slate-600 text-wrap text-justify">
-                  {courseDataToView.tutor.experiences.join(' ')}
+                  {courseDataToView.tutor.experiences.join(" ")}
                 </span>
               </p>
               <p>
-                <span className="text-slate-800 block font-bold">Languages</span>
+                <span className="text-slate-800 block font-bold">
+                  Languages
+                </span>
                 <span className="font-normal text-slate-600 text-wrap">
-                  {courseDataToView.tutor.languages.join(', ')}
+                  {courseDataToView.tutor.languages.join(", ")}
                 </span>
               </p>
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-2">
@@ -193,26 +207,34 @@ export default function View_Course_modal({
                   </span>
                 </p>
                 <p>
-                  <span className="text-slate-800 block font-bold">whatsapp</span>
+                  <span className="text-slate-800 block font-bold">
+                    whatsapp
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.contact.whatsapp}
                   </span>
                 </p>
 
                 <p>
-                  <span className="text-slate-800 block font-bold">Linkedln</span>
+                  <span className="text-slate-800 block font-bold">
+                    Linkedln
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.contact.linkedin}
                   </span>
                 </p>
                 <p>
-                  <span className="text-slate-800 block font-bold">Instagram</span>
+                  <span className="text-slate-800 block font-bold">
+                    Instagram
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.contact.instagram}
                   </span>
                 </p>
                 <p>
-                  <span className="text-slate-800 block font-bold">Facebook</span>
+                  <span className="text-slate-800 block font-bold">
+                    Facebook
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.contact.facebook}
                   </span>
@@ -224,19 +246,25 @@ export default function View_Course_modal({
                   </span>
                 </p>
                 <p>
-                  <span className="text-slate-800 block font-bold">Web Address</span>
+                  <span className="text-slate-800 block font-bold">
+                    Web Address
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.contact.website}
                   </span>
                 </p>
                 <p>
-                  <span className="text-slate-800 block font-bold">Location</span>
+                  <span className="text-slate-800 block font-bold">
+                    Location
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.contact.location}
                   </span>
                 </p>
                 <p>
-                  <span className="text-slate-800 block font-bold">Availability</span>
+                  <span className="text-slate-800 block font-bold">
+                    Availability
+                  </span>
                   <span className="font-normal text-slate-600 text-wrap">
                     {courseDataToView.tutor.availability}
                   </span>
@@ -244,11 +272,8 @@ export default function View_Course_modal({
               </div>
             </div>
           </section>
-
-          
         </div>
       </div>
-
       <div className="text-center mt-6 ">
         <button
           className="rounded ring ring-black/5 text-white bg-blue-600 hover:bg-blue-700 transition py-1 px-5"

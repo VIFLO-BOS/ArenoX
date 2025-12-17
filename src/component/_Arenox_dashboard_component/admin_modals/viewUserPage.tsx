@@ -1,5 +1,5 @@
 import React from "react";
-import { User } from "@/utils/data/fetchdata/userData";
+import { UserType as User } from "@/utils/data/fetchdata/userData";
 import Image from "next/image";
 
 interface ViewUserModalProps {
