@@ -5,7 +5,7 @@ import Course_form_modal from "../admin_modals/courseForm";
 import Edit_course_form from "../admin_modals/editCourseForm";
 import View_book_modal from "../admin_modals/viewCoursePage";
 import toast from "react-hot-toast";
-import { course } from "@/utils/types/course/course";
+import { course, coursesDetails } from "@/utils/types/course/course";
 
 interface sortConfig {
   key: keyof course | null;
@@ -351,7 +351,7 @@ export default function Admin_courses() {
       </Admin_modal>
       <Admin_modal isOpen={isviewCourseModal} onClose={closeModal}>
         <View_book_modal
-          courseDataToView={courseDataToView as any}
+          courseDataToView={courseDataToView as unknown as coursesDetails}
           editBook={openEditCourseForm}
           onClose={closeModal}
         />
