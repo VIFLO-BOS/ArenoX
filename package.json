@@ -25,7 +25,7 @@
     "express": "^5.1.0",
     "framer-motion": "^12.23.12",
     "lucide-react": "^0.544.0",
-    "mongodb": "^7.0.0",
+    "mongodb": "^6.21.0",
     "mongoose": "^8.18.1",
     "motion-dom": "^12.23.12",
     "next": "^16.0.10",
