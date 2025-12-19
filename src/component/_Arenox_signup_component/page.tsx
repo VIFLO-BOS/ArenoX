@@ -7,6 +7,7 @@ import { signUp } from "@/app/lib/auth-action";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signUpSchema, SignUpValues } from "@/app/model/signUpSchema";
+import { authClient } from "@/app/lib/auth-client";
 
 export default function SignUpPage() {
   const {
@@ -24,9 +25,29 @@ export default function SignUpPage() {
       agreeToTerms: false as unknown as true,
     },
   });
+
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
+  const handleSocialAuth = async (provider: "google" | "github") => {
+    setIsLoading(true);
+    setError("");
+
+    try {
+      await authClient.signIn.social({
+        provider: provider,
+        callbackURL: "/",
+      });
+    } catch (error) {
+      setError(
+        `error authenticating ${provider}: ${
+          error instanceof Error ? error.message : "unknown error"
+        } .`
+      );
+      setIsLoading(false);
+    }
+  };
   const handleFormSubmit = async (data: SignUpValues) => {
     setIsLoading(true);
 
@@ -179,6 +200,11 @@ export default function SignUpPage() {
           )}
         </button>
 
+        {/* Error message */}
+        {error ? (
+          <div className="text-sm text-red-400 mb-4 text-center">{error}</div>
+        ) : null}
+
         <div className="flex items-center my-4">
           <hr className="flex-grow border-gray-300" />
           <span className="px-2 text-gray-400 text-sm">or</span>
@@ -189,6 +215,8 @@ export default function SignUpPage() {
         <div className="flex space-x-3">
           <button
             type="button"
+            onClick={() => handleSocialAuth("google")}
+            disabled={isLoading}
             className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0"
           >
             <i className="bi bi-google">&nbsp;</i>
@@ -196,6 +224,8 @@ export default function SignUpPage() {
           </button>
           <button
             type="button"
+            onClick={() => handleSocialAuth("github")}
+            disabled={isLoading}
             className="w-1/2 flex items-center justify-center rounded-lg py-2 text-gray-100 hover:bg-blue-600 hover:border-0"
           >
             <svg
