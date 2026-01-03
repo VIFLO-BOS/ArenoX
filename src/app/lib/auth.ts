@@ -31,10 +31,5 @@ export const auth = betterAuth({
     },
   },
   plugins: [nextCookies()],
-  trustedOrigins: [
-    "http://192.168.42.174:3000",
-    "http://192.168.137.227:3000",
-    "http://localhost:3000",
-  ],
   experimental: { joins: true },
 });
