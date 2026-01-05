@@ -1,7 +1,7 @@
 import { auth } from "@/app/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
-import { Image } from "next/image";
+import Image  from "next/image";
 
 /* @ welcome-page : welcome page displaying user information after successful authentication */
 
