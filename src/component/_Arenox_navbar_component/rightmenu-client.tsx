@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut, authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { userSession } from "@/utils/types/session";
 
 type Session = typeof authClient.$Infer.Session;
 
@@ -15,7 +16,7 @@ export default function RightMenu({
 }) {
   const { data: clientSession } = useSession();
   const session = serverSession || clientSession;
-  const user = session?.user;
+  const user = session?.user as userSession;
   const router = useRouter();
 
   const handleSignOut = async () => {
