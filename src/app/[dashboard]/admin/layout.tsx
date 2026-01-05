@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 import { AdminShell } from "./adminShell";
 import { userSession } from "@/utils/types/session";
 
+// Force dynamic rendering to avoid database access at build time
+export const dynamic = "force-dynamic";
+
 {
   /* @ admin-layout : admin dashboard layout with authentication and role-based access control */
 }
@@ -16,7 +19,7 @@ export default async function AdminLayout({
     /* @ session-check : verify user is authenticated */
   }
 
-  const auth = await getAuth()
+  const auth = await getAuth();
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -26,7 +29,7 @@ export default async function AdminLayout({
   {
     /* @ role-validation : ensure user has admin role */
   }
-  const user = session.user as userSession
+  const user = session.user as userSession;
   const role = user.role;
 
   if (role !== "admin") redirect("/dashboard/user");

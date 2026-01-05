@@ -1,7 +1,10 @@
-import { getAuth} from "@/app/lib/auth";
+import { getAuth } from "@/app/lib/auth";
 import { userSession } from "@/utils/types/session";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+
+// Force dynamic rendering to avoid database access at build time
+export const dynamic = "force-dynamic";
 
 export default async function DashboardRouter() {
   const auth = await getAuth();

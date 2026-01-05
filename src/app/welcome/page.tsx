@@ -4,10 +4,13 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import { userSession } from "@/utils/types/session";
 
+// Force dynamic rendering to avoid database access at build time
+export const dynamic = "force-dynamic";
+
 /* @ dashboard-component : welcome dashboard page with user session */
 
 export default async function Dashboard() {
-/* @ session-check : verify user is authenticated */
+  /* @ session-check : verify user is authenticated */
   const auth = await getAuth();
   const session = await auth.api.getSession({
     headers: await headers(),
@@ -18,15 +21,15 @@ export default async function Dashboard() {
   }
 
   /* @ user-data : extract user information from session */
-  
+
   const user = session.user as userSession;
 
   /* @ render : display user welcome dashboard with profile and info */
-  
+
   return (
     <div className="p-10 max-w-4xl mx-auto">
       <div className="bg-white shadow rounded-lg p-6">
-       { /* @ user-profile : display user avatar and basic info */}
+        {/* @ user-profile : display user avatar and basic info */}
         <div className="flex items-center gap-6">
           <Image
             src={user.image || "/images/avatar.png"}
@@ -52,4 +55,3 @@ export default async function Dashboard() {
     </div>
   );
 }
-
