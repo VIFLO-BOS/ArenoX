@@ -3,3 +3,14 @@ export interface RightMenuClientProps {
   // to avoid tight coupling to the adapter's exact shape.
   session: Record<string, unknown> | null;
 }
+
+
+// types/auth.d.ts (or inside auth.ts)
+export interface userSession {
+  id: string;
+  email: string;
+  emailVerified: boolean;
+  name: string;
+  image?: string | null;
+  role?: "student" | "admin" | "instructor";
+}
