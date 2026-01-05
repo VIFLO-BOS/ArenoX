@@ -55,9 +55,6 @@ export const auth = betterAuth({
 
   // @ plugins-and-config : setup Next.js cookies plugin, trusted origins, and experimental features
   plugins: [nextCookies()],
-<<<<<<< HEAD
   trustedOrigins: [process.env.BETTER_AUTH_URL as string],
-=======
->>>>>>> 9c844d249e78ad451b468d536b7ca31bb80f67f7
   experimental: { joins: true },
 });
