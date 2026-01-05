@@ -1,8 +1,10 @@
-import { auth } from "@/app/lib/auth";
+import { getAuth} from "@/app/lib/auth";
+import { userSession } from "@/utils/types/session";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 
 export default async function DashboardRouter() {
+  const auth = await getAuth();
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -11,7 +13,8 @@ export default async function DashboardRouter() {
     return redirect("/signin");
   }
 
-  const role = session.user?.role;
+  const user = session.user as userSession;
+  const role = user.role;
   if (!role) {
     return redirect("/signin");
   }
