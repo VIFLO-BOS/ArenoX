@@ -1,4 +1,4 @@
-import { auth } from "@/app/lib/auth";
+import { getAuth } from "@/app/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
@@ -7,7 +7,7 @@ import Image from "next/image";
 
 export default async function Dashboard() {
 /* @ session-check : verify user is authenticated */
-  
+  const auth = await getAuth();
   const session = await auth.api.getSession({
     headers: await headers(),
   });
