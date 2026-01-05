@@ -1,12 +1,17 @@
 import React from "react";
 
+/* @ form-props-interface : define props for create user form component */
+
 interface createUserFormProps {
   onClose: () => void;
 }
+
+/* @ create-user-form : form component for creating new users with basic and address information */
+
 export default function Create_user_form({ onClose }: createUserFormProps) {
   return (
     <form className="max-w-5xl mx-auto bg-white backdrop-blur-md p-5 rounded-3xl shadow-lg space-y-10 transition-all duration-300">
-      {/* Header */}
+      /* @ form-header : header with title and close button */
       <div className="flex items-center justify-between border-b border-gray-200 pb-4">
         <h2 className="text-3xl font-semibold text-gray-900">
           🧾 User Information
@@ -16,13 +21,13 @@ export default function Create_user_form({ onClose }: createUserFormProps) {
           onClick={onClose}
           className="px-4 py-2 text-gray-700 rounded-lg hover:bg-red-500 transition-all"
         >
-          <i className="bi bi-x-lg text-xl"></i> 
+          <i className="bi bi-x-lg text-xl"></i>
         </button>
       </div>
-
-      {/* Two-column sections */}
+      /* @ form-sections : two-column layout for basic and address information
+      */
       <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-4">
-        {/* Basic Info */}
+        /* @ basic-info-section : form fields for user's basic information */
         <section className="bg-white p-2 m-0 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
           <h3 className="text-lg font-semibold text-gray-700 mb-5 border-b border-gray-200 pb-2">
             👤 Basic Info
@@ -70,8 +75,7 @@ export default function Create_user_form({ onClose }: createUserFormProps) {
             />
           </div>
         </section>
-
-        {/* Address Info */}
+        /* @ address-info-section : form fields for user's address details */
         <section className="bg-white p-2 m-0 rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition">
           <h3 className="text-lg font-semibold text-gray-700 mb-5 border-b border-gray-200 pb-2">
             📍 Address Info
@@ -116,8 +120,7 @@ export default function Create_user_form({ onClose }: createUserFormProps) {
           </div>
         </section>
       </div>
-
-      {/* Submit */}
+      /* @ submit-button : form submission button */
       <div className="">
         <button
           type="submit"

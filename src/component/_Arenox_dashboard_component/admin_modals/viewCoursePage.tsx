@@ -2,11 +2,16 @@ import React from "react";
 import Image from "next/image";
 import { coursesDetails } from "@/utils/types/course/course";
 
+/* @ view-course-modal-props : define props for course view modal */
+
 interface viewBookModalProps {
   onClose: () => void;
   editBook: () => void;
   courseDataToView: coursesDetails | null;
 }
+
+/* @ view-course-modal : modal component for displaying detailed course information */
+
 export default function View_Course_modal({
   onClose,
   courseDataToView,
@@ -285,3 +290,4 @@ export default function View_Course_modal({
     </div>
   );
 }
+

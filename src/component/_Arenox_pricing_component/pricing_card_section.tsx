@@ -5,105 +5,143 @@ import { fadeUp } from "@/utils/animation/fadeUpProps";
 
 export default function Pricing_card_section() {
   return (
-    <div className="flex flex-col  px-4 lg:px-20 py-10 gap-10 bg-gray-50">
+    <div className="flex flex-col  px-4 lg:px-20 py-16 gap-20 bg-gray-50/50">
       <motion.div
         initial="hidden"
         whileInView="visible"
         viewport={{ amount: 0.1 }}
         transition={{ delay: 0.5, ease: easeIn }}
         variants={fadeUp}
-        className="flex flex-wrap lg:flex-nowrap items-center justify-center gap-5"
+        className="flex flex-wrap lg:flex-nowrap justify-center gap-8 items-stretch"
       >
+        {/* Starter Plan */}
         <motion.div
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.8, ease: easeInOut }}
-          className="bg-white shdadow-lg hover:scale-102 hover:shadow-gray-600 transition duration-300 ease-in p-5 rounded-3xl ring-1 ring-black/5 w-80 lg:w-90 xl:w-100 h-100 "
+          className="bg-white hover:shadow-xl hover:-translate-y-2 transition-all duration-300 p-8 rounded-3xl border border-gray-100 w-full max-w-sm flex flex-col relative overflow-hidden"
         >
-          <div className="">
-            <h1 className="font-bold">Starter</h1>
-            <p className="py-3">Get started with functional courses.</p>
+          <h1 className="font-bold text-2xl text-gray-900">Starter</h1>
+          <p className="py-4 text-gray-500 text-sm">
+            Perfect for exploring new skills.
+          </p>
+
+          <div className="py-6">
+            <span className="text-4xl font-extrabold text-gray-900">$0</span>
+            <span className="text-gray-500 font-medium ml-1">/mo</span>
           </div>
-          <div className="">
-            <div className="py-4 text-2xl font-bold">
-              <span>$0</span>
-              <span className="text-gray-600 text-xs font-medium"> /mt</span>
-            </div>
-            <div className="flex flex-col items-center gap-5">
-              <ul>
-                <li>Access to 5 free courses</li>
-                <li>Community forum</li>
-                <li>Basic progress tracking</li>
-              </ul>
-              <button className="bg-sky-100 hover:bg-blue-600 transition-all duration-200 ease hover:text-white font-medium text-blue-950 rounded-2xl w-full py-2">
-                Get Started
-              </button>
-            </div>
+
+          <div className="flex-grow">
+            <ul className="space-y-4 mb-8">
+              {[
+                "Access to 5 free courses",
+                "Community forum access",
+                "Basic progress tracking",
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="flex items-center gap-3 text-gray-600 text-sm"
+                >
+                  <i className="bi bi-check-circle-fill text-blue-500"></i>{" "}
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <button className="w-full py-3 rounded-xl bg-blue-50 text-blue-600 font-semibold hover:bg-blue-100 transition-colors">
+            Get Started
+          </button>
         </motion.div>
+
+        {/* Pro Plan (Popular) */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: -20 }}
+          whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8, ease: easeInOut }}
-          className="bg-white shdadow-lg hover:scale-102 hover:shadow-gray-600 transition duration-300 ease-in p-5 rounded-3xl ring-1 ring-black/5 w-80 lg:w-90 xl:w-100 h-100 "
+          className="bg-gray-900 text-white shadow-2xl hover:-translate-y-2 transition-all duration-300 p-8 rounded-3xl border border-gray-800 w-full max-w-sm flex flex-col relative scale-105 z-10"
         >
-          <div className="">
-            <h1 className="font-medium bg-amber-400 text-gray-800 rounded-2xl w-30 text-center">
+          <div className="absolute top-0 right-0 p-0">
+            <span className="bg-orange-500 text-white text-xs font-bold px-4 py-1.5 rounded-bl-xl rounded-tr-2xl uppercase tracking-wider">
               Most Popular
-            </h1>
-            <h2 className="font-bold py-2">Pro</h2>
-            <p>Unlock the full catalogue and certificates.</p>
+            </span>
           </div>
-          <div className="">
-            <div className="py-4 text-2xl font-bold">
-              <span>$25</span>
-              <span className="text-gray-500 text-xs font-medium"> /mt</span>
-            </div>
-            <div className="flex flex-col items-center gap-5">
-              <ul>
-                <li>Unlimited courses & paths</li>
-                <li>Certificates of completion</li>
-                <li>Offline downloads</li>
-                <li>Priority support</li>
-              </ul>
-              <button className="bg-blue-500  hover:bg-blue-600 transition-all duration-200 ease text-white rounded-2xl w-full py-2">
-                <i className="bi bi-star">&nbsp;</i>Start Pro
-              </button>
-            </div>
+
+          <h1 className="font-bold text-2xl text-white">Pro</h1>
+          <p className="py-4 text-gray-400 text-sm">
+            Unlock your full potential.
+          </p>
+
+          <div className="py-6">
+            <span className="text-5xl font-extrabold text-white">$25</span>
+            <span className="text-gray-400 font-medium ml-1">/mo</span>
           </div>
+
+          <div className="flex-grow">
+            <ul className="space-y-4 mb-8">
+              {[
+                "Unlimited courses & paths",
+                "Certificates of completion",
+                "Offline downloads",
+                "Priority support",
+                "Exclusive workshops",
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="flex items-center gap-3 text-gray-300 text-sm"
+                >
+                  <i className="bi bi-check-circle-fill text-orange-500"></i>{" "}
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <button className="w-full py-3.5 rounded-xl bg-blue-600 text-white font-bold hover:bg-blue-500 shadow-lg shadow-blue-900/50 transition-all flex items-center justify-center gap-2">
+            Start Pro Trial <i className="bi bi-arrow-right"></i>
+          </button>
         </motion.div>
+
+        {/* Teams Plan */}
         <motion.div
-          initial={{ opacity: 0, x: -20 }}
+          initial={{ opacity: 0, x: 20 }}
           whileInView={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.8, ease: easeInOut }}
-          className="bg-white shdadow-lg hover:scale-102 hover:shadow-gray-600 transition duration-300 ease-in p-5 rounded-3xl ring-1 ring-black/5 w-80 lg:w-90 xl:w-100 h-100 "
+          className="bg-white hover:shadow-xl hover:-translate-y-2 transition-all duration-300 p-8 rounded-3xl border border-gray-100 w-full max-w-sm flex flex-col"
         >
-          <div className="">
-            <h1 className="font-bold">Teams</h1>
-            <p className="py-3">
-              Upskill your team with analytics and admin tools
-            </p>
+          <h1 className="font-bold text-2xl text-gray-900">Teams</h1>
+          <p className="py-4 text-gray-500 text-sm">
+            Scale learning across your org.
+          </p>
+
+          <div className="py-6">
+            <span className="text-4xl font-extrabold text-gray-900">$50</span>
+            <span className="text-gray-500 font-medium ml-1">/seat/mo</span>
           </div>
-          <div className="">
-            <div className="py-4 text-2xl font-bold">
-              <span>$50</span>
-              <span className="text-gray-500 text-xs font-medium">
-                {" "}
-                /seat/mt
-              </span>
-            </div>
-            <div className="flex flex-col items-center gap-5">
-              <ul>
-                <li>Team dashboard & roles</li>
-                <li>Progress analytics</li>
-                <li>SSO (SAML/Oauth)</li>
-                <li>Dedicated success manager</li>
-              </ul>
-              <button className="bg-blue-500  hover:bg-blue-600 transition-all duration-200 ease text-white rounded-2xl w-full py-2">
-                Contact sales
-              </button>
-            </div>
+
+          <div className="flex-grow">
+            <ul className="space-y-4 mb-8">
+              {[
+                "Team dashboard & roles",
+                "Advanced progress analytics",
+                "SSO (SAML/Oauth)",
+                "Dedicated success manager",
+                "Custom learning paths",
+              ].map((item, i) => (
+                <li
+                  key={i}
+                  className="flex items-center gap-3 text-gray-600 text-sm"
+                >
+                  <i className="bi bi-check-circle-fill text-blue-500"></i>{" "}
+                  {item}
+                </li>
+              ))}
+            </ul>
           </div>
+
+          <button className="w-full py-3 rounded-xl bg-white border-2 border-blue-600 text-blue-600 font-semibold hover:bg-blue-50 transition-colors">
+            Contact Sales
+          </button>
         </motion.div>
       </motion.div>
 
@@ -113,68 +151,104 @@ export default function Pricing_card_section() {
         viewport={{ amount: 0.1 }}
         transition={{ delay: 0.5, ease: easeIn }}
         variants={fadeUp}
-        className="rounded-2x"
+        className="max-w-5xl mx-auto w-full"
       >
-        <div className="flex items-center justify-between ">
-          <h1 className="font-semibold text-lg mb-2">
-            Frequently asked questions
+        <div className="text-center mb-10">
+          <h1 className="font-bold text-3xl text-gray-900 mb-3">
+            Frequently Asked Questions
           </h1>
+          <p className="text-gray-500">
+            Everything you need to know about billing and subscriptions.
+          </p>
         </div>
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-0.5 sm:gap-2 md:gap-3 lg:gap-4 px-4 lg:px-0">
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.8, ease: easeInOut }}
-            variants={fadeUp}
-            className="bg-white rounded-lg ring-1 ring-black/5  p-2"
+            transition={{ delay: 0.8 }}
+            className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
           >
-            <h2 className="font-medium">Can I cancel anytime?</h2>
-            <p className="text-gray-500">
-              Yes, you can switch plans or can your subscriptions anytime from
-              your account settings.
-            </p>
+            <div className="flex items-start gap-4">
+              <div className="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+                <i className="bi bi-x-circle text-xl"></i>
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-900 mb-2">
+                  Can I cancel anytime?
+                </h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Yes, you can switch plans or cancel your subscription anytime
+                  from your account settings. No questions asked.
+                </p>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1, ease: easeInOut }}
-            variants={fadeUp}
-            className="bg-white rounded-lg ring-1 ring-black/5  p-2"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.9 }}
+            className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
           >
-            <h2 className="font-medium">Do you offer student discounts?</h2>
-            <p className="text-gray-500">
-              we offer 60% off verified students and educators. Contact support
-              to apply.
-            </p>
+            <div className="flex items-start gap-4">
+              <div className="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+                <i className="bi bi-mortarboard text-xl"></i>
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-900 mb-2">
+                  Do you offer student discounts?
+                </h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  We offer 60% off for verified students and educators. Contact
+                  support with your ID to apply.
+                </p>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
-            transition={{ delay: 1.2, ease: easeInOut }}
-            variants={fadeUp}
-            className="bg-white rounded-lg ring-1 ring-black/5  p-2"
+            transition={{ delay: 1.0 }}
+            className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
           >
-            <h2 className="font-medium">What payment methods are accepted?</h2>
-            <p className="text-gray-500">
-              We accept major credit cards and paypal. Invoice is available for
-              Teams.
-            </p>
+            <div className="flex items-start gap-4">
+              <div className="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+                <i className="bi bi-credit-card text-xl"></i>
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-900 mb-2">
+                  What payment methods are accepted?
+                </h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  We accept all major credit cards and PayPal. Invoices are
+                  available for Team plans.
+                </p>
+              </div>
+            </div>
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.4, ease: easeInOut }}
-            variants={fadeUp}
-            className="bg-white rounded-lg ring-1 ring-black/5  p-2"
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            transition={{ delay: 1.1 }}
+            className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
           >
-            <h2 className="font-medium">Is there a free trial?</h2>
-            <p className="text-gray-500">
-              Pro includes a 7-day free trials with full access to catalog.
-              cancel before it ends to avoid charges.
-            </p>
+            <div className="flex items-start gap-4">
+              <div className="p-2 bg-blue-50 text-blue-600 rounded-lg shrink-0">
+                <i className="bi bi-clock-history text-xl"></i>
+              </div>
+              <div>
+                <h2 className="font-bold text-gray-900 mb-2">
+                  Is there a free trial?
+                </h2>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  Pro plan includes a 7-day free trial with full access to the
+                  catalog. Cancel before it ends to avoid charges.
+                </p>
+              </div>
+            </div>
           </motion.div>
         </div>
       </motion.div>

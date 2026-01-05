@@ -58,8 +58,10 @@ const data = [
 
 export default function Monthly_user_data() {
   return (
-    <div className="bg-white p-2 rounded-lg shadow">
-      <h3 className="font-semibold text-gray-700 mb-4">Monthly User Data</h3>
+    <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 h-full">
+      <h3 className="font-bold text-lg text-gray-800 mb-6">
+        Monthly User Activity
+      </h3>
       <ResponsiveContainer width="100%" height={250}>
         <BarChart
           width={500}

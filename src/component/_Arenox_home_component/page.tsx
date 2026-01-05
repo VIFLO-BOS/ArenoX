@@ -11,11 +11,13 @@ import Newsletter_section from "./newsletter_section";
 import Testimonial_section from "./testimonial_section";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
+/* @ home-page : main landing page with all sections and decorative backgrounds */
+
 export default function HomePage() {
   return (
     <>
       <div className="relative isolate px-0">
-        {/* clipPath start here.. */}
+        {/* @ background-gradient-top : decorative gradient background at top */}
         <div
           aria-hidden="true"
           className="absolute inset-x-0 -top-40 z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
@@ -93,7 +95,7 @@ export default function HomePage() {
         >
           <Newsletter_section />
         </motion.div>
-        {/* second clipPath start here.. */}
+        {/* @ background-gradient-bottom : decorative gradient background at bottom */}
         <div
           aria-hidden="true"
           className="absolute inset-x-0 top-[calc(100%-13rem)] -z-10 transform-gpu overflow-hidden blur-3xl sm:top-[calc(100%-30rem)]"
@@ -107,7 +109,7 @@ export default function HomePage() {
           />
         </div>
       </div>
-      {/* second clipPath start here.. */}
     </>
   );
 }
+

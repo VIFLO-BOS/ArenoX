@@ -42,16 +42,18 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
               <MenuButton
                 as={Link}
                 href={item.pathname}
-                className={`rounded-md py-1 font-semibold ${
+                className={`rounded-full px-4 py-2 font-semibold ${
                   isHomepage
                     ? scrolledEffect
-                      ? "text-gray-900"
-                      : "text-white"
-                    : "text-gray-800"
-                } focus:outline-none transition group-hover:text-blue-600 inline-flex items-center gap-x-1.5`}
+                      ? "text-gray-700 hover:bg-gray-100/80"
+                      : "text-white/90 hover:bg-white/10 hover:text-white"
+                    : "text-gray-600 hover:bg-gray-100/80 hover:text-blue-600"
+                } focus:outline-none transition-all duration-300 inline-flex items-center gap-x-1.5`}
               >
                 {item.name}
-                {item.iconName && <i className={`${item.iconName} pl-0.5`} />}
+                {item.iconName && (
+                  <i className={`${item.iconName} pl-0.5 text-xs opacity-70`} />
+                )}
               </MenuButton>
 
               {/* Dropdown submenu */}
@@ -59,19 +61,19 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
                 <MenuItems
                   static
                   className="
-                    absolute right-0 top-full min-w-56
-                    rounded-xl  bg-white shadow-lg ring-1 ring-black/5
-                    opacity-0 invisible translate-y-1 pointer-events-none
+                    absolute right-0 top-full min-w-56 mt-2
+                    rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl ring-1 ring-black/5 border border-white/20
+                    opacity-0 invisible translate-y-2 pointer-events-none
                     group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:pointer-events-auto
-                    transition-all duration-200 ease-out
-                    z-50
+                    transition-all duration-300 ease-out
+                    z-50 overflow-hidden
                   "
                 >
                   <div
                     className={
                       item.submenu.length > 8
-                        ? "grid grid-cols-2"
-                        : "flex flex-col"
+                        ? "grid grid-cols-2 p-2"
+                        : "flex flex-col p-2"
                     }
                   >
                     {item.submenu.map((submenuItem, submenuIndex) => (
@@ -80,8 +82,8 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
                         as={Link}
                         href={submenuItem}
                         className="
-                          block px-4 py-2 text-sm font-medium text-gray-900
-                          data-[focus]:bg-gray-100 data-[focus]:text-gray-900
+                          block px-4 py-2.5 text-sm font-medium text-gray-600 rounded-xl
+                          hover:bg-blue-50 hover:text-blue-600 transition-colors
                         "
                       >
                         {submenuItem}
@@ -97,7 +99,7 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
 
       {/* Right-side menu */}
       <div className=" flex items-center flex-1 justify-end gap-6">
-        <RightMenu  />
+        <RightMenu />
         {/* Mobile hamburger */}
         <div className="flex lg:hidden">
           <button

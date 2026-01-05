@@ -1,6 +1,5 @@
 import { Button } from "@headlessui/react";
 import Image from "next/image";
-import React from "react";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
@@ -33,11 +32,11 @@ export default function Blog_content_section() {
   ];
 
   return (
-    <div className="bg-gray-50 h-full">
+    <div className="bg-gray-50/50 h-full pb-20">
       {/* Filter bar */}
-      <div className="hidden lg:flex items-center justify-between px-4 lg:px-20 py-3 bg-gray-50 w-full ring-1 ring-black/5">
-        <div className="flex gap-2 flex-wrap">
-          <span className="bg-blue-500 text-white p-1.5 px-3 rounded-3xl font-medium">
+      <div className="hidden lg:flex items-center justify-between px-6 lg:px-24 py-4 bg-white/80 backdrop-blur-sm sticky top-0 z-20 border-b border-gray-100 shadow-sm">
+        <div className="flex gap-3 flex-wrap">
+          <span className="bg-blue-600 text-white py-1.5 px-4 rounded-full font-medium text-sm shadow-sm cursor-pointer transition-transform hover:scale-105">
             All
           </span>
           {[
@@ -49,110 +48,125 @@ export default function Blog_content_section() {
           ].map((cat, i) => (
             <span
               key={i}
-              className="p-2 px-3 bg-sky-100 rounded-3xl hover:bg-blue-500 hover:text-white transition duration-300 ease-in"
+              className="py-1.5 px-4 bg-gray-100 text-gray-600 rounded-full text-sm font-medium hover:bg-blue-50 hover:text-blue-600 cursor-pointer transition-all duration-200"
             >
               {cat}
             </span>
           ))}
         </div>
         <div>
-          <span className="text-gray-600 font-medium">
-            <i className="bi bi-filter-left"></i>&nbsp;Sort by: Newest
+          <span className="text-gray-500 font-medium text-sm flex items-center gap-2 cursor-pointer hover:text-gray-900 transition-colors">
+            <i className="bi bi-filter-left text-lg"></i> Sort by:{" "}
+            <span className="text-gray-900">Newest</span>
           </span>
         </div>
       </div>
 
       {/* Main layout */}
-      <div className="flex flex-col-reverse lg:flex-row px-4 lg:px-20 py-10 gap-8 mt-6">
+      <div className="flex flex-col-reverse lg:flex-row px-4 lg:px-24 py-12 gap-10">
         {/* Main content */}
         <div className="w-full">
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             {categories.map((item, index) => (
               <motion.div
                 key={index}
-                className="bg-white shadow-lg rounded-md w-full flex flex-col border-b-2 border-orange-500 hover:scale-105 transition-all duration-300 cursor-pointer"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.8 }}
+                className="group bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100 hover:shadow-xl hover:translate-y-[-4px] transition-all duration-300 flex flex-col cursor-pointer"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
                 variants={fadeUp}
               >
-                <Image
-                  width={400}
-                  height={200}
-                  src={item.url}
-                  alt={item.name}
-                  className="w-full h-40 object-cover rounded-t-md"
-                  loading="lazy"
-                />
-                <div className="flex flex-col flex-grow justify-between p-3">
-                  <h1 className="text-base lg:text-lg text-gray-800 font-bold">
-                    {item.name}
-                  </h1>
-                  <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
-                    <div className="flex items-center gap-2">
+                <div className="relative overflow-hidden h-48">
+                  <Image
+                    width={400}
+                    height={200}
+                    src={item.url}
+                    alt={item.name}
+                    className="w-full h-full object-cover transform transition-transform duration-500 group-hover:scale-110"
+                    loading="lazy"
+                  />
+                  <div className="absolute inset-0 bg-linear-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+
+                <div className="flex flex-col flex-grow justify-between p-5">
+                  <div>
+                    <div className="flex gap-2 mb-3">
+                      <span className="px-2 py-0.5 bg-blue-50 text-blue-600 text-[10px] uppercase font-bold tracking-wider rounded-md">
+                        Category
+                      </span>
+                    </div>
+                    <h1 className="text-lg text-gray-900 font-bold leading-tight group-hover:text-blue-600 transition-colors line-clamp-2 mb-2">
+                      {item.name}
+                    </h1>
+                    <p className="text-sm text-gray-500 line-clamp-3 leading-relaxed mb-4">
+                      {item.desc}
+                    </p>
+                  </div>
+
+                  <div className="mt-auto border-t border-gray-100 pt-4">
+                    <div className="flex items-center gap-3 mb-3">
                       <Image
-                        width={40}
-                        height={20}
-                        src={item.url}
+                        width={32}
+                        height={32}
+                        src={item.url} // Using same img for avatar demo
                         loading="lazy"
                         alt="author"
-                        className="w-6 h-6 rounded-full"
+                        className="w-8 h-8 rounded-full ring-2 ring-white shadow-sm"
                       />
-                      <p>Alex Ukafor</p>
+                      <div className="flex flex-col">
+                        <span className="text-xs font-semibold text-gray-800">
+                          Alex Ukafor
+                        </span>
+                        <span className="text-[10px] text-gray-400">
+                          Sept 7, 2025
+                        </span>
+                      </div>
                     </div>
-                    <span>Sept 7, 2025</span>
-                  </div>
-                  <p className="text-sm text-gray-600 mt-2">{item.desc}</p>
-                  <div className="flex flex-wrap gap-2 mt-2 text-xs">
-                    <span className="p-1 px-2 bg-sky-100 rounded-2xl">
-                      keywords
-                    </span>
-                    <span className="p-1 px-2 bg-sky-100 rounded-2xl">
-                      keywords
-                    </span>
-                  </div>
-                  <div className="flex items-center justify-between mt-3 text-sm">
-                    <span className="text-blue-500 font-medium cursor-pointer">
-                      Explore Courses
-                    </span>
-                    <span className="text-gray-500 flex items-center gap-1 cursor-pointer">
-                      <i className="bi bi-share"></i> Share
-                    </span>
+                    <div className="flex items-center justify-between text-sm">
+                      <span className="text-blue-600 font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                        Read More <i className="bi bi-arrow-right"></i>
+                      </span>
+                      <span className="text-gray-400 hover:text-gray-600 transition-colors cursor-pointer">
+                        <i className="bi bi-bookmark"></i>
+                      </span>
+                    </div>
                   </div>
                 </div>
               </motion.div>
             ))}
           </div>
         </div>
+
         {/* Sidebar */}
-        <div className="w-full lg:w-[22rem] flex-shrink-0">
+        <div className="w-full lg:w-[20rem] flex-shrink-0 space-y-8">
           {/* Search bar */}
           <motion.div
             initial="hidden"
             whileInView="visible"
             viewport={{ amount: 0.6 }}
             variants={fadeUp}
-            className="bg-white rounded-2xl p-5 ring-1 ring-black/5 mb-3"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
           >
-            <form>
-              <label htmlFor="search" className="font-medium">
-                Search
-              </label>
-              <div className="flex items-center bg-white rounded-sm p-1 px-2 ring-1 ring-black/5 mt-1 text-gray-500">
-                <i className="bi bi-search"></i>
-                <input
-                  type="search"
-                  placeholder="Search articles, topics..."
-                  className="outline-0 w-full ml-2"
-                />
-              </div>
+            <h3 className="font-bold text-gray-900 mb-4 text-lg">Search</h3>
+            <form className="relative">
+              <i className="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input
+                type="search"
+                placeholder="Search articles..."
+                className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-100 focus:border-blue-400 transition-all text-sm text-gray-700"
+              />
             </form>
           </motion.div>
 
           {/* Categories */}
-          <motion.div className="bg-white rounded-2xl p-5 ring-1 ring-black/5 mb-3">
-            <h1 className="font-medium">Categories</h1>
-            <div className="flex flex-col gap-2 mt-2">
+          <motion.div
+            className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
+            variants={fadeUp}
+            initial="hidden"
+            whileInView="visible"
+          >
+            <h3 className="font-bold text-gray-900 mb-4 text-lg">Categories</h3>
+            <div className="flex flex-col gap-2">
               {[
                 ["Ai & Data", 6],
                 ["Productivity", 10],
@@ -162,10 +176,14 @@ export default function Blog_content_section() {
               ].map(([name, count], i) => (
                 <div
                   key={i}
-                  className="flex items-center justify-between bg-sky-100 px-4 py-1 rounded-2xl ring-1 ring-black/5"
+                  className="group flex items-center justify-between p-2 px-3 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer"
                 >
-                  <span>{name}</span>
-                  <span>{count}</span>
+                  <span className="text-gray-600 text-sm font-medium group-hover:text-blue-600 transition-colors">
+                    {name}
+                  </span>
+                  <span className="text-xs bg-gray-100 text-gray-500 py-0.5 px-2 rounded-full group-hover:bg-blue-100 group-hover:text-blue-600 transition-colors">
+                    {count}
+                  </span>
                 </div>
               ))}
             </div>
@@ -177,39 +195,51 @@ export default function Blog_content_section() {
             whileInView="visible"
             viewport={{ amount: 0.1 }}
             variants={fadeUp}
-            className="bg-white rounded-2xl p-5 ring-1 ring-black/5 mb-3"
+            className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100"
           >
-            <h1 className="font-medium">Popular Posts</h1>
-            <div className="flex flex-col gap-2 mt-2">
+            <h3 className="font-bold text-gray-900 mb-4 text-lg">
+              Popular Posts
+            </h3>
+            <div className="flex flex-col gap-5">
               {[
                 [
                   "/images/courses/coursetwo.png",
-                  "From Zero to SQL",
+                  "From Zero to SQL: A beginner's journey",
                   "12 min read",
                 ],
                 [
                   "/images/courses/courseone.png",
-                  "UX heuristic 101",
+                  "UX Heuristic 101: The Essential Guide",
                   "9 min read",
                 ],
                 [
                   "/images/courses/coursethree.png",
-                  "Choose Your Data Track",
+                  "Choose Your Data Track wisely",
                   "7 min read",
                 ],
               ].map(([src, title, time], i) => (
-                <div key={i} className="flex items-center gap-2 py-1">
-                  <Image
-                    src={src}
-                    width={60}
-                    height={40}
-                    loading="lazy"
-                    alt="post"
-                    className="object-cover rounded-sm shadow"
-                  />
-                  <div className="text-start">
-                    <span className="font-medium text-sm">{title}</span>
-                    <p className="text-xs text-gray-500">{time}</p>
+                <div
+                  key={i}
+                  className="flex items-start gap-4 group cursor-pointer"
+                >
+                  <div className="w-20 h-16 shrink-0 overflow-hidden rounded-lg">
+                    <Image
+                      src={src}
+                      width={80}
+                      height={64}
+                      loading="lazy"
+                      alt="post"
+                      className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-300"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <span className="font-semibold text-sm text-gray-800 leading-snug group-hover:text-blue-600 transition-colors line-clamp-2">
+                      {title}
+                    </span>
+                    <p className="text-xs text-gray-400 mt-1 flex items-center gap-1">
+                      <i className="bi bi-clock"></i> {time}
+                    </p>
                   </div>
                 </div>
               ))}
@@ -222,25 +252,31 @@ export default function Blog_content_section() {
             whileInView="visible"
             viewport={{ amount: 0.1 }}
             variants={fadeUp}
-            className="bg-white rounded-2xl p-5 ring-1 ring-black/5"
+            className="bg-linear-to-br from-blue-600 to-indigo-700 rounded-2xl p-6 text-white shadow-lg shadow-blue-200"
           >
-            <h2 className="font-medium">Newsletter</h2>
-            <input
-              type="text"
-              className="ring-1 ring-black/5 rounded-lg w-full p-2 mt-2"
-              placeholder="Your name"
-            />
-            <input
-              type="email"
-              className="ring-1 ring-black/5 rounded-lg w-full p-2 mt-2"
-              placeholder="Email address"
-            />
-            <Button
-              type="submit"
-              className="bg-blue-500 text-white rounded-lg w-full mt-3 p-2"
-            >
-              Subscribe
-            </Button>
+            <h3 className="font-bold text-xl mb-2">Newsletter</h3>
+            <p className="text-blue-100 text-sm mb-4">
+              Get the latest trends and updates delivered straight to your
+              inbox.
+            </p>
+            <div className="space-y-3">
+              <input
+                type="text"
+                className="w-full bg-white/10 border border-white/20 rounded-xl p-2.5 text-sm placeholder-blue-200 text-white focus:outline-none focus:bg-white/20 transition-colors"
+                placeholder="Your name"
+              />
+              <input
+                type="email"
+                className="w-full bg-white/10 border border-white/20 rounded-xl p-2.5 text-sm placeholder-blue-200 text-white focus:outline-none focus:bg-white/20 transition-colors"
+                placeholder="Email address"
+              />
+              <Button
+                type="submit"
+                className="w-full bg-white text-blue-600 font-bold rounded-xl p-2.5 text-sm hover:bg-blue-50 transition-colors shadow-sm"
+              >
+                Subscribe Now
+              </Button>
+            </div>
           </motion.form>
         </div>
       </div>

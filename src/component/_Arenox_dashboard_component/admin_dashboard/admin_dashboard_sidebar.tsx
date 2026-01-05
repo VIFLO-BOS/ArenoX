@@ -40,7 +40,7 @@ const Admin_dashboard_sidebar = ({
   ];
 
   const toggleSidebar = () => setisSidebarOpen((prev: boolean) => !prev);
-  
+
   return (
     <aside
       className={`fixed h-screen flex flex-col transition-all duration-300 ${
@@ -53,8 +53,9 @@ const Admin_dashboard_sidebar = ({
           {isSidebarOpen ? (
             <Image
               src="/images/small-logo.jpg"
-              width={100} 
-              height={0}
+              width={100}
+              height={100}
+              style={{ height: "auto" }}
               alt="images"
               loading="lazy"
             />
@@ -62,10 +63,10 @@ const Admin_dashboard_sidebar = ({
             <Image
               src="/images/small-logo1.jpg"
               alt="Logo"
-              width={30} 
-              height={0}
+              width={30}
+              height={30}
+              style={{ height: "auto" }}
               loading="lazy"
-              
             />
           )}
         </div>

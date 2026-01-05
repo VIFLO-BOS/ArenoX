@@ -24,10 +24,10 @@ export const NavbarMenu = () => {
     <header className="fixed inset-x-0 top-0 z-50">
       <nav
         aria-label="Global"
-        className={`flex items-center justify-between py-3 px-2 lg:px-15 transition-colors duration-500
+        className={`flex items-center justify-between py-3 px-2 lg:px-15 transition-all duration-500
           ${
             isScrolled
-              ? "bg-white backdrop backdrop-filter backdrop-blur-3xl "
+              ? "bg-white/90 backdrop-blur-md shadow-lg border-b border-gray-100"
               : "bg-transparent "
           }`}
       >

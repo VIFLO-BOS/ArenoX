@@ -1,26 +1,13 @@
-import React from "react";
-import { UserType as User } from "@/utils/data/fetchdata/userData";
 import Image from "next/image";
 
-interface ViewUserModalProps {
-  onClose: () => void;
-  userDetails: User | null;
-  editUser: () => void;
-}
 
-export default function View_user_modal({
-  onClose,
-  userDetails,
-  editUser,
-}: ViewUserModalProps) {
-  if (!userDetails) return null;
 
+export default function View_user({) {
   return (
     <div
-      className="w-full max-w-5xl bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 overflow-y-auto max-h-[90vh] transition-all duration-500"
+      className="w-full max-w-9xl bg-white/90 backdrop-blur-md rounded-2xl shadow-xl p-8 overflow-y-auto max-h-[90vh] transition-all duration-500"
       style={{ scrollbarWidth: "none" }}
     >
-      {" "}
       <button
         onClick={onClose}
         className="text-slate-500 hover:text-red-600 transition text-2xl fixed top-4 right-4 "
@@ -41,18 +28,17 @@ export default function View_user_modal({
           </div>
           <div className="text-center mt-3">
             <h2 className="text-2xl font-medium text-slate-700">
-              {userDetails.firstname} {userDetails.lastname}
+              Bankole Olaniyi
             </h2>
             <p className="flex flex-col text-sm text-slate-500">
-              <span className="font-mediu">
-                Username: {userDetails.login.username}
-              </span>
-              <span>UUID: {userDetails.login.uuid}</span>
+              <span className="font-mediu">Username:bosman</span>
+              <span>UUID: wieutbhvh27657bhjgh</span>
             </p>
           </div>
         </div>
+        /* @ information-grid : grid layout for personal, address, company, and login information */}
         <div className="mt-6 grid grid-cols-1 md:grid-cols-2 gap-4 mx-auto">
-          {/* Personal Information */}
+          /* @ personal-info : display user's personal information section */}
           <section>
             <h3 className="text-lg font-bold text-slate-700 mb-3 border-b border-slate-200 pb-1">
               Personal Information
@@ -61,36 +47,32 @@ export default function View_user_modal({
               <p>
                 <span className="text-slate-500 block">Email</span>
                 <span className="font-medium text-slate-800">
-                  {userDetails.email}
+                  bankoleolaniyi@gmail.com
                 </span>
               </p>
               <p>
                 <span className="text-slate-500 block">Phone</span>
-                <span className="font-medium text-slate-800">
-                  {userDetails.phone}
-                </span>
+                <span className="font-medium text-slate-800">082437987679</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Birth Date</span>
-                <span className="font-medium text-slate-800">
-                  {userDetails.birthDate}
-                </span>
+                <span className="font-medium text-slate-800">20/12/2000</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Website</span>
                 <a
-                  href={`https://${userDetails.website}`}
+                  href={`https://google.com`}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-blue-600 hover:underline"
                 >
-                  {userDetails.website}
+                  google.com
                 </a>
               </p>
             </div>
           </section>
 
-          {/* Address Information */}
+          /* @ address-info : display user's address and location details */}
           <section>
             <h3 className="text-lg font-bold text-slate-700 mb-3 border-b border-slate-200 pb-1">
               Address Information
@@ -99,38 +81,31 @@ export default function View_user_modal({
               <p>
                 <span className="text-slate-500 block">Street</span>
                 <span className="font-medium text-slate-800">
-                  {userDetails.address.street}
+                  234, Olowu Street
                 </span>
               </p>
               <p>
                 <span className="text-slate-500 block">Suite</span>
-                <span className="font-medium text-slate-800">
-                  {userDetails.address.suite}
-                </span>
+                <span className="font-medium text-slate-800">234</span>
               </p>
               <p>
                 <span className="text-slate-500 block">City</span>
-                <span className="font-medium text-slate-800">
-                  {userDetails.address.city}
-                </span>
+                <span className="font-medium text-slate-800">Lagos</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Zip Code</span>
-                <span className="font-medium text-slate-800">
-                  {userDetails.address.zipcode}
-                </span>
+                <span className="font-medium text-slate-800">123456</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Geo Location</span>
                 <span className="font-medium text-slate-800">
-                  Lat: {userDetails.address.geo.lat}, Lng:{" "}
-                  {userDetails.address.geo.lng}
+                  Lat: 123456, Lng: 123456
                 </span>
               </p>
             </div>
           </section>
 
-          {/* Company Information */}
+          /* @ company-info : display user's company information */}
           <section>
             <h3 className="text-lg font-bold text-slate-700 mb-3 border-b border-slate-200 pb-1">
               Company Information
@@ -139,25 +114,25 @@ export default function View_user_modal({
               <p>
                 <span className="text-slate-500 block">Company Name</span>
                 <span className="font-medium text-slate-800">
-                  {userDetails.company.name}
+                  Arenox Learning Platform
                 </span>
               </p>
               <p>
                 <span className="text-slate-500 block">Catch Phrase</span>
                 <span className="italic text-slate-700">
-                  {`"${userDetails.company.catchPhrase}"`}
+                  "Are you ready to learn?"
                 </span>
               </p>
               <p>
                 <span className="text-slate-500 block">Business Strategy</span>
                 <span className="font-medium text-slate-800">
-                  {userDetails.company.bs}
+                  "Are you ready to learn?"
                 </span>
               </p>
             </div>
           </section>
 
-          {/* Login Information */}
+          /* @ login-info : display user's login credentials and authentication details */}
           <section>
             <h3 className="text-lg font-bold text-slate-700 mb-3 border-b border-slate-200 pb-1">
               Login Information
@@ -165,44 +140,33 @@ export default function View_user_modal({
             <div className="space-y-3 text-sm">
               <p>
                 <span className="text-slate-500 block">UUID</span>
-                <span className="font-mono text-slate-800">
-                  {userDetails.login.uuid}
-                </span>
+                <span className="font-mono text-slate-800">123456</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Username</span>
-                <span className="font-medium text-slate-800">
-                  {userDetails.login.username}
-                </span>
+                <span className="font-medium text-slate-800">bosman</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Password (hashed)</span>
-                <span className="font-mono text-slate-800">
-                  {userDetails.login.password}
-                </span>
+                <span className="font-mono text-slate-800">123456</span>
               </p>
               <p>
                 <span className="text-slate-500 block">MD5</span>
-                <span className="font-mono text-slate-800">
-                  {userDetails.login.md5}
-                </span>
+                <span className="font-mono text-slate-800">123456</span>
               </p>
               <p>
                 <span className="text-slate-500 block">SHA1</span>
-                <span className="font-mono text-slate-800">
-                  {userDetails.login.sha1}
-                </span>
+                <span className="font-mono text-slate-800">123456</span>
               </p>
               <p>
                 <span className="text-slate-500 block">Registered</span>
-                <span className="font-medium text-slate-800">
-                  {new Date(userDetails.login.registered).toLocaleDateString()}
-                </span>
+                <span className="font-medium text-slate-800">20/12/2000</span>
               </p>
             </div>
           </section>
         </div>
       </div>
+      /* @ edit-button : button to trigger edit user modal */}
       <div className="text-center mt-6 ">
         <button
           className="rounded ring ring-black/5 text-white bg-blue-600 hover:bg-blue-700 transition py-1 px-5"
@@ -214,3 +178,4 @@ export default function View_user_modal({
     </div>
   );
 }
+

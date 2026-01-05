@@ -39,46 +39,46 @@ export default function RightMenu({
     <div className="flex items-center ">
       {user && (
         <Menu as="div" className="relative inline-block">
-          <MenuButton className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md  px-2 py-1   text-sm font-semibold  text-black  outline-0 transition-all duration-300">
+          <MenuButton className="inline-flex w-full items-center justify-center gap-x-2 rounded-full px-1 py-1 text-sm font-semibold text-gray-700 outline-0 transition-all duration-300 hover:bg-gray-100/50">
             <Image
               src="/images/mentor/09.jpg"
-              width={30}
-              height={30}
+              width={36}
+              height={36}
               alt=""
-              className="rounded-full ring-1.5 ring-white"
+              className="rounded-full ring-2 ring-white shadow-sm"
             />
 
             {/* <span>Account</span> */}
-            <i className="bi bi-chevron-down text-gray-400"></i>
+            <i className="bi bi-chevron-down text-gray-400 text-xs mr-1"></i>
           </MenuButton>
           <MenuItems
             transition
             modal={false}
-            className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 transition-all ease-in-out duration-200"
+            className="absolute right-0 z-10 mt-3 w-48 origin-top-right rounded-2xl bg-white/95 backdrop-blur-xl outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 shadow-2xl transition-all ease-in-out duration-200 p-1.5"
           >
-            <div className="py-1">
+            <div className="flex flex-col gap-1">
               <MenuItem>
                 <Link
                   href={getDashboardLink(user?.role)}
-                  className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                  className="block px-4 py-2 text-sm text-gray-700 font-medium rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
-                  Dashboard
+                  <i className="bi bi-speedometer2 mr-2"></i> Dashboard
                 </Link>
               </MenuItem>
               <MenuItem>
                 <Link
                   href="/profile"
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 font-medium rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
-                  Profile
+                  <i className="bi bi-person mr-2"></i> Profile
                 </Link>
               </MenuItem>
               <MenuItem>
                 <button
                   onClick={handleSignOut}
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                  className="block w-full text-left px-4 py-2 text-sm text-red-600 font-medium rounded-xl hover:bg-red-50 hover:text-red-700 transition-colors"
                 >
-                  Sign Out
+                  <i className="bi bi-box-arrow-right mr-2"></i> Sign Out
                 </button>
               </MenuItem>
             </div>
@@ -88,38 +88,38 @@ export default function RightMenu({
 
       {!user && (
         <Menu as="div" className="relative inline-block">
-          <MenuButton className="inline-flex w-full items-center justify-center gap-x-1.5 rounded-md  px-2 py-1   text-sm font-semibold  text-black  outline-0 transition-all duration-300">
+          <MenuButton className="inline-flex w-full items-center justify-center gap-x-2 rounded-full px-1 py-1 text-sm font-semibold text-gray-700 outline-0 transition-all duration-300 hover:bg-gray-100/50">
             <Image
               src="/images/avatar.png"
-              width={30}
-              height={30}
+              width={36}
+              height={36}
               alt=""
-              className="rounded-full ring-1.5 ring-white"
+              className="rounded-full ring-2 ring-white shadow-sm"
             />
 
             {/* <span>Account</span> */}
-            <i className="bi bi-chevron-down text-gray-400"></i>
+            <i className="bi bi-chevron-down text-gray-400 text-xs mr-1"></i>
           </MenuButton>
           <MenuItems
             transition
             modal={false}
-            className="absolute right-0 z-10 mt-2 w-32 origin-top-right rounded-md bg-white outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 transition-all ease-in-out duration-200"
+            className="absolute right-0 z-10 mt-3 w-40 origin-top-right rounded-2xl bg-white/95 backdrop-blur-xl outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 shadow-2xl transition-all ease-in-out duration-200 p-1.5"
           >
-            <div className="py-1">
+            <div className="flex flex-col gap-1">
               <MenuItem>
                 <Link
                   href="/signin"
-                  className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                  className="block px-4 py-2 text-sm text-gray-700 font-medium rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
-                  Sign In
+                  <i className="bi bi-box-arrow-in-right mr-2"></i> Sign In
                 </Link>
               </MenuItem>
               <MenuItem>
                 <Link
                   href="/signup"
-                  className="block px-4 py-2 text-sm text-gray-950 font-semibold data-focus:bg-white/5 data-focus:text-gray-600 data-focus:outline-hidden"
+                  className="block px-4 py-2 text-sm text-gray-700 font-medium rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
-                  Sign Up
+                  <i className="bi bi-person-plus mr-2"></i> Sign Up
                 </Link>
               </MenuItem>
             </div>

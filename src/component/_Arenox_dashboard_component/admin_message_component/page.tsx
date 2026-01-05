@@ -1,6 +1,8 @@
 "use client";
 import React, { useState } from "react";
 
+/* @ message-interface : define message structure */
+
 interface AdminMessageProp {
   id: number;
   name: string;
@@ -8,7 +10,11 @@ interface AdminMessageProp {
   time: string;
 }
 
-export default function Admin_message() {
+/* @ admin-message-component : messaging interface for admin communication */
+
+export default function Admin_message( ){
+ /* @ mock-messages : sample message data */
+  
   const mockMessages: AdminMessageProp[] = [
     {
       id: 1,
@@ -24,6 +30,8 @@ export default function Admin_message() {
     },
   ];
 
+  /* @ selected-message : track currently selected message */
+  
   const [selected, setSelected] = useState(mockMessages[0]);
   return (
     <div className="min-h-screen bg-white p-4 rounded-lg">
@@ -95,3 +103,4 @@ export default function Admin_message() {
     </div>
   );
 }
+

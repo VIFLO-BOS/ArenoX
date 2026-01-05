@@ -256,3 +256,4 @@ export default function About_team_section() {
     </div>
   );
 }
+

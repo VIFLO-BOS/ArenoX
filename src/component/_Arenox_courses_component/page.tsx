@@ -7,6 +7,8 @@ import Courses_card from "./courses_card";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 import { motion } from "framer-motion";
 
+/* @ course-page : main courses page component with animated hero, navigation, and course cards */
+
 export default function Course_Page() {
   return (
     <div>
@@ -37,3 +39,4 @@ export default function Course_Page() {
     </div>
   );
 }
+

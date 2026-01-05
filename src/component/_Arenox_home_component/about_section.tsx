@@ -22,27 +22,28 @@ export default function About_section() {
         </div>
 
         {/* Right: Text Content */}
-        <div>
-          <span className="text-center lg:text-start text-blue-600 font-semibold uppercase tracking-wide text-sm mb-3 block">
+        <div className="lg:pl-10">
+          <span className="inline-block py-1 px-3 rounded-full bg-blue-50 text-blue-600 text-xs font-bold uppercase tracking-wide mb-4">
             About Us
           </span>
-          <h2 className="text-center lg:text-start text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-snug">
-            We’re Here to Make <span className="text-blue-600">Learning</span>{" "}
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 leading-tight">
+            We’re Here to Make{" "}
+            <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">
+              Learning
+            </span>{" "}
             Simple and Impactful
           </h2>
-          <p className="text-center lg:text-start text-gray-700 text-lg leading-relaxed mb-8">
+          <p className="text-gray-600 text-lg leading-relaxed mb-8">
             Education is the most powerful tool for change and we’re on a
             mission to make it accessible to everyone, everywhere. We connect
             learners with industry experts who simplify complex topics into
-            engaging, practical lessons. Whether you’re a student, a
-            professional, or simply curious, we’ve built this platform to help
-            you achieve your dreams.
+            engaging, practical lessons.
           </p>
           <a
             href="#about"
-            className="bg-gradient-to-r from-blue-600 to-indigo-600 !text-white px-7 py-3 rounded-lg shadow-md hover:shadow-xl hover:scale-105 transition-all duration-300 flex justify-center lg:justfiy-start"
+            className="inline-flex items-center justify-center bg-blue-600 hover:bg-blue-700 text-white px-8 py-3.5 rounded-full font-semibold shadow-lg shadow-blue-200 transition-all duration-300 transform hover:-translate-y-1"
           >
-            Learn More About Us
+            Learn More About Us <i className="bi bi-arrow-right ml-2"></i>
           </a>
         </div>
       </motion.div>

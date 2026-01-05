@@ -1,16 +1,24 @@
 "use client";
 import React, { useEffect, useState } from "react";
 
+/* @ ticket-interface : define support ticket structure */
+
 interface mockTickets {
   id: number;
   subject: string;
   status: string;
   date: string;
 }
+/* @ admin-support-component : support ticket management system */
+
 export default function Admin_support() {
+/* @ tickets-state : manage support tickets and new ticket form */
+  
   const [mockTickets, setMockTickets] = useState<mockTickets[]>([]);
   const [newTickets, setnewTickets] = useState({ subject: "" });
 
+  /* @ load-tickets : load tickets from localStorage on mount */
+  
   useEffect(() => {
     const defaultTickets: mockTickets[] = [
       { id: 1, subject: "Login issue", status: "open", date: "Oct 1, 2025" },
@@ -30,6 +38,8 @@ export default function Admin_support() {
     }
   }, []);
 
+  /* @ add-ticket : create and save new support ticket */
+  
   const addTickets = () => {
     const newEntry = {
       id: mockTickets.length + 1,
@@ -103,3 +113,4 @@ export default function Admin_support() {
     </div>
   );
 }
+

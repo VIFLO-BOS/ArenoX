@@ -5,6 +5,8 @@ import Pricing_card_section from "./pricing_card_section";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
+/* @ pricing-page : main pricing page component with animated hero and pricing cards */
+
 export default function Pricing_page() {
   return (
     <div className="mt-15">
@@ -20,3 +22,4 @@ export default function Pricing_page() {
     </div>
   );
 }
+

@@ -1,9 +1,14 @@
-import React from 'react'
+import React from "react";
 
-interface editCourseFormProps{
+/* @ edit-course-form-props : define props for edit course form */
+
+interface editCourseFormProps {
   onClose: () => void;
 }
-export default function Edit_course_form({onClose}:editCourseFormProps) {
+
+/* @ edit-course-form : form component for editing existing course information */
+
+export default function Edit_course_form({ onClose }: editCourseFormProps) {
   return (
     <div>
       <form className="max-w-5xl mx-auto bg-white backdrop-blur-md p-5 rounded-3xl shadow-lg space-y-10 transition-all duration-300">
@@ -33,7 +38,7 @@ export default function Edit_course_form({onClose}:editCourseFormProps) {
               name="Category"
               className="w-full py-2 px-1 rounded border-b text-gray-500 border-gray-200 focus:ring-2 focus:ring-blue-400 focus:outline-none transition"
             >
-               <option value="">Course Category</option>
+              <option value="">Course Category</option>
               <option value="Data Science">Data Science</option>
               <option value="Design">Design </option>
               <option value="Development">Development</option>
@@ -72,7 +77,7 @@ export default function Edit_course_form({onClose}:editCourseFormProps) {
         <div className="">
           <button
             type="submit"
-            className="w-full text-center  bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-lg transition"
+            className="w-full text-center  bg-linear-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white py-3 rounded-xl font-semibold shadow-md hover:shadow-lg transition"
           >
             Submit
           </button>
@@ -81,3 +86,4 @@ export default function Edit_course_form({onClose}:editCourseFormProps) {
     </div>
   );
 }
+

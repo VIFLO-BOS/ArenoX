@@ -47,7 +47,7 @@ export default function Admin_dashboard_header({
           <Menu as="div" className="relative">
             <MenuButton className="inline-flex items-center justify-center gap-x-1.5 rounded-md px-1 py-1 text-sm font-semibold bg-white outline-none focus:outline-none">
               <Image
-                src="/images/mentor/09.jpg"
+                src={user?.image as string}
                 width={35}
                 height={35}
                 alt="User Profile"
@@ -62,13 +62,13 @@ export default function Admin_dashboard_header({
             </MenuButton>
             <MenuItems
               transition
-              className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition duration-100 ease-out data-[closed]:scale-95 data-[closed]:opacity-0"
+              className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
             >
               <div className="py-1">
                 <MenuItem>
                   <button
-                    onClick={handleSignOut} 
-                    className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100 data-[focus]:text-gray-900 outline-none w-full text-left"
+                    onClick={handleSignOut}
+                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 outline-none w-full text-left"
                   >
                     Sign-Out
                   </button>

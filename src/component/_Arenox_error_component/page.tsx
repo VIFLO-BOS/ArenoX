@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowRight, Home, RefreshCw } from "lucide-react";
 import { ErrorProps } from "@/utils/types/ErrorPage";
 
-export default function ErrorPage({ error }: ErrorProps) {
+/* @ error-page : custom 404 error page with animations and decorative elements */}
+export default function ErrorPage({ error }: ErrorProps) /* @ animations : define bounce animation keyframes */}
   <style jsx>{`
     @keyframes bounce {
       0%,
@@ -87,7 +88,7 @@ export default function ErrorPage({ error }: ErrorProps) {
         </div>
       </div>
 
-      {/* Floating Particles Background Effect */}
+      /* @ floating-particles : animated background particles for visual effect */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-bounce"></div>
         <div className="absolute top-40 right-20 w-96 h-96 bg-pink-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-bounce animation-delay-2000"></div>
@@ -96,3 +97,4 @@ export default function ErrorPage({ error }: ErrorProps) {
     </>
   );
 }
+

@@ -7,14 +7,20 @@ import View_book_modal from "../admin_modals/viewCoursePage";
 import toast from "react-hot-toast";
 import { course, coursesDetails } from "@/utils/types/course/course";
 
+/* @ sort-config-interface : define sorting configuration type */
+
 interface sortConfig {
   key: keyof course | null;
   dir: "asc" | "desc";
 }
+/* @ admin-courses-component : main admin courses management component with table, modals, and CRUD operations */
+
 export default function Admin_courses() {
-  // this is to fetch the data
+  /* @ courses-state : manage courses data and table display */
   const [courses, setcourses] = useState<course[]>([]);
   const [coursesToTable, setcourseToTable] = useState<course[]>([]);
+
+  /* @ fetch-courses : fetch courses data from API on component mount */
 
   useEffect(() => {
     let cancelled = false;
@@ -42,26 +48,20 @@ export default function Admin_courses() {
     };
   }, []);
 
-  // Page Loading State
-  const [loading, setLoading] = useState(false);
+  /* @ loading-state : manage page loading and error states */
+
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  if (window.onload) {
-    setLoading(true);
-    setTimeout(() => {
+  useEffect(() => {
+    const timer = setTimeout(() => {
       setLoading(false);
     }, 1000);
-  }
 
-  try {
-    // Simulate data fetching
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  } catch (err) {
-    console.error(err);
-    setError("Failed to load user data.");
-  }
+    return () => clearTimeout(timer);
+  }, []);
+
+  /* @ modal-state : manage modal visibility for create, edit, and view operations */
 
   const [isCreateCourseForm, setisCreateCourseForm] = useState(false);
   const [isEditCourseForm, setisEditCourseForm] = useState(false);
@@ -75,15 +75,16 @@ export default function Admin_courses() {
     setisviewCourseModal(false);
   };
 
-  // delete functionalities
+  /* @ delete-handler : remove course from table */
+
   const handleDelete = (id: string) => {
-    // const courseToDelete = courses.filter((item) => item.id === id);
     if (id) {
       setcourseToTable(coursesToTable.filter((item) => item.id !== id));
     }
   };
 
-  // pagination
+  /* @ pagination : manage table pagination state and calculations */
+
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
   const indexOfLastItem = currentPage * itemsPerPage;
@@ -94,7 +95,8 @@ export default function Admin_courses() {
   );
   const totalPages = Math.ceil(coursesToTable.length / itemsPerPage);
 
-  // table filtering functionalities
+  /* @ filtering : filter courses by search query */
+
   const [query, setQuery] = useState("");
   const filteredData = currentCourses.filter((item) => {
     return (
@@ -105,13 +107,13 @@ export default function Admin_courses() {
     );
   });
 
-  // sorting courses
+  /* @ sorting : manage table sorting configuration */
+
   const [sortConfig, setSortConfig] = useState<sortConfig>({
     key: null,
     dir: "asc",
   });
 
-  // handling sort functions
   const handleSort = (key: keyof course) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.dir === "asc") {
@@ -138,8 +140,8 @@ export default function Admin_courses() {
     return data;
   }, [filteredData, sortConfig]);
 
-  // function to view user details
-  //  get the user data
+  /* @ view-course-handler : handle viewing course details */
+
   const [courseDataToView, setcourseDataToView] = useState<course | null>(null);
   const handleViewCourseForm = (id: string) => {
     const selectCourses = sortedData.find((item) => item.id === id);
@@ -150,190 +152,182 @@ export default function Admin_courses() {
   };
   return (
     <>
-      <div className="bg-white backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg mb-5">
-        <div className="bg-white p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center justify-between">
+      <div className="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 mb-8 overflow-hidden">
+        <div className="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-center justify-between pb-6">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Courses Record</h1>
-            <p className="text-gray-600 mt-1">Manage all available courses</p>
+            <h1 className="text-2xl font-bold text-gray-800">Courses Record</h1>
+            <p className="text-sm text-gray-500 mt-1">
+              Manage and update course inventory
+            </p>
           </div>
-          <div className="flex items-center gap-1 bg-white text-gray-500 ring ring-black/5 rounded px-2 py-1 w-full sm:w-72">
-            <i className="bi bi-search"></i>
-            <input
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Search by name, email or role..."
-              className="outline-0 w-60"
-            />
-          </div>
-          <div className="flex items-center gap-5">
+          <div className="flex flex-col sm:flex-row gap-4 w-full sm:w-auto">
+            <div className="relative group">
+              <i className="bi bi-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+              <input
+                value={query}
+                onChange={(e) => setQuery(e.target.value)}
+                placeholder="Search courses..."
+                className="pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-400 outline-none w-full sm:w-64 transition-all"
+              />
+            </div>
             <button
-              className="ring ring-black/5 px-2 bg-indigo-600 text-white hover:bg-indigo-700 hover:scale-102 transition-all duration-300 ease-in-out py-1 rounded"
+              className="flex items-center gap-2 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-lg shadow-blue-200 hover:-translate-y-0.5 transition-all duration-300"
               onClick={openCreateCourseForm}
             >
-              <i className="bi bi-person-add">&nbsp;</i>Add Course
+              <i className="bi bi-plus-lg text-sm"></i> Add Course
             </button>
           </div>
         </div>
 
         <div className="overflow-x-auto w-full">
-          <table className="w-full min-w-[600px] text-sm text-gray-700">
-            <thead className="bg-sky-100 text-gray-600 uppercase text-xs border-b border-gray-200 sticky top-0 z-10">
+          <table className="w-full text-sm text-left">
+            <thead className="bg-gray-50 text-gray-600 uppercase text-xs font-semibold border-b border-gray-200">
               <tr>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  S/N
+                <th className="px-6 py-4">S/N</th>
+                <th
+                  className="px-6 py-4 cursor-pointer hover:text-blue-600 transition-colors"
+                  onClick={() => handleSort("title")}
+                >
+                  Course Title{" "}
+                  <i className="bi bi-arrow-down-up text-[10px] ml-1"></i>
                 </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Course Title
-                </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
+                <th
+                  className="px-6 py-4 cursor-pointer hover:text-blue-600 transition-colors"
+                  onClick={() => handleSort("category")}
+                >
                   Category
                 </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Instructor
-                </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Level
-                </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Duration
-                </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Price
-                </th>
-                <th className="p-4 text-gray-600 text-left text-xs font-semibold">
-                  Langauge
-                </th>
-                <th className="p-4 text-gray-600 text-center text-xs font-semibold">
-                  Actions
-                </th>
+                <th className="px-6 py-4">Instructor</th>
+                <th className="px-6 py-4">Level</th>
+                <th className="px-6 py-4">Duration</th>
+                <th className="px-6 py-4">Price</th>
+                <th className="px-6 py-4">Language</th>
+                <th className="px-6 py-4 text-center">Actions</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {loading ? (
                 <tr>
                   <td
-                    colSpan={7}
-                    className="p-8 whitespace-normal text-center text-gray-500 italic animate-pulse"
+                    colSpan={9}
+                    className="p-12 text-center text-gray-500 animate-pulse"
                   >
-                    Loading...
+                    Loading courses...
                   </td>
                 </tr>
               ) : error ? (
                 <tr>
                   <td
-                    colSpan={7}
-                    className="p-8 whitespace-normal text-center text-red-600"
+                    colSpan={9}
+                    className="p-12 text-center text-red-500 bg-red-50"
                   >
                     {error}
                   </td>
                 </tr>
               ) : sortedData.length === 0 ? (
                 <tr>
-                  <td
-                    colSpan={7}
-                    className="p-8  whitespace-normal text-center text-gray-500"
-                  >
-                    No courses found.
+                  <td colSpan={9} className="p-12 text-center text-gray-400">
+                    No courses found matching your search.
                   </td>
                 </tr>
-              ) : sortedData.length > 0 ? (
-                sortedData &&
+              ) : (
                 sortedData.map((c, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50">
-                    <td className="px-4 py-2 whitespace-normal text-left border-b-gray-200 text-gray-600">
-                      {idx + 1}
+                  <tr
+                    key={idx}
+                    className="hover:bg-blue-50/20 transition-colors group"
+                  >
+                    <td className="px-6 py-4 text-gray-500 font-medium">
+                      #{idx + 1}
                     </td>
-                    <td
-                      className="flex items-center px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600"
-                      onClick={() => handleSort("title")}
-                    >
-                      <span className="w-10 h-10 bg-indigo-100 text-indigo-500 text-medium rounded-full flex items-center justify-center mr-3">
-                        {c.title
-                          .split(" ")
-                          .slice(0, 3)
-                          .map((n) => n[0])
-                          .join("")}
-                      </span>
-                      <span>{c.title}</span>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shadow-sm group-hover:scale-105 transition-transform">
+                          {c.title.slice(0, 2).toUpperCase()}
+                        </div>
+                        <span className="font-semibold text-gray-800">
+                          {c.title}
+                        </span>
+                      </div>
                     </td>
-                    <td
-                      className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600"
-                      onClick={() => handleSort("category")}
-                    >
+                    <td className="px-6 py-4 text-gray-600 font-medium bg-gray-50/50 rounded-lg m-2 w-fit">
                       {c.category}
                     </td>
-                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                      {c.instructor}
+                    <td className="px-6 py-4 text-gray-600">{c.instructor}</td>
+                    <td className="px-6 py-4">
+                      <span
+                        className={`px-2 py-1 rounded-md text-xs font-semibold ${
+                          c.level === "Beginner"
+                            ? "bg-green-100 text-green-700"
+                            : c.level === "Intermediate"
+                            ? "bg-yellow-100 text-yellow-700"
+                            : "bg-red-100 text-red-700"
+                        }`}
+                      >
+                        {c.level}
+                      </span>
                     </td>
-                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                      {c.level}
-                    </td>
-                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                      {c.duration}hrs
-                    </td>
-
-                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
+                    <td className="px-6 py-4 text-gray-600">{c.duration}h</td>
+                    <td className="px-6 py-4 font-bold text-gray-800">
                       ${c.price}
                     </td>
-                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                      Language
-                    </td>
-                    <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 flex items-center space-x-2">
-                      <button
-                        className="p-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-200 transition"
-                        onClick={() => handleViewCourseForm(c.id)}
-                      >
-                        <i className="bi bi-eye"></i>
-                      </button>
-                      <button
-                        className="p-2 rounded-md bg-orange-50 text-orange-600 hover:bg-orange-200 transition"
-                        onClick={() => openEditCourseForm()}
-                      >
-                        <i className="bi bi-pencil"></i>
-                      </button>
-                      <button
-                        className="p-2 rounded-md bg-red-50 text-red-600 hover:bg-red-200 transition"
-                        onClick={() => handleDelete(c.id)}
-                      >
-                        <i className="bi bi-trash"></i>
-                      </button>
+                    <td className="px-6 py-4 text-gray-500">English</td>
+                    <td className="px-6 py-4">
+                      <div className="flex items-center justify-center gap-2">
+                        <button
+                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm"
+                          onClick={() => handleViewCourseForm(c.id)}
+                          title="View"
+                        >
+                          <i className="bi bi-eye-fill"></i>
+                        </button>
+                        <button
+                          className="p-2 rounded-lg bg-orange-50 text-orange-600 hover:bg-orange-100 transition-colors shadow-sm"
+                          onClick={() => openEditCourseForm()}
+                          title="Edit"
+                        >
+                          <i className="bi bi-pencil-fill"></i>
+                        </button>
+                        <button
+                          className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors shadow-sm"
+                          onClick={() => handleDelete(c.id)}
+                          title="Delete"
+                        >
+                          <i className="bi bi-trash-fill"></i>
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))
-              ) : (
-                "No data found"
               )}
             </tbody>
-            <tfoot className="mt-2">
+            <tfoot className="bg-gray-50/50">
               <tr>
-                <td colSpan={7} className="px-4 py-2">
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">
-                      Showing {currentPage * itemsPerPage - itemsPerPage + 1} to{" "}
+                <td colSpan={9} className="px-6 py-4">
+                  <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
+                    <span className="text-sm text-gray-500 font-medium">
+                      Showing {currentPage * itemsPerPage - itemsPerPage + 1}-
                       {Math.min(currentPage * itemsPerPage, courses.length)} of{" "}
-                      {courses.length} courses
+                      {courses.length}
                     </span>
 
-                    <div className="flex flex-wrap items-center justify-between gap-3">
+                    <div className="flex gap-2">
                       <button
                         onClick={() =>
-                          setCurrentPage((prev) => Math.max(prev - 1, 1))
+                          setCurrentPage((p) => Math.max(p - 1, 1))
                         }
                         disabled={currentPage === 1}
-                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50"
+                        className="px-4 py-2 rounded-lg border border-gray-200 bg-white text-gray-600 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm transition-all"
                       >
-                        {"<"}
+                        Previous
                       </button>
                       <button
                         onClick={() =>
-                          setCurrentPage((prev) =>
-                            Math.min(prev + 1, totalPages)
-                          )
+                          setCurrentPage((p) => Math.min(p + 1, totalPages))
                         }
                         disabled={currentPage === totalPages}
-                        className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50"
+                        className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 shadow-md hover:shadow-lg disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                       >
-                        {">"}
+                        Next
                       </button>
                     </div>
                   </div>

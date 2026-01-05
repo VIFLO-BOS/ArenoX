@@ -16,30 +16,37 @@ export default function Program_hero_section() {
     { name: "Degree", pathname: "degree" },
   ];
   return (
-    <div className=" flex items-center justify-center lg:grid lg:grid-cols-2 px-13 lg:px-20 pb-10 ">
+    <div className="flex items-center justify-center lg:grid lg:grid-cols-2 px-6 lg:px-24 py-16 gap-12 bg-white">
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.7 }}
-        className="lg"
+        className="lg:pr-10"
       >
-        <div className="lg:w-100">
-          <h1 className="text-5xl sm:px-10 lg:px-0 text-center lg:text-start lg:text-5xl font-medium mb-3">
-            Find the right program for your career.
+        <div className="lg:w-full">
+          <h1 className="text-4xl sm:px-10 lg:px-0 text-center lg:text-start lg:text-6xl font-extrabold tracking-tight text-gray-900 mb-6 leading-tight">
+            Find the right <span className="text-blue-600">program</span> for
+            your career.
           </h1>
-          <p className="text-center lg:text-start text-gray-600 mb-3">
-            Explore our structured learning programs accross Bootcamps ,
-            Certifications, Degrees. Filter by level, duration, learning format
-            to match your schedule.
+          <p className="text-center lg:text-start text-gray-600 mb-8 text-lg font-light leading-relaxed">
+            Explore our structured learning programs across Bootcamps,
+            Certifications, and Degrees. Filter by level, duration, and learning
+            format to match your schedule.
           </p>
         </div>
-        <div className="flex items-center justify-center mt-5 lg:justify-normal gap-5 ">
+        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3">
           {filterBtn.map((x, i) => {
             return (
               <Button
                 key={i}
-                className="px-2 py:1 lg:py-2 lg:px-3 shadow rounded-lg ring-1 ring-black/5"
+                className={`px-5 py-2.5 rounded-full font-medium transition-all duration-200 border 
+                  ${
+                    i === 0
+                      ? "bg-gray-900 text-white border-gray-900 shadow-md hover:bg-gray-800"
+                      : "bg-white text-gray-700 border-gray-200 hover:border-blue-300 hover:bg-blue-50 hover:text-blue-600"
+                  }`}
               >
+                {i === 0 && <i className="bi bi-sliders mr-2"></i>}
                 {x.name}
               </Button>
             );
@@ -50,15 +57,16 @@ export default function Program_hero_section() {
         initial={{ opacity: 0, x: 20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 1 }}
-        className="hidden lg:block"
+        className="hidden lg:block relative"
       >
+        <div className="absolute inset-0 bg-linear-to-tr from-blue-600/20 to-orange-500/20 rounded-2xl transform translate-x-4 translate-y-4 -z-10 blur-xl"></div>
         <Image
-          width={400}
-          height={400}
+          width={600}
+          height={600}
           src="/images/banner/mahila.png"
           alt="student-img"
           loading="lazy"
-          className="w-full h-auto object-cover rounded-xs"
+          className="w-full h-auto object-cover rounded-2xl shadow-2xl ring-1 ring-gray-900/5"
         />
       </motion.div>
     </div>

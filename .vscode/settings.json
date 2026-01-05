@@ -16,5 +16,6 @@
   "workbench.colorTheme": "Best Themes - Synthwave Black(No Neon)",
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+  },
+  "editor.fontSize": 13
 }

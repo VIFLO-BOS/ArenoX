@@ -1,14 +1,7 @@
 import { authClient } from "./auth-client";
 
-/**
- * Email Sign Up
- */
-
-export const signUp = async (
-  email: string,
-  password: string,
-  name: string
-) => {
+// @ email-signup : handle user registration with email and password
+export const signUp = async (email: string, password: string, name: string) => {
   const { data, error } = await authClient.signUp.email({
     email,
     password,
@@ -23,9 +16,7 @@ export const signUp = async (
   return { data, error: null };
 };
 
-/**
- * Social Auth (Works for both Sign Up and Sign In)
- */
+// @ social-auth : handle authentication with Google or GitHub
 export const signInWithSocial = async (provider: "google" | "github") => {
   const { data, error } = await authClient.signIn.social({
     provider,
@@ -42,15 +33,13 @@ export const signInWithSocial = async (provider: "google" | "github") => {
   return { data, error: null };
 };
 
-/**
- * Email Sign In
- */
+// @ email-signin : handle user login with email and password
 export const signIn = async (email: string, password: string) => {
   const { data, error } = await authClient.signIn.email({
     email,
     password,
     rememberMe: true,
-    callbackURL: "/dashboard",
+    callbackURL: "/",
   });
 
   if (error) {

@@ -1,9 +1,10 @@
 "use client";
-import React from "react";
 import Blog_hero_section from "./blog_hero_section";
 import Blog_content_section from "./blog_content_section";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
+
+/* @ blog-page : main blog page component with animated hero and content sections */
 
 export default function Blog_page() {
   return (
@@ -27,3 +28,4 @@ export default function Blog_page() {
     </div>
   );
 }
+

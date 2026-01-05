@@ -7,3 +7,4 @@ export default function Student_total_gender() {
     </div>
   )
 }
+

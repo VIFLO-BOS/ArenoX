@@ -1,28 +1,39 @@
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import Admin_modal from "../admin_modals/admin_modal";
-import Create_user_form from "../admin_modals/userForm";
+import { useEffect, useMemo, useState } from "react";
 import { UserType } from "@/utils/data/fetchdata/userData";
-import Edit_user_form from "../admin_modals/editUserForm";
-import View_user_modal from "../admin_modals/viewUserPage";
 import toast from "react-hot-toast";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
+/* @ sort-config-interface : define sorting configuration type for table columns */
 interface sortConfig {
   key: keyof UserType | null;
   dir: "asc" | "desc";
 }
+
+/* @ component-definition : main admin user list component with table, modals, and CRUD operations */
 export default function Admin_user_list() {
+  const params = useParams();
+  const dashboard = params.dashboard as string;
+
+  /* @ user-state : manage users data and table display data */
   const [Users, setUsers] = useState<UserType[]>([]);
   const [DataToTable, setDataToTable] = useState<UserType[]>([]);
 
+  /* @ fetch-users : fetch user data from API on component mount */
   useEffect(() => {
     let cancelled = false;
     async function fetchUser() {
       try {
         const res = await fetch("/api/data/users");
         const result = await res.json();
-        setUsers(result.data || null);
-        setDataToTable(result.data || null);
+        // console.log(result, "here is the result from data");
+        if (!Array.isArray(result.data)) {
+          toast.error("Unexpected data format received.");
+        } else {
+          setUsers(result.data || null);
+          setDataToTable(result.data || null);
+        }
       } catch (error) {
         if (!cancelled) {
           if (error instanceof Error) {
@@ -39,16 +50,17 @@ export default function Admin_user_list() {
     };
   }, []);
 
-  // Page Loading State
+  /* @ loading-error-state : manage page loading and error states */
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-
-  if (window.onload) {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 1000);
-  }
+  useEffect(() => {
+    if (window.onload) {
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, []);
 
   try {
     // Simulate data fetching
@@ -56,43 +68,34 @@ export default function Admin_user_list() {
       setLoading(false);
     }, 1000);
   } catch (err) {
-    console.error(err);
+    // console.error(err);
     setError("Failed to load user data.");
   }
 
-  // this is for the all form modal
-  const [isCreateModalform, setisCreateModalOpen] = useState(false);
-  const [isEditModalform, setisEditModalOpen] = useState(false);
-  const [userToEdit, setUserToEdit] = useState<UserType | null>(null);
-  const [isViewUserModal, setisViewUserModal] = useState(false);
-  const openCreateModalForm = () => setisCreateModalOpen(true);
-  const openEditModalForm = (id?: string) => {
-    if (id) {
-      const user = Users.find((u) => u.id === id) || null;
-      setUserToEdit(user);
-    }
-    setisEditModalOpen(true);
-  };
-  const openViewUserModal = () => setisViewUserModal(true);
-  const closeModal = () => {
-    setisCreateModalOpen(false);
-    setisEditModalOpen(false);
-    setisViewUserModal(false);
-  };
-
-  // delete functions
+  /* @ delete-handler : handle user deletion with confirmation dialog */
   const handleDelete = (id: string) => {
-    const dataToDelete = Users.filter((item) => item.id === id);
+    console.log(id);
+    const dataToDelete = Users.filter((item) => item._id === id);
+
+    if (dataToDelete.length === 0) {
+      toast.error("User not found!");
+      return;
+    }
+
+    const firstName = dataToDelete[0].name.split(" ")[0];
+    const lastName = dataToDelete[0].name.split(" ")[1] || "";
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete this user ${dataToDelete[0].firstname} ${dataToDelete[0].lastname}`
+      `Are you sure you want to delete this user ${firstName} ${lastName}`
     );
 
     if (confirmDelete) {
-      setDataToTable(Users.filter((item) => item.id !== id));
+      setUsers(Users.filter((item) => item._id !== id));
+      setDataToTable(Users.filter((item) => item._id !== id));
+      toast.success("User deleted successfully!");
     }
   };
 
-  // paginations
+  /* @ pagination : manage pagination state and calculate current page items */
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
@@ -102,24 +105,27 @@ export default function Admin_user_list() {
 
   const totalPages = Math.ceil(DataToTable.length / itemsPerPage);
 
-  // table filtering functionalities
+  /* @ table-filtering : filter users by name, email, or phone based on search query */
   const [query, setQuery] = useState("");
   const filteredData = currentUsers.filter((item) => {
+    const namePath = item.name ? item.name.split(" ") : [];
+    const firstName = namePath[0] || " ";
+    const lastName = namePath[1] || " ";
     return (
-      item.firstname.toLowerCase().includes(query.toLocaleLowerCase()) ||
-      item.lastname.toLowerCase().includes(query.toLocaleLowerCase()) ||
+      firstName.toLowerCase().includes(query.toLocaleLowerCase()) ||
+      lastName.toLowerCase().includes(query.toLocaleLowerCase()) ||
       item.email.toLowerCase().includes(query.toLocaleLowerCase()) ||
       item.phone.toString().includes(query.toLocaleLowerCase())
     );
   });
 
-  // sorting data
+  /* @ sorting-state : manage table column sorting configuration */
   const [sortConfig, setSortConfig] = useState<sortConfig>({
     key: null,
     dir: "asc",
   });
 
-  // handling sort functions
+  /* @ sort-handler : handle column sort direction toggle */
   const handleSort = (key: keyof UserType) => {
     let direction: "asc" | "desc" = "asc";
     if (sortConfig.key === key && sortConfig.dir === "asc") {
@@ -128,6 +134,7 @@ export default function Admin_user_list() {
     setSortConfig({ key, dir: direction });
   };
 
+  /* @ sorted-data : apply sorting logic to filtered data using useMemo for performance */
   const sortedData = useMemo(() => {
     if (!sortConfig.key) {
       return filteredData;
@@ -146,104 +153,111 @@ export default function Admin_user_list() {
     return data;
   }, [filteredData, sortConfig]);
 
-  // function to view user details
-  //  get the user data
-  const [userDataToView, setuserDataToView] = useState<UserType | null>(null);
-  const handleViewUser = (id: string) => {
-    const selectUser = sortedData.find((item) => item.id === id);
-    if (selectUser) {
-      setuserDataToView(selectUser);
-      openViewUserModal();
-    }
-  };
-
+  // console.log(sortedData)
+  /* @ render : main component render with table and modals */
   return (
     <>
-      <div className="min-h-screen">
-        <div className="mx-auto">
+      <div className="min-h-screen  p-6 lg:p-10">
+        <div className="mx-auto max-w-7xl">
           {/* MAIN TABLE */}
-          <div className="bg-white backdrop-blur-md border border-gray-200 rounded-2xl shadow-md overflow-hidden transition-all duration-300 hover:shadow-lg mb-5">
-            <div className="p-4 border-b border-gray-100 flex flex-wrap gap-2 items-center justify-between">
-              <h2 className="text-xl font-semibold text-gray-800">
-                👥 User Records
-              </h2>
-              <div className="flex items-center gap-1 bg-white text-gray-500 ring ring-black/5 rounded px-2 py-1 w-full sm:w-72">
-                <i className="bi bi-search"></i>
-                <input
-                  value={query}
-                  onChange={(e) => setQuery(e.target.value)}
-                  placeholder="Search by name, email or role..."
-                  className="outline-0 w-60"
-                />
+          <div className="bg-white border border-gray-100 rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden mb-10">
+            <div className="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-center justify-between bg-white/50 backdrop-blur-xl sticky top-0 z-20">
+              <div className="flex items-center gap-3">
+                <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
+                  <i className="bi bi-people-fill text-xl"></i>
+                </div>
+                <h2 className="text-2xl font-bold text-gray-900 tracking-tight">
+                  User Records
+                </h2>
               </div>
-              <div className="flex items-center gap-5">
-                <button
-                  className="ring ring-black/5 px-2 bg-indigo-600 text-white hover:bg-indigo-700 hover:scale-102 transition-all duration-200  py-1 rounded"
-                  onClick={openCreateModalForm}
-                >
-                  <i className="bi bi-person-add">&nbsp;</i>Add User
+
+              <div className="flex flex-wrap items-center gap-4 w-full sm:w-auto">
+                <div className="relative group w-full sm:w-72">
+                  <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                    <i className="bi bi-search text-gray-400 group-focus-within:text-blue-500 transition-colors"></i>
+                  </div>
+                  <input
+                    value={query}
+                    onChange={(e) => setQuery(e.target.value)}
+                    placeholder="Search users..."
+                    className="pl-10 pr-4 py-2.5 w-full bg-gray-50 border border-gray-200 text-gray-900 text-sm rounded-xl focus:ring-2 focus:ring-blue-100 focus:border-blue-500 block transition-all"
+                  />
+                </div>
+
+                <button className="bg-blue-600 hover:bg-blue-700 text-white shadow-lg shadow-blue-200 px-5 py-2.5 rounded-xl font-medium transition-all active:scale-95 flex items-center gap-2">
+                  <Link
+                    href="/dashboard/admin/adduser"
+                    className="flex items-center gap-2"
+                  >
+                    <i className="bi bi-plus-lg"></i> <span>Add User</span>
+                  </Link>
                 </button>
               </div>
             </div>
+
             <div className="overflow-x-auto w-full">
-              <table className="w-full min-w-[600px] text-sm text-gray-700 ">
-                <thead className="bg-sky-100 text-gray-600 uppercase text-xs border-b border-gray-200 sticky top-0 z-10">
+              <table className="w-full min-w-[800px] text-left border-collapse">
+                <thead className="bg-gray-50 border-b border-gray-100">
                   <tr>
                     <th
-                      className="p-4 whitespace-nowrap text-gray-600 text-left font-semibold tracking-wide"
-                      onClick={() => handleSort("id")}
+                      className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors"
+                      onClick={() => handleSort("_id")}
                     >
                       S/N
                     </th>
                     <th
-                      className="p-4 whitespace-nowrap text-gray-600 mx-auto  text-left font-semibold tracking-wide cursor-pointer hover:text-blue-600"
-                      onClick={() => handleSort("firstname")}
+                      className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors"
+                      onClick={() => handleSort("firstName")}
                     >
                       Name
                     </th>
                     <th
-                      className="p-4 whitespace-nowrap text-gray-600 mx-auto  text-left font-semibold tracking-wide cursor-pointer hover:text-blue-600"
+                      className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors"
                       onClick={() => handleSort("email")}
                     >
                       Email
                     </th>
-                    <th className="p-4 whitespace-nowrap text-gray-600 mx-auto  text-left font-semibold tracking-wide">
+                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider">
                       Phone
                     </th>
                     <th
-                      className="p-4 whitespace-nowrap text-gray-600 mx-auto  text-left font-semibold tracking-wide cursor-pointer hover:text-blue-600"
+                      className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors"
                       onClick={() => handleSort("birthDate")}
                     >
                       Birthday
                     </th>
                     <th
-                      className="p-4 whitespace-nowrap text-gray-600 mx-auto  text-left font-semibold tracking-wide cursor-pointer"
+                      className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider cursor-pointer hover:text-blue-600 transition-colors"
                       onClick={() => handleSort("address")}
                     >
                       Address
                     </th>
-                    <th className="p-4 whitespace-nowrap text-gray-600 mx-auto  text-left font-semibold tracking-wide">
+                    <th className="px-6 py-4 text-xs font-semibold text-gray-500 uppercase tracking-wider text-right">
                       Actions
                     </th>
                   </tr>
                 </thead>
 
-                <tbody className="divide-y divide-gray-100">
+                <tbody className="divide-y divide-gray-50">
                   {loading ? (
                     <tr>
                       <td
                         colSpan={7}
-                        className="p-8 whitespace-normal text-center text-gray-500 italic animate-pulse"
+                        className="px-6 py-10 text-center text-gray-500 italic"
                       >
-                        Loading...
+                        <div className="flex flex-col items-center gap-2">
+                          <div className="w-6 h-6 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+                          Loading users...
+                        </div>
                       </td>
                     </tr>
                   ) : error ? (
                     <tr>
                       <td
                         colSpan={7}
-                        className="p-8 whitespace-normal text-center text-red-600"
+                        className="px-6 py-10 text-center text-red-500 bg-red-50/50"
                       >
+                        <i className="bi bi-exclamation-triangle mr-2"></i>{" "}
                         {error}
                       </td>
                     </tr>
@@ -251,9 +265,12 @@ export default function Admin_user_list() {
                     <tr>
                       <td
                         colSpan={7}
-                        className="p-8  whitespace-normal text-center text-gray-500"
+                        className="px-6 py-10 text-center text-gray-500"
                       >
-                        No users found.
+                        <div className="flex flex-col items-center gap-2 opacity-50">
+                          <i className="bi bi-inbox text-3xl"></i>
+                          No users found matching criteria.
+                        </div>
                       </td>
                     </tr>
                   ) : sortedData.length > 0 ? (
@@ -261,55 +278,90 @@ export default function Admin_user_list() {
                     sortedData.map((u, idx) => (
                       <tr
                         key={idx}
-                        className="hover:bg-blue-50/50 transition duration-150"
+                        className="hover:bg-blue-50/30 transition-colors group"
                       >
-                        <td className="px-4 py-2 whitespace-normal font-medium text-gray-700 text-left border-b-gray-200">
-                          {idx + 1}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-medium">
+                          #{idx + 1}
                         </td>
-                        <td className="flex items-center px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
-                          <span className="w-10 h-10 bg-indigo-100 text-indigo-500 text-medium rounded-full flex items-center justify-center mr-3">
-                            {u.firstname
-                              .split(" ")
-                              .map((n) => n[0])
-                              .join("") +
-                              u.lastname
-                                .split(" ")
-                                .map((x) => x[0])
-                                .join("")}
-                          </span>
-                          <span>{u.firstname + " " + u.lastname}</span>
+                        <td className="px-6 py-4 whitespace-nowrap">
+                          <div className="flex items-center gap-3">
+                            <span className="w-10 h-10 bg-linear-to-br from-blue-500 to-indigo-600 text-white text-sm font-bold rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
+                              {u.name.split(" ")[0] && u.name.split(" ")[1]
+                                ? (
+                                    u.name.split(" ")[0][0] +
+                                    u.name.split(" ")[1][0]
+                                  ).toUpperCase()
+                                : "NA"}
+                            </span>
+                            <div className="flex flex-col">
+                              <span className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
+                                {u.name.split(" ")[0] && u.name.split(" ")[1]
+                                  ? u.name.split(" ")[0] +
+                                    " " +
+                                    u.name.split(" ")[1]
+                                  : "Unknown User"}
+                              </span>
+                              <span className="text-xs text-gray-500">
+                                User ID: {u._id.slice(-4)}
+                              </span>
+                            </div>
+                          </div>
                         </td>
-                        <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                           {u.email}
                         </td>
-                        <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
-                          {u.phone}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 font-mono">
+                          {u.phone ? (
+                            u.phone
+                          ) : (
+                            <span className="text-gray-300 italic">N/A</span>
+                          )}
                         </td>
-                        <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200">
-                          {u.birthDate}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                          {u.birthDate ? (
+                            <div className="flex items-center gap-2">
+                              <i className="bi bi-calendar4 text-gray-400"></i>
+                              {u.birthDate}
+                            </div>
+                          ) : (
+                            <span className="text-gray-300 italic">N/A</span>
+                          )}
                         </td>
-                        <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 text-gray-600">
-                          {u.address.street}, {u.address.city}
+                        <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                          {u.address?.city ? (
+                            <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800">
+                              {u.address.city}
+                            </span>
+                          ) : (
+                            <span className="text-gray-300 italic">N/A</span>
+                          )}
                         </td>
-                        <td className="px-4 py-2 whitespace-normal font-medium text-left border-b-gray-200 flex items-center space-x-2">
-                          <button
-                            onClick={() => handleViewUser(u.id)}
-                            className="p-2 rounded-md bg-blue-50 text-blue-600 hover:bg-blue-200 transition"
-                          >
-                            <i className="bi bi-eye"></i>
-                          </button>
-                          <button
-                            onClick={() => openEditModalForm(u.id)}
-                            className="p-2 rounded-md bg-orange-50 text-orange-600 hover:bg-orange-200 transition"
-                          >
-                            <i className="bi bi-pencil"></i>
-                          </button>
-                          <button
-                            onClick={() => handleDelete(u.id)}
-                            className="p-2 rounded-md bg-red-50 text-red-600 hover:bg-red-200 transition"
-                          >
-                            <i className="bi bi-trash"></i>
-                          </button>
+                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                          <div className="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
+                            <Link href={`/${dashboard}/admin/${u._id}`}>
+                              <button
+                                className="p-2 rounded-lg text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors tooltip"
+                                title="View Details"
+                              >
+                                <i className="bi bi-eye"></i>
+                              </button>
+                            </Link>
+                            <Link href={`/dashboard/admin/edituser/${u._id}`}>
+                              <button
+                                className="p-2 rounded-lg text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors"
+                                title="Edit User"
+                              >
+                                <i className="bi bi-pencil-square"></i>
+                              </button>
+                            </Link>
+                            <button
+                              onClick={() => handleDelete(u._id)}
+                              className="p-2 rounded-lg text-red-600 bg-red-50 hover:bg-red-100 transition-colors"
+                              title="Delete User"
+                            >
+                              <i className="bi bi-trash"></i>
+                            </button>
+                          </div>
                         </td>
                       </tr>
                     ))
@@ -317,25 +369,34 @@ export default function Admin_user_list() {
                     "No data found"
                   )}
                 </tbody>
-                <tfoot className="mt-2">
+                <tfoot className="bg-gray-50/50 border-t border-gray-100">
                   <tr>
-                    <td colSpan={7} className="px-4 py-2">
-                      <div className="flex items-center justify-between">
+                    <td colSpan={7} className="px-6 py-4">
+                      <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
                         <span className="text-sm text-gray-500">
                           Showing{" "}
-                          {currentPage * itemsPerPage - itemsPerPage + 1} to{" "}
-                          {Math.min(currentPage * itemsPerPage, Users.length)}{" "}
-                          of {Users.length} users
+                          <span className="font-semibold text-gray-900">
+                            {currentPage * itemsPerPage - itemsPerPage + 1}
+                          </span>{" "}
+                          to{" "}
+                          <span className="font-semibold text-gray-900">
+                            {Math.min(currentPage * itemsPerPage, Users.length)}
+                          </span>{" "}
+                          of{" "}
+                          <span className="font-semibold text-gray-900">
+                            {Users.length}
+                          </span>{" "}
+                          entries
                         </span>
-                        <div className="flex flex-wrap items-center justify-between gap-3">
+                        <div className="flex items-center gap-2">
                           <button
                             onClick={() =>
                               setCurrentPage((prev) => Math.max(prev - 1, 1))
                             }
                             disabled={currentPage === 1}
-                            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50"
+                            className="px-4 py-2 text-sm font-medium bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
                           >
-                            {"<"}
+                            Previous
                           </button>
                           <button
                             onClick={() =>
@@ -344,9 +405,9 @@ export default function Admin_user_list() {
                               )
                             }
                             disabled={currentPage === totalPages}
-                            className="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white rounded-md disabled:opacity-50"
+                            className="px-4 py-2 text-sm font-medium bg-white border border-gray-200 text-gray-700 rounded-lg hover:bg-gray-50 hover:text-blue-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-sm"
                           >
-                            {">"}
+                            Next
                           </button>
                         </div>
                       </div>
@@ -358,19 +419,6 @@ export default function Admin_user_list() {
           </div>
         </div>
       </div>
-      <Admin_modal isOpen={isCreateModalform} onClose={closeModal}>
-        <Create_user_form onClose={closeModal} />
-      </Admin_modal>
-      <Admin_modal isOpen={isEditModalform} onClose={closeModal}>
-        <Edit_user_form onClose={closeModal} user={userToEdit} />
-      </Admin_modal>
-      <Admin_modal isOpen={isViewUserModal} onClose={closeModal}>
-        <View_user_modal
-          userDetails={userDataToView}
-          onClose={closeModal}
-          editUser={openEditModalForm}
-        />
-      </Admin_modal>
     </>
   );
 }

@@ -1,17 +1,13 @@
 "use client";
 
 import { createAuthClient } from "better-auth/react";
-import { auth } from "./auth";
+import type { auth } from "./auth";
 import { inferAdditionalFields } from "better-auth/client/plugins";
 
+// @ auth-client-config : create and configure authentication client with base URL and plugins
 export const authClient = createAuthClient({
-  baseURL:
-    typeof window === "undefined"
-      ? "http://localhost:3000"
-      : window.location.origin,
-  plugins: [
-    inferAdditionalFields<typeof auth>(),
-  ],
+  plugins: [inferAdditionalFields<typeof auth>()],
 });
 
+// @ exports : export authentication methods for use in client components
 export const { signIn, signUp, useSession, signOut } = authClient;

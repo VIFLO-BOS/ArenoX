@@ -1,13 +1,14 @@
 "use client";
-import React from "react";
 import Program_hero_section from "./program_hero_section";
 import Program_content_section from "./program_content_section";
 import { motion } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
+/* @ program-page : main program page component with decorative background and animated sections */
 export default function Program_page() {
   return (
     <div>
+      {/* @ background-gradient : decorative gradient background */}
       <div
         aria-hidden="true"
         className="absolute inset-x-0 -top-70 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"

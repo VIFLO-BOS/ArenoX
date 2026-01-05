@@ -1,4 +1,3 @@
-
 const studentData = [
   { name: "Web Dev", students: 1240 },
   { name: "Data Science", students: 987 },
@@ -15,4 +14,4 @@ const revenueData = [
   { month: "Jul", revenue: 7490 },
 ];
 
-export { revenueData, studentData};
+export { revenueData, studentData };

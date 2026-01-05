@@ -1,3 +1,4 @@
+// @ course-model : MongoDB validation schema for course documents
 export const courseModel = {
   validator: {
     $jsonSchema: {
@@ -48,6 +49,6 @@ export const courseModel = {
       },
     },
   },
-  validationLevel: "strict", // Enforces validation on all inserts and updates
-  validationAction: "error", // Rejects documents that fail validation
+  validationLevel: "strict",
+  validationAction: "error",
 };

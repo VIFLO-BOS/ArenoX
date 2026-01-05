@@ -68,3 +68,4 @@ export const mobileMenuConfig = {
 	toggleIcon: true,
 	items: [...navigationItems, ...userMenuItems],
 };
+

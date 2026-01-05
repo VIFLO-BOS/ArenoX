@@ -26,93 +26,81 @@ export default function Mobile_menu({
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ delay: 0.3, ease: easeInOut }}
-          className="fixed inset-0 z-50 transition-all duration-300 "
+          className="fixed inset-0 z-50 transition-all duration-300"
         >
-          <DialogPanel className="fixed inset-y-0 right-0 z-50 overflow-y-aut bg-black ./kmi.n\Atext-black  w-60 h-full transition-all duration-500 ease">
-            <div className="flex  items-center justify-end ">
-              <Link href="/" aria-label="Home" className="hidden -m-1.5 p-1.5">
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 bg-black/20 backdrop-blur-sm"
+            onClick={() => setMobileMenuOpen(false)}
+          />
+
+          <DialogPanel className="fixed inset-y-0 right-0 z-50 overflow-y-auto bg-gray-900/95 backdrop-blur-2xl border-l border-white/10 w-72 h-full shadow-2xl transition-all duration-500 ease">
+            <div className="flex items-center justify-between p-6">
+              <Link
+                href="/"
+                aria-label="Home"
+                className="-m-1.5 p-1.5"
+                onClick={() => setMobileMenuOpen(false)}
+              >
                 <Image
                   src="/images/large-logo.jpg"
                   width={50}
                   height={10}
                   alt="logo"
-                  className="h-8 w-auto"
+                  className="h-10 w-auto rounded-lg"
                 />
               </Link>
               <button
                 type="button"
-                className="m-2.5 mr-4 rounded-md p-2.5  text-gray-400 flex items-center-safe gap-1 hover:text-white cursor-pointer font-medium"
+                className="rounded-full p-2 text-white bg-white/10 hover:bg-white/20 transition-all cursor-pointer"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <span className="font-medium">Back</span>
-                <i className="bi bi-chevron-right"></i>
+                <i className="bi bi-x-lg text-lg"></i>
               </button>
             </div>
-            <p className="px-3 text-gray-200 font-medium text-lg border-b border-gray-400 mb-5 w-100">Arenox Menu</p>
-            <div className=" flow-root">
-              <div className="-my-6 divide-y divide-gray-500/10">
-                <div className="space-y-2  text-gray-400 p-1 mt-5 h-100">
-                  {navigationItems.map((item, index) => (
-                    <motion.div key={index}>
-                      <Menu
-                        as="div"
-                        className="relative rounded inline-block group w-58 pl-3  py-2 hover:bg-white/20 transition-all duration-500 ease-in-out"
-                      >
-                        {/* Main menu button directly as a Link */}
-                        <MenuButton
-                          as={Link}
-                          href={item.pathname}
-                          className={`font-semibold 
-																	} focus:outline-none transition group-hover:text-white inline-flex items-center gap-x-1.5`}
-                        >
-                          {item.name}
-                          {/* {item.iconName && (
-                            <i className={`${item.iconName} pl-0.5`} />
-                          )} */}
-                        </MenuButton>
 
-                        {/* Dropdown submenu */}
-                        {/* {item.submenu && (
-                          <MenuItems
-                            static
-                            className="
-																		absolute -right-5 -top-0 min-w-30
-																		rounded-xl  bg-white shadow-lg ring-1 ring-black/5
-																		opacity-0 invisible translate-y-1 pointer-events-none
-																		group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 group-hover:pointer-events-auto
-																		transition-all duration-300 ease-out
-																		z-50
-																		max-w-50
-																	"
-                          >
-                            <div>
-                              {item.submenu.map((submenuItem, submenuIndex) => (
-                                <MenuItem
-                                  key={submenuIndex}
-                                  as={Link}
-                                  href={submenuItem}
-                                  className="
-																					block px-4 py-2 text-sm font-medium text-gray-900
-																					data-[focus]:bg-gray-100 data-[focus]:text-gray-900
-																					hover:text-blue-600
-																				"
-                                >
-                                  {submenuItem}
-                                </MenuItem>
-                              ))}
-                            </div>
-                          </MenuItems>
-                        )} */}
-                      </Menu>
-                    </motion.div>
-                  ))}
-                </div>
+            <div className="px-6 pb-6">
+              <p className="text-gray-400 text-xs font-semibold uppercase tracking-wider mb-4 border-b border-gray-700/50 pb-2">
+                Menu
+              </p>
+              <div className="space-y-1">
+                {navigationItems.map((item, index) => (
+                  <motion.div key={index}>
+                    <Menu as="div" className="relative group w-full">
+                      <MenuButton
+                        as={Link}
+                        href={item.pathname}
+                        onClick={() => setMobileMenuOpen(false)}
+                        className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-300 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300"
+                      >
+                        {item.name}
+                        <i className="bi bi-chevron-right text-gray-600 group-hover:text-blue-400 text-xs"></i>
+                      </MenuButton>
+                    </Menu>
+                  </motion.div>
+                ))}
+              </div>
+
+              <div className="mt-8 pt-6 border-t border-gray-700/50">
+                <Link
+                  href="/signin"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-center py-3 rounded-xl bg-white/5 text-white font-medium hover:bg-white/10 border border-white/10 mb-3 transition-all"
+                >
+                  Sign In
+                </Link>
+                <Link
+                  href="/signup"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="block w-full text-center py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition-all"
+                >
+                  Get Started
+                </Link>
               </div>
             </div>
           </DialogPanel>
         </motion.div>
       </Dialog>
-
     </>
   );
 }

@@ -2,6 +2,8 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+/* @ type-definitions : define types for users, courses, and enrollments */
+
 type User = {
   id: string;
   name: string;
@@ -21,7 +23,8 @@ type Enrollment = {
   enrolledAt: string;
 };
 
-// 🧩 Mock Data (unchanged)
+/* @ mock-data : sample data for users, courses, and enrollments */
+
 const MOCK_USERS: User[] = [
   { id: "u1", name: "Alice Johnson", email: "alice@example.com" },
   { id: "u2", name: "Bob Smith", email: "bob@example.com" },
@@ -57,7 +60,8 @@ const MOCK_ENROLLMENTS: Enrollment[] = [
   },
 ];
 
-// Status Config
+/* @ status-config : styling configuration for different enrollment statuses */
+
 const STATUS_CONFIG = {
   active: {
     bg: "bg-emerald-100",
@@ -76,7 +80,11 @@ const STATUS_CONFIG = {
   },
 };
 
+/* @ admin-enrollment-component : enrollment management component with search, filter, and sort */
+
 export default function Admin_enrollment() {
+  /* @ filter-state : manage search, filter, and sort state */
+
   const [searchTerm, setSearchTerm] = useState("");
   const [filterStatus, setFilterStatus] = useState<
     "all" | "active" | "completed" | "pending"
@@ -84,6 +92,8 @@ export default function Admin_enrollment() {
   const [sortBy, setSortBy] = useState<"name" | "course" | "status" | "date">(
     "name"
   );
+
+  /* @ enrollment-data : combine enrollment data with user and course information */
 
   const enrollments = MOCK_ENROLLMENTS.map((en) => {
     const user = MOCK_USERS.find((u) => u.id === en.userId);
@@ -95,6 +105,8 @@ export default function Admin_enrollment() {
       courseTitle: course?.title ?? "N/A",
     };
   });
+
+  /* @ filtered-sorted-data : apply search, filter, and sort to enrollments */
 
   const filteredEnrollments = enrollments
     .filter((en) => {
@@ -155,31 +167,19 @@ export default function Admin_enrollment() {
         </div>
 
         {/* Controls */}
-        <div className="bg-white  mb-6">
+        <div className="bg-white mb-6">
           <div className="px-2">
             <div className="flex flex-col lg:flex-row gap-4 items-center justify-between">
               {/* Search */}
-              <div className="relative flex-1 max-w-md">
+              <div className="relative flex-1 max-w-md w-full">
                 <input
                   type="text"
                   placeholder="Search students or courses..."
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-transparent transition-all"
+                  className="w-full pl-10 pr-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none transition-all"
                 />
-                <svg
-                  className="absolute left-3 top-3.5 w-5 h-5 text-gray-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+                <i className="bi bi-search absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"></i>
               </div>
 
               {/* Filters */}
@@ -191,10 +191,10 @@ export default function Admin_enrollment() {
                       whileHover={{ scale: 1.05 }}
                       whileTap={{ scale: 0.95 }}
                       onClick={() => setFilterStatus(status)}
-                      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all ${
+                      className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all border ${
                         filterStatus === status
-                          ? "bg-indigo-600 text-white shadow-sm"
-                          : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                          ? "bg-blue-600 text-white border-blue-600 shadow-md shadow-blue-500/20"
+                          : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
                       }`}
                     >
                       {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -204,44 +204,49 @@ export default function Admin_enrollment() {
               </div>
 
               {/* Sort */}
-              <select
-                value={sortBy}
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
-                  setSortBy(e.target.value as "name" | "course" | "status" | "date")
-                }
-                className="px-3 py-2 border border-gray-200 rounded-lg text-sm focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
-              >
-                <option value="name">Sort by Name</option>
-                <option value="course">Sort by Course</option>
-                <option value="status">Sort by Status</option>
-                <option value="date">Sort by Date</option>
-              </select>
+              <div className="relative">
+                <select
+                  value={sortBy}
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) =>
+                    setSortBy(
+                      e.target.value as "name" | "course" | "status" | "date"
+                    )
+                  }
+                  className="px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:bg-white focus:ring-2 focus:ring-blue-100 focus:border-blue-500 outline-none appearance-none pr-8 cursor-pointer"
+                >
+                  <option value="name">Sort by Name</option>
+                  <option value="course">Sort by Course</option>
+                  <option value="status">Sort by Status</option>
+                  <option value="date">Sort by Date</option>
+                </select>
+                <i className="bi bi-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-xs text-gray-500 pointer-events-none"></i>
+              </div>
             </div>
           </div>
         </div>
 
         {/* Modern Table */}
-        <div className="bg-white overflow-hidden">
+        <div className="bg-white border border-gray-100 rounded-2xl shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
           <div className="overflow-x-auto w-full">
             <table className="w-full min-w-[600px] text-sm text-gray-700">
-              <thead className="bg-sky-100 text-gray-600 uppercase text-xs border-b border-gray-200 sticky top-0 z-10">
+              <thead className="bg-gray-50 text-gray-600 uppercase text-xs border-b border-gray-200">
                 <tr>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left font-semibold tracking-wider">
                     S/N
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left font-semibold tracking-wider">
                     Student
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left font-semibold tracking-wider">
                     Course
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left font-semibold tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left font-semibold tracking-wider">
                     Enrolled
                   </th>
-                  <th className="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-right font-semibold tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -250,22 +255,12 @@ export default function Admin_enrollment() {
                 <tbody>
                   {filteredEnrollments.length === 0 ? (
                     <tr>
-                      <td colSpan={5} className="px-6 py-12 text-center">
-                        <div className="text-gray-500">
-                          <svg
-                            className="w-12 h-12 mx-auto mb-4 text-gray-300"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={1}
-                              d="M20 13V6a2 2 0 00-2-2H6a2 2 0 00-2 2v7m16 0v5a2 2 0 01-2 2H6a2 2 0 01-2-2v-5m16 0h-2.586a1 1 0 00-.707.293l-2.414 2.414a1 1 0 01-.707.293h-3.172a1 1 0 01-.707-.293l-2.414-2.414A1 1 0 006.586 13H4"
-                            />
-                          </svg>
-                          <p className="text-sm">No enrollments found</p>
+                      <td colSpan={6} className="px-6 py-12 text-center">
+                        <div className="text-gray-500 flex flex-col items-center">
+                          <i className="bi bi-inbox text-4xl text-gray-300 mb-3"></i>
+                          <p className="text-sm font-medium">
+                            No enrollments found
+                          </p>
                         </div>
                       </td>
                     </tr>

@@ -3,10 +3,15 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { nextCookies } from "better-auth/next-js";
 import connect from "./db";
 
+// @ database-connection : establish connection to MongoDB database
 const mongodb = await connect();
 
+// @ auth-configuration : configure better-auth with database, user schema, providers, and plugins
 export const auth = betterAuth({
+  // @ database-adapter : setup MongoDB adapter for better-auth
   database: mongodbAdapter(mongodb.db),
+
+  // @ user-schema : define user model with additional role field for RBAC
   user: {
     additionalFields: {
       role: {
@@ -17,24 +22,39 @@ export const auth = betterAuth({
       },
     },
   },
+
+  // @ email-password-auth : enable email and password authentication
   emailAndPassword: {
     enabled: true,
   },
+
+  // @ social-providers : configure GitHub and Google OAuth providers
   socialProviders: {
     github: {
       clientId: process.env.GITHUB_CLIENT_ID as string,
       clientSecret: process.env.GITHUB_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "select_account",
+        },
+      },
+      
     },
+
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+      authorization: {
+        params: {
+          prompt: "select_account",
+        },
+      },
+    
     },
   },
+
+  // @ plugins-and-config : setup Next.js cookies plugin, trusted origins, and experimental features
   plugins: [nextCookies()],
-  trustedOrigins: [
-    "http://192.168.42.174:3000",
-    "http://192.168.137.227:3000",
-    "http://localhost:3000",
-  ],
+  trustedOrigins: [process.env.BETTER_AUTH_URL as string],
   experimental: { joins: true },
 });
