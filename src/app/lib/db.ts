@@ -1,6 +1,6 @@
 import { MongoClient, Db } from "mongodb";
 
-const dbName = process.env.DB_NAME || "arenox-database";
+const dbName = process.env.DB_NAME;
 
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
