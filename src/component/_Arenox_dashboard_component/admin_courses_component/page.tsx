@@ -1,9 +1,5 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
-import Admin_modal from "../admin_modals/admin_modal";
-import Course_form_modal from "../admin_modals/courseForm";
-import Edit_course_form from "../admin_modals/editCourseForm";
-import View_book_modal from "../admin_modals/viewCoursePage";
 import toast from "react-hot-toast";
 import { course, coursesDetails } from "@/utils/types/course/course";
 
@@ -337,19 +333,6 @@ export default function Admin_courses() {
           </table>
         </div>
       </div>
-      <Admin_modal isOpen={isCreateCourseForm} onClose={closeModal}>
-        <Course_form_modal onClose={closeModal} />
-      </Admin_modal>
-      <Admin_modal isOpen={isEditCourseForm} onClose={closeModal}>
-        <Edit_course_form onClose={closeModal} />
-      </Admin_modal>
-      <Admin_modal isOpen={isviewCourseModal} onClose={closeModal}>
-        <View_book_modal
-          courseDataToView={courseDataToView as unknown as coursesDetails}
-          editBook={openEditCourseForm}
-          onClose={closeModal}
-        />
-      </Admin_modal>
     </>
   );
 }
