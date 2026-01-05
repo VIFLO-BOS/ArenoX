@@ -1,7 +1,8 @@
 import { headers } from "next/headers";
-import { auth } from "@/app/lib/auth";
+import { getAuth } from "@/app/lib/auth";
 import { redirect } from "next/navigation";
 import { AdminShell } from "./adminShell";
+import { userSession } from "@/utils/types/session";
 
 {
   /* @ admin-layout : admin dashboard layout with authentication and role-based access control */
@@ -14,6 +15,8 @@ export default async function AdminLayout({
   {
     /* @ session-check : verify user is authenticated */
   }
+
+  const auth = await getAuth()
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -23,7 +26,8 @@ export default async function AdminLayout({
   {
     /* @ role-validation : ensure user has admin role */
   }
-  const role = session?.user.role;
+  const user = session.user as userSession
+  const role = user.role;
 
   if (role !== "admin") redirect("/dashboard/user");
 

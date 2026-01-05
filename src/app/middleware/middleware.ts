@@ -1,12 +1,14 @@
 import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
-import { auth } from "@/app/lib/auth";
+import { getAuth } from "@/app/lib/auth";
+import { userSession } from "@/utils/types/session";
 
 // @ middleware-function : protect dashboard routes with authentication and role-based access control
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
   // @ session-check : verify user is authenticated
+  const auth = await getAuth();
   const session = await auth.api.getSession({
     headers: req.headers,
   });
@@ -15,7 +17,8 @@ export async function middleware(req: NextRequest) {
   }
 
   // @ role-validation : ensure user has a valid role assigned
-  const role = session.user.role;
+  const user = session.user as userSession;
+  const role = user.role;
   if (!role) return NextResponse.redirect(new URL("/signin", req.url));
 
   // @ role-based-routing : redirect users to their appropriate dashboard based on role

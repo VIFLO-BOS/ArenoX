@@ -65,7 +65,7 @@ export async function POST(request: Request): Promise<NextResponse> {
         const userId = JSON.parse(tokenPayload as string).userId;
 
         console.log("userId:- ", userId);
-        console.log("blob.url:- ", blob.url);
+        console.log("blob.url:- ", blob.url);   
 
         const response = await auth.api.updateUser({
           headers: await headers(),

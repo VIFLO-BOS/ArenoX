@@ -2,6 +2,7 @@ import { getAuth } from "@/app/lib/auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
 import Image from "next/image";
+import { userSession } from "@/utils/types/session";
 
 /* @ dashboard-component : welcome dashboard page with user session */
 
@@ -18,7 +19,7 @@ export default async function Dashboard() {
 
   /* @ user-data : extract user information from session */
   
-  const user = session.user;
+  const user = session.user as userSession;
 
   /* @ render : display user welcome dashboard with profile and info */
   
