@@ -40,5 +40,8 @@ export default async function connect() {
   }
 
   cachedDb = cachedClient.db(dbName);
+  console.log(
+    `Connected to database: ${dbName || "default database from URL"}`
+  );
   return { client: cachedClient, db: cachedDb };
 }

@@ -47,7 +47,7 @@ export default function Admin_dashboard_header({
           <Menu as="div" className="relative">
             <MenuButton className="inline-flex items-center justify-center gap-x-1.5 rounded-md px-1 py-1 text-sm font-semibold bg-white outline-none focus:outline-none">
               <Image
-                src={user?.image as string}
+                src={user?.image || "/images/avatar.png"}
                 width={35}
                 height={35}
                 alt="User Profile"
