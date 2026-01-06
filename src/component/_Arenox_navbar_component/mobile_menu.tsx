@@ -1,5 +1,4 @@
 import React from "react";
-import { Menu, MenuButton } from "@headlessui/react";
 import { navigationItems } from "./nav-menu";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import Link from "next/link";
@@ -19,7 +18,7 @@ export default function Mobile_menu({
     <>
       <Dialog
         open={mobileMenuOpen}
-        onClose={setMobileMenuOpen}
+        onClose={() => setMobileMenuOpen(false)}
         className="lg:hidden"
       >
         <motion.div
@@ -66,17 +65,14 @@ export default function Mobile_menu({
               <div className="space-y-1">
                 {navigationItems.map((item, index) => (
                   <motion.div key={index}>
-                    <Menu as="div" className="relative group w-full">
-                      <MenuButton
-                        as={Link}
-                        href={item.pathname}
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-300 rounded-xl hover:bg-white/10 hover:text-white transition-all duration-300"
-                      >
-                        {item.name}
-                        <i className="bi bi-chevron-right text-gray-600 group-hover:text-blue-400 text-xs"></i>
-                      </MenuButton>
-                    </Menu>
+                    <Link
+                      href={item.pathname || "/"}
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-300 rounded-xl hover:bg-white/10 hover:text-white active:bg-white/20 transition-all duration-300"
+                    >
+                      <span>{item.name}</span>
+                      <i className="bi bi-chevron-right text-gray-600 text-xs"></i>
+                    </Link>
                   </motion.div>
                 ))}
               </div>
@@ -85,14 +81,14 @@ export default function Mobile_menu({
                 <Link
                   href="/signin"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center py-3 rounded-xl bg-white/5 text-white font-medium hover:bg-white/10 border border-white/10 mb-3 transition-all"
+                  className="block w-full text-center py-3 rounded-xl bg-white/5 text-white font-medium hover:bg-white/10 active:bg-white/20 border border-white/10 mb-3 transition-all"
                 >
                   Sign In
                 </Link>
                 <Link
                   href="/signup"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block w-full text-center py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 shadow-lg shadow-blue-500/20 transition-all"
+                  className="block w-full text-center py-3 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 active:bg-blue-800 shadow-lg shadow-blue-500/20 transition-all"
                 >
                   Get Started
                 </Link>

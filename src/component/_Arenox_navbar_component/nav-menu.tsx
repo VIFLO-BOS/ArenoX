@@ -1,4 +1,3 @@
-
 // arenoX Navigation Menu Structure
 // --------------------------------
 // Top-level menu items:
@@ -23,49 +22,48 @@
 // • ARIA labels on expandable menus
 
 interface navigationItems {
-	name: string;
-	pathname?: string;
-	iconName?: string;
-	submenu?: string[];
-	// subprogram?: string[];
-	action?: "";
+  name: string;
+  pathname?: string;
+  iconName?: string;
+  submenu?: string[];
+  // subprogram?: string[];
+  action?: "";
 }
 
 export const navigationItems = [
-	{ name: "Home", pathname: "/" },
-	{
-		name: "Courses",
-		pathname: "/courses",
-		iconName: "bi bi-arrow-down-short",
-		submenu: [
-			"Development",
-			"Business",
-			"Design",
-			"Marketing",
-			"Data Science",
-			"Managament",
-		],
-	},
-	{
-		name: "Programs",
-		pathname: "/program",
-		iconName: "bi bi-arrow-down-short",
-		submenu: ["Bootcamps", "Certifications", "Degrees"],
-	},
-	{ name: "Blog", pathname: "/blog" },
-	{ name: "Pricing", pathname: "/pricing" },
-	{ name: "About", pathname: "/about" },
-	{ name: "Contact", pathname: "/contact" },
+  { name: "Home", pathname: "/" },
+  {
+    name: "Courses",
+    pathname: "/courses",
+    iconName: "bi bi-arrow-down-short",
+    submenu: [
+      "Development",
+      "Business",
+      "Design",
+      "Marketing",
+      "Data Science",
+      "Managament",
+    ],
+  },
+  {
+    name: "Programs",
+    pathname: "/program",
+    iconName: "bi bi-arrow-down-short",
+    submenu: ["Bootcamps", "Certifications", "Degrees"],
+  },
+  { name: "Blog", pathname: "/blog" },
+  { name: "Pricing", pathname: "/pricing" },
+  { name: "About", pathname: "/about" },
+  { name: "Contact", pathname: "/contact" },
 ];
 
 export const userMenuItems = [
-	{ name: "Profile", pathname: "/profile" },
-	{ name: "Settings", pathname: "/settings" },
-	{ name: "Sign Out", action: "logout" },
+  { name: "Profile", pathname: "/profile" },
+  { name: "Settings", pathname: "/settings" },
+  { name: "Sign Out", action: "logout" },
 ];
 
 export const mobileMenuConfig = {
-	toggleIcon: true,
-	items: [...navigationItems, ...userMenuItems],
+  toggleIcon: true,
+  items: [...navigationItems, ...userMenuItems],
 };
-
