@@ -23,10 +23,14 @@ export const getAuth = async () => {
   const authSecret = process.env.BETTER_AUTH_SECRET;
 
   if (process.env.NODE_ENV === "production") {
-    if (!authUrl)
-      console.warn("WARNING: BETTER_AUTH_URL is missing in production");
-    if (!authSecret)
-      console.warn("WARNING: BETTER_AUTH_SECRET is missing in production");
+    if (!authUrl || authUrl.includes("localhost")) {
+      console.warn(
+        "CRITICAL: BETTER_AUTH_URL is missing or set to localhost in production. This will break authentication."
+      );
+    }
+    if (!authSecret) {
+      console.warn("WARNING: BETTER_AUTH_SECRET is missing in production.");
+    }
   }
 
   cachedAuth = betterAuth({
@@ -79,7 +83,7 @@ export const getAuth = async () => {
 
     // @ plugins-and-config : setup Next.js cookies plugin, trusted origins, and experimental features
     plugins: [nextCookies()],
-    trustedOrigins: authUrl ? [authUrl] : [],
+    trustedOrigins: authUrl ? [new URL(authUrl).origin] : [],
     experimental: { joins: true },
   });
 

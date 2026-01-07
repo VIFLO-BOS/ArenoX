@@ -6,6 +6,7 @@ import { inferAdditionalFields } from "better-auth/client/plugins";
 
 // @ auth-client-config : create and configure authentication client with base URL and plugins
 export const authClient = createAuthClient({
+  baseURL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL,
   plugins: [inferAdditionalFields<typeof getAuth>()],
 });
 
