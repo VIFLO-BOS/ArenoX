@@ -7,8 +7,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signInSchema, SignInValues } from "@/app/model/signInSchema";
 
-
-
 /* @ signin-page : user sign-in page with email/password and social authentication */
 export default function SignInPage() {
   /* @ loading-state : manage loading and error states */
@@ -18,6 +16,7 @@ export default function SignInPage() {
   const router = useRouter();
 
   /* @ form-setup : configure react-hook-form with zod validation */
+  /* @ imports */
   const {
     register,
     handleSubmit,
@@ -39,7 +38,8 @@ export default function SignInPage() {
     try {
       await authClient.signIn.social({
         provider: provider,
-        callbackURL: "/",
+        // @ ensure absolute callback URL for production safety
+        callbackURL: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/`,
       });
     } catch (error) {
       setError(
@@ -56,6 +56,7 @@ export default function SignInPage() {
     setIsLoading(true);
     setError("");
     const trimEmail = data.email.trim();
+
     try {
       if (!trimEmail || !data.password) {
         setError("Please provide both email and password.");
@@ -67,7 +68,8 @@ export default function SignInPage() {
       await authClient.signIn.email({
         email: trimEmail,
         password: data.password,
-        callbackURL: "/",
+        // @ ensure absolute callback URL for production safety
+        callbackURL: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/`,
         fetchOptions: {
           onSuccess: () => {
             toast.success("login successfully");

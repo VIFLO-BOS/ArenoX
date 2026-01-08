@@ -1,12 +1,14 @@
 import { authClient } from "./auth-client";
 
+const baseUrl = process.env.NEXT_PUBLIC_BETTER_AUTH_URL;
+
 // @ email-signup : handle user registration with email and password
 export const signUp = async (email: string, password: string, name: string) => {
   const { data, error } = await authClient.signUp.email({
     email,
     password,
     name,
-    callbackURL: "/",
+    callbackURL: `${baseUrl}/`,
   });
 
   if (error) {
@@ -20,9 +22,9 @@ export const signUp = async (email: string, password: string, name: string) => {
 export const signInWithSocial = async (provider: "google" | "github") => {
   const { data, error } = await authClient.signIn.social({
     provider,
-    callbackURL: "/",
-    newUserCallbackURL: "/welcome",
-    errorCallbackURL: "/error",
+    callbackURL: `${baseUrl}/`,
+    newUserCallbackURL: `${baseUrl}/welcome`,
+    errorCallbackURL: `${baseUrl}/error`,
     disableRedirect: true,
   });
 
@@ -39,7 +41,7 @@ export const signIn = async (email: string, password: string) => {
     email,
     password,
     rememberMe: true,
-    callbackURL: "/",
+    callbackURL: `${baseUrl}/`,
   });
 
   if (error) {
@@ -48,3 +50,4 @@ export const signIn = async (email: string, password: string) => {
 
   return { data, error: null };
 };
+  
