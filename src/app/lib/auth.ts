@@ -19,15 +19,17 @@ export const getAuth = async () => {
     throw error;
   }
 
-  const authUrl = process.env.BETTER_AUTH_URL;
+  const authUrl =
+    process.env.NEXT_PUBLIC_BETTER_AUTH_URL ?? process.env.BETTER_AUTH_URL;
   const authSecret = process.env.BETTER_AUTH_SECRET;
 
   if (process.env.NODE_ENV === "production") {
     if (!authUrl || authUrl.includes("localhost")) {
       console.warn(
-        "CRITICAL: BETTER_AUTH_URL is missing or set to localhost in production. This will break authentication."
+        "CRITICAL: BETTER_AUTH_URL or NEXT_PUBLIC_BETTER_AUTH_URL is missing or set to localhost in production."
       );
     }
+
     if (!authSecret) {
       console.warn("WARNING: BETTER_AUTH_SECRET is missing in production.");
     }
