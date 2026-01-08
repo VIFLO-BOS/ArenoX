@@ -39,7 +39,7 @@ export default function SignInPage() {
       await authClient.signIn.social({
         provider: provider,
         // @ ensure absolute callback URL for production safety
-        callbackURL: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/`,
+        callbackURL: "/",
       });
     } catch (error) {
       setError(
@@ -69,7 +69,7 @@ export default function SignInPage() {
         email: trimEmail,
         password: data.password,
         // @ ensure absolute callback URL for production safety
-        callbackURL: `${process.env.NEXT_PUBLIC_BETTER_AUTH_URL}/`,
+        callbackURL: "/",
         fetchOptions: {
           onSuccess: () => {
             toast.success("login successfully");

@@ -8,7 +8,7 @@ export const signUp = async (email: string, password: string, name: string) => {
     email,
     password,
     name,
-    callbackURL: `${baseUrl}/`,
+    callbackURL: "/",
   });
 
   if (error) {
@@ -22,9 +22,9 @@ export const signUp = async (email: string, password: string, name: string) => {
 export const signInWithSocial = async (provider: "google" | "github") => {
   const { data, error } = await authClient.signIn.social({
     provider,
-    callbackURL: `${baseUrl}/`,
-    newUserCallbackURL: `${baseUrl}/welcome`,
-    errorCallbackURL: `${baseUrl}/error`,
+    callbackURL: "/",
+    newUserCallbackURL: "/welcome",
+    errorCallbackURL: "/error",
     disableRedirect: true,
   });
 
@@ -41,7 +41,7 @@ export const signIn = async (email: string, password: string) => {
     email,
     password,
     rememberMe: true,
-    callbackURL: `${baseUrl}/`,
+    callbackURL: "/",
   });
 
   if (error) {
@@ -50,4 +50,3 @@ export const signIn = async (email: string, password: string) => {
 
   return { data, error: null };
 };
-  

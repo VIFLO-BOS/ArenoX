@@ -20,7 +20,7 @@ export const getAuth = async () => {
   }
 
   const authUrl =
-    process.env.NEXT_PUBLIC_BETTER_AUTH_URL ?? process.env.BETTER_AUTH_URL;
+    process.env.BETTER_AUTH_URL ?? process.env.NEXT_PUBLIC_BETTER_AUTH_URL;
   const authSecret = process.env.BETTER_AUTH_SECRET;
 
   if (process.env.NODE_ENV === "production") {
