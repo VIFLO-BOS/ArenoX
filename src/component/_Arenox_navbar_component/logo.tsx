@@ -13,6 +13,8 @@ export default function Logo() {
 						className="h-10 w-auto box-shadow rounded-md"
 						width={400}
 						height={200}
+						loading="eager"
+						priority={true}
 					/>
 				</a>
 			</div>

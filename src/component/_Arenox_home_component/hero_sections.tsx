@@ -83,7 +83,8 @@ export default function Hero_sections() {
               className="object-cover w-full h-auto rounded-2xl shadow-2xl relative border border-gray-700/50"
               src="https://i.pinimg.com/736x/e7/af/c7/e7afc7833290f90f46deb42a86174006.jpg"
               alt="Learning Student"
-              loading="lazy"
+              loading="eager"
+              priority={true}
               width={600}
               height={500}
             />

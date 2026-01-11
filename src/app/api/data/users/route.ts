@@ -8,6 +8,7 @@ export async function GET() {
     const { db } = await connect();
     const usersCollection = db.collection("user");
     const data = await usersCollection.find({}).toArray();
+    console.log(data)
 
     // @ success-response : return users data with success status
     return NextResponse.json(

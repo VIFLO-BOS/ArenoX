@@ -4,33 +4,47 @@ const nextConfig = {
     remotePatterns: [
       {
         protocol: "https",
+        hostname: "**blob.vercel-storage.com", // ← Most common & reliable wildcard
+        port: "",
+        pathname: "/**",
+      },
+
+      {
+        protocol: "https",
+        hostname: "**.public.blob.vercel-storage.com",
+        port: "",
+        pathname: "/**",
+      },
+
+      {
+        protocol: "https",
         hostname: "www.pexels.com",
         port: "",
-        pathname: "/**", // Allow all paths in Pexels
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "images.unsplash.com",
         port: "",
-        pathname: "/**", // Allow all paths in Unsplash
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "images.pexels.com",
         port: "",
-        pathname: "/**", // Allow all paths in Pexels image hosting
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "i.pinimg.com",
         port: "",
-        pathname: "/**", // Allow all paths in Pinterest
+        pathname: "/**",
       },
       {
         protocol: "https",
         hostname: "via.placeholder.com",
         port: "",
-        pathname: "/**", // Allow all paths from via.placeholder.com
+        pathname: "/**",
       },
     ],
   },

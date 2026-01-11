@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
+import { NextRequest } from "next/server";
 import { getAuth } from "@/app/lib/auth";
 import { userSession } from "@/utils/types/session";
 
@@ -7,6 +7,14 @@ import { userSession } from "@/utils/types/session";
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
+  // @ skip middleware for system paths and images
+  if (
+    pathname.startsWith("/_next") ||
+    pathname.startsWith("/api") ||
+    pathname.includes(".")
+  ) {
+    return NextResponse.next();
+  }
   // @ session-check : verify user is authenticated
   const auth = await getAuth();
   const session = await auth.api.getSession({

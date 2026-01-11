@@ -29,7 +29,7 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
     suite: "",
     city: "",
     zipcode: "",
-    avatar: "",
+    image: "",
   });
   //   state for user image
   const [avatarUrl, setAvatarUrl] = useState<string>("");
@@ -105,9 +105,9 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
         suite: userData?.address?.suite || "",
         city: userData?.address?.city || "",
         zipcode: userData?.address?.zipcode || "",
-        avatar: userData?.avatar || "",
+        image: userData?.image || "",
       });
-      setAvatarUrl(userData?.avatar || "");
+      setAvatarUrl(userData?.image || "");
     }
   }, [userData]);
 
@@ -252,9 +252,9 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
             <div className="flex flex-col items-center">
               <div className="relative group">
                 <div className="w-32 h-32 rounded-full overflow-hidden ring-4 ring-blue-100 shadow-lg">
-                  {avatarUrl || formData.avatar ? (
+                  {avatarUrl || formData.image ? (
                     <img
-                      src={avatarUrl || formData.avatar}
+                      src={avatarUrl || formData.image}
                       alt="User avatar"
                       className="w-full h-full object-cover"
                     />

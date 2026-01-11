@@ -8,7 +8,7 @@ export interface UserType {
   phone: string;
   website: string;
   role: string;
-  avatar: string;
+  image: string;
   gender: string;
   address: {
     street: string;

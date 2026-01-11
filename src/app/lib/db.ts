@@ -24,18 +24,28 @@ export default async function connect() {
     );
   }
 
+  // Very important options for serverless
+  const options = {
+    maxPoolSize: 5, // ← most important: keep very low
+    minPoolSize: 1, // optional, can be 0-2
+    maxIdleTimeMS: 10000, //close idle connections faster (helps prevent leaks)
+    waitQueueTimeoutMS: 10000,
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 20000,
+  };
+
   if (process.env.NODE_ENV === "development") {
     const globalWithMongo = global as typeof globalThis & {
       _mongoClient?: MongoClient;
     };
 
     if (!globalWithMongo._mongoClient) {
-      globalWithMongo._mongoClient = new MongoClient(url);
+      globalWithMongo._mongoClient = new MongoClient(url, options);
       await globalWithMongo._mongoClient.connect();
     }
     cachedClient = globalWithMongo._mongoClient;
   } else {
-    cachedClient = new MongoClient(url);
+    cachedClient = new MongoClient(url, options);
     await cachedClient.connect();
   }
 

@@ -1,6 +1,5 @@
 import { authClient } from "./auth-client";
 
-const baseUrl = process.env.NEXT_PUBLIC_BETTER_AUTH_URL;
 
 // @ email-signup : handle user registration with email and password
 export const signUp = async (email: string, password: string, name: string) => {

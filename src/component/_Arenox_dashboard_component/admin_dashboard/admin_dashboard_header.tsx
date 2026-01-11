@@ -2,6 +2,7 @@ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
 import Image from "next/image";
 import { authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
+import { userSession } from "@/utils/types/session";
 
 type Session = typeof authClient.$Infer.Session;
 
@@ -13,7 +14,7 @@ export default function Admin_dashboard_header({
   const { data: clientSession } = authClient.useSession();
 
   const session = serverSession || clientSession;
-  const user = session?.user;
+  const user = session?.user as userSession;
   const router = useRouter();
 
   const handleSignOut = async () => {
@@ -47,16 +48,13 @@ export default function Admin_dashboard_header({
           <Menu as="div" className="relative">
             <MenuButton className="inline-flex items-center justify-center gap-x-1.5 rounded-md px-1 py-1 text-sm font-semibold bg-white outline-none focus:outline-none">
               <Image
-                src={user?.image || "/images/avatar.png"}
+                src={"/images/avatar.png"}
                 width={35}
                 height={35}
                 alt="User Profile"
                 className="rounded-full"
               />
               <div className="hidden md:flex items-center gap-1 text-start">
-                <span className="font-medium text-gray-800 text-sm">
-                  {user?.name}
-                </span>
                 <i className="bi bi-chevron-down text-gray-500 text-xs"></i>
               </div>
             </MenuButton>

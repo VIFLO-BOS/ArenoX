@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useSession, signOut, authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { userSession } from "@/utils/types/session";
+import { useEffect, useState } from "react";
 
 type Session = typeof authClient.$Infer.Session;
 
@@ -36,17 +37,25 @@ export default function RightMenu({
     }
   };
 
+  const avatarSrc =
+    user?.image && user.image.startsWith("http")
+      ? user.image
+      : "/images/avatar.png";
+
+  console.log();
+
   return (
     <div className="flex items-center ">
       {user && (
         <Menu as="div" className="relative inline-block">
           <MenuButton className="inline-flex w-full items-center justify-center gap-x-2 rounded-full px-1 py-1 text-sm font-semibold text-gray-700 outline-0 transition-all duration-300 hover:bg-gray-100/50">
             <Image
-              src="/images/mentor/09.jpg"
-              width={36}
-              height={36}
-              alt=""
-              className="rounded-full ring-2 ring-white shadow-sm"
+              src={avatarSrc}
+              width={400}
+              height={400}
+              alt={user?.name || "User avatar"}
+              className="rounded-full ring-2 ring-white shadow-sm w-9 h-9"
+              unoptimized
             />
 
             {/* <span>Account</span> */}

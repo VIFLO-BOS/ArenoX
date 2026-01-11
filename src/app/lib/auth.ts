@@ -24,9 +24,9 @@ export const getAuth = async () => {
   const authSecret = process.env.BETTER_AUTH_SECRET;
 
   if (process.env.NODE_ENV === "production") {
-    if (!authUrl || authUrl.includes("localhost")) {
+    if (!authUrl) {
       console.warn(
-        "CRITICAL: BETTER_AUTH_URL or NEXT_PUBLIC_BETTER_AUTH_URL is missing or set to localhost in production."
+        "CRITICAL: BETTER_AUTH_URL or NEXT_PUBLIC_BETTER_AUTH_URL is missing in production."
       );
     }
 
@@ -51,7 +51,7 @@ export const getAuth = async () => {
           required: false,
           defaultValue: "student",
           input: false,
-        },
+        }
       },
     },
 

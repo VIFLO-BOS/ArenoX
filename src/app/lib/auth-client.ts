@@ -9,7 +9,7 @@ const authBaseUrl = process.env.NEXT_PUBLIC_BETTER_AUTH_URL;
 
 if (
   process.env.NODE_ENV === "production" &&
-  (!authBaseUrl || authBaseUrl.includes("localhost"))
+  (!authBaseUrl)
 ) {
   console.warn(
     "CRITICAL: NEXT_PUBLIC_BETTER_AUTH_URL is missing or set to localhost in production."

@@ -11,6 +11,6 @@ export interface userSession {
   email: string;
   emailVerified: boolean;
   name: string;
-  image?: string | null;
+  image?: string | null | undefined;
   role?: "student" | "admin" | "instructor";
 }

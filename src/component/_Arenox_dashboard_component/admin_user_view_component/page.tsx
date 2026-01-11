@@ -85,7 +85,7 @@ export default function View_user({ userId }: { userId: string }) {
           <div className="relative">
             <div className="w-32 h-32 rounded-full p-1 bg-white shadow-lg ring-4 ring-blue-50">
               <Image
-              src={userData?.avatar}
+                src={userData?.avatar?.trim() || "/images/avatar.png"}
                 width={150}
                 height={150}
                 alt="User Profile"
@@ -142,7 +142,7 @@ export default function View_user({ userId }: { userId: string }) {
                 <i className="bi bi-card-text text-blue-500"></i> Biography
               </h3>
               <p className="text-gray-600 text-sm leading-relaxed">
-                {userData?.bio || "NA"} 
+                {userData?.bio || "NA"}
               </p>
             </div>
 
@@ -277,7 +277,9 @@ export default function View_user({ userId }: { userId: string }) {
                   <p className="text-indigo-600 text-xs font-bold uppercase mb-1">
                     Strategy
                   </p>
-                  <p className="text-gray-800 font-medium">{userData?.strategy || "NA"}</p>
+                  <p className="text-gray-800 font-medium">
+                    {userData?.strategy || "NA"}
+                  </p>
                 </div>
               </div>
             </div>

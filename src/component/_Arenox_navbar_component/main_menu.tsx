@@ -23,6 +23,8 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
     transition: { type: "spring" as const, bounce: 0.5, duration: 1 },
   };
 
+  
+
   return (
     <>
       {/* Desktop nav */}
