@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from "react";
 import Logo from "./logo";
 import Main_menu from "./main_menu";

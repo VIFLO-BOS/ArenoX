@@ -15,10 +15,8 @@ export default function About_team_section() {
         >
           <h1 className="font-bold text-3xl mb-3">Our Team</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-            expedita nesciunt tempore animi, fugiat dolor non cupiditate
-            reprehenderit ad, quis, porro at et. Beatae dolorem quidem, alias
-            facilis laboriosam nisi.
+            Meet the passionate individuals dedicated to transforming the future
+            of online education ensuring quality and community support.
           </p>
         </motion.div>
 
@@ -50,16 +48,16 @@ export default function About_team_section() {
 
             <div className="flex  justify-center flex-end space-x-4 ">
               <a href="#" className="">
-                <i className="bi bi-facebook hover:!text-blue-500"></i>
+                <i className="bi bi-facebook hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-twitter hover:!text-blue-500"></i>
+                <i className="bi bi-twitter hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-linkedin hover:!text-blue-500"></i>
+                <i className="bi bi-linkedin hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-instagram hover:!text-blue-500"></i>
+                <i className="bi bi-instagram hover:text-blue-500!"></i>
               </a>
             </div>
           </motion.div>
@@ -93,16 +91,16 @@ export default function About_team_section() {
 
             <div className="flex  justify-center flex-end  space-x-4 ">
               <a href="#" className="">
-                <i className="bi bi-facebook hover:!text-blue-500"></i>
+                <i className="bi bi-facebook hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-twitter hover:!text-blue-500"></i>
+                <i className="bi bi-twitter hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-linkedin hover:!text-blue-500"></i>
+                <i className="bi bi-linkedin hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-instagram hover:!text-blue-500"></i>
+                <i className="bi bi-instagram hover:text-blue-500!"></i>
               </a>
             </div>
           </motion.div>
@@ -136,16 +134,16 @@ export default function About_team_section() {
 
             <div className="flex justify-center flex-end  space-x-4">
               <a href="#" className="">
-                <i className="bi bi-facebook hover:!text-blue-500"></i>
+                <i className="bi bi-facebook hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-twitter hover:!text-blue-500"></i>
+                <i className="bi bi-twitter hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-linkedin hover:!text-blue-500"></i>
+                <i className="bi bi-linkedin hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-instagram hover:!text-blue-500"></i>
+                <i className="bi bi-instagram hover:text-blue-500!"></i>
               </a>
             </div>
           </motion.div>
@@ -178,16 +176,16 @@ export default function About_team_section() {
 
             <div className="flex justify-center  space-x-4">
               <a href="#" className="">
-                <i className="bi bi-facebook hover:!text-blue-500"></i>
+                <i className="bi bi-facebook hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-twitter hover:!text-blue-500"></i>
+                <i className="bi bi-twitter hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-linkedin hover:!text-blue-500"></i>
+                <i className="bi bi-linkedin hover:text-blue-500!"></i>
               </a>
               <a href="#" className="">
-                <i className="bi bi-instagram hover:!text-blue-500"></i>
+                <i className="bi bi-instagram hover:text-blue-500!"></i>
               </a>
             </div>
           </motion.div>
@@ -215,45 +213,44 @@ export default function About_team_section() {
         >
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">500k+</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Active Learners</p>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">10,000+</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Career Transitions</p>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">50+</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Enterprise Partners</p>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">95%</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Course Completion</p>
           </div>
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">2,500+</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Expert Mentors</p>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">15M+</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Minutes Viewed</p>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">25+</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Countries Served</p>
           </div>
 
           <div className="text-center">
             <h2 className="font-bold text-3xl text-center">4.8/5</h2>
-            <p className="text-blue-200">Lorem ipsum dolor</p>
+            <p className="text-blue-200">Average Rating</p>
           </div>
         </motion.div>
       </div>
     </div>
   );
 }
-

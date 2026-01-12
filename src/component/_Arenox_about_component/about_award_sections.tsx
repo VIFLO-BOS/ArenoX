@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import {motion} from "framer-motion";
+import { motion } from "framer-motion";
 import { fadeUp } from "@/utils/animation/fadeUpProps";
 
 export default function About_award_sections() {
-	return (
+  return (
     <div>
       <div className="px-4 lg:px-20 py-10 bg-white rounded-sm  w-full h-full mt-10 flex flex-col  items-center justify-center gap-10">
         <motion.div
@@ -16,10 +16,9 @@ export default function About_award_sections() {
         >
           <h1 className="font-bold text-3xl mb-3">Recognition & Awards</h1>
           <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quam
-            expedita nesciunt tempore animi, fugiat dolor non cupiditate
-            reprehenderit ad, quis, porro at et. Beatae dolorem quidem, alias
-            facilis laboriosam nisi.
+            We are proud to be recognized by industry leaders for our commitment
+            to excellence in education technology, innovation, and student
+            success.
           </p>
         </motion.div>
 
@@ -32,10 +31,10 @@ export default function About_award_sections() {
         >
           <div className="text-center">
             <i className="bi bi-heart-fill text-2xl bg-orange-100 text-orange-600 p-4 px-5 mb-5 rounded-full"></i>
-            <h2 className="font-bold my-5">Best GoTech Platform 2025</h2>
+            <h2 className="font-bold my-5">Best EdTech Platform 2025</h2>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Molestias laudantium illum voluptate eum sequi quasi?
+              Recognized for delivering the most intuitive and comprehensive
+              technical learning experience for students globally.
             </p>
           </div>
 
@@ -43,16 +42,16 @@ export default function About_award_sections() {
             <i className="bi bi-people-fill text-2xl bg-green-100 text-green-600 p-4 px-5 mb-5 rounded-full"></i>
             <h2 className="font-bold my-5">Innovation In Learning 2025</h2>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Molestias laudantium illum voluptate eum sequi quasi?
+              Honored for pioneering adaptive learning paths and integrating
+              AI-driven support systems to personalized education.
             </p>
           </div>
           <div className="text-center">
             <i className="bi bi-lightbulb-fill text-2xl bg-blue-100 text-blue-600 p-4 px-5 mb-5 rounded-full"></i>
             <h2 className="font-bold my-5">Top 10 Online Learning Platform</h2>
             <p>
-              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-              Molestias laudantium illum voluptate eum sequi quasi?
+              Ranked among the top platforms globally for student satisfaction,
+              engagement, and successful career outcomes.
             </p>
           </div>
         </motion.div>
@@ -89,4 +88,3 @@ export default function About_award_sections() {
     </div>
   );
 }
-

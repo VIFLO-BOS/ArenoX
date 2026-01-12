@@ -33,7 +33,7 @@ export default function About_hero_section() {
         variants={fadeUp}
         className="flex flex-col items-center justify-center text-center h-120 bg-cover bg-center mb-10 relative overflow-hidden"
         style={{
-          background: `linear-gradient(rgba(1, 1, 46, 0.7), rgba(37, 99, 235, 0.6)), url(${currentBgImage})`,
+          backgroundImage: `linear-gradient(rgba(1, 1, 46, 0.7), rgba(37, 99, 235, 0.6)), url(${currentBgImage})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
         }}

@@ -1,9 +1,12 @@
-import React from "react";
+"use client";
 import { navigationItems } from "./nav-menu";
 import { Dialog, DialogPanel } from "@headlessui/react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, easeInOut } from "framer-motion";
+import { useSession } from "@/app/lib/auth-client";
+import { ServerSession } from "mongodb";
+import { userSession } from "@/utils/types/session";
 
 interface MobileMenuProps {
   mobileMenuOpen: boolean;
@@ -14,6 +17,10 @@ export default function Mobile_menu({
   mobileMenuOpen,
   setMobileMenuOpen,
 }: MobileMenuProps) {
+  const { data: clientSession } = useSession();
+  const session = clientSession;
+  const user = session?.user as userSession;
+
   return (
     <>
       <Dialog
@@ -77,7 +84,11 @@ export default function Mobile_menu({
                 ))}
               </div>
 
-              <div className="mt-8 pt-6 border-t border-gray-700/50">
+              <div
+                className={`mt-8 pt-6 border-t border-gray-700/50 ${
+                  user ? "hidden" : ""
+                }`}
+              >
                 <Link
                   href="/signin"
                   onClick={() => setMobileMenuOpen(false)}

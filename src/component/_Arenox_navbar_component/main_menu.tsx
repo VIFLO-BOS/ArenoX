@@ -1,3 +1,4 @@
+"use client";
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/react";
 import { useState } from "react";
@@ -22,8 +23,6 @@ export default function Main_menu({ scrolledEffect }: mainMenuProps) {
     animate: { opacity: 1, y: 0 },
     transition: { type: "spring" as const, bounce: 0.5, duration: 1 },
   };
-
-  
 
   return (
     <>

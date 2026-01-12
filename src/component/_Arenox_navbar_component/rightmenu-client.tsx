@@ -6,7 +6,6 @@ import Link from "next/link";
 import { useSession, signOut, authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { userSession } from "@/utils/types/session";
-import { useEffect, useState } from "react";
 
 type Session = typeof authClient.$Infer.Session;
 
@@ -42,7 +41,6 @@ export default function RightMenu({
       ? user.image
       : "/images/avatar.png";
 
-  console.log();
 
   return (
     <div className="flex items-center ">
