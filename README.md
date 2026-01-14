@@ -158,6 +158,5 @@ All rights reserved. This project is proprietary and confidential. Unauthorized 
 
 ## 12. Links
 
--   **Live Demo**: [Comming Soon](#)
--   **Project Information**: [PROJECT_SHOWCASE.md](./PROJECT_SHOWCASE.md)
--   **LinkedIn**: [Follow the "Build in Public" Journey](#)
+-   **Live Demo**: (https://areno-x-pmlx.vercel.app/)
+-   **LinkedIn**:www.linkedin.com/in/bankole-olaniyi-427b34291
