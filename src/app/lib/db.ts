@@ -7,7 +7,7 @@ let cachedDb: Db | null = null;
 
 export default async function connect() {
   // Only enforce DATABASE_URL here, when actually connecting (runtime only)
-  const url = process.env.DATABASE_URL;
+  const url = process.env.DATABASE_URL || process.env.DATABASE_URL_LOCAL || "";
   if (!url) {
     throw new Error(
       "Please provide a database URL in your environment variables"
@@ -54,4 +54,8 @@ export default async function connect() {
     `Connected to database: ${dbName || "default database from URL"}`
   );
   return { client: cachedClient, db: cachedDb };
+}
+
+export async function closeDb() {
+  await cachedClient?.close()
 }

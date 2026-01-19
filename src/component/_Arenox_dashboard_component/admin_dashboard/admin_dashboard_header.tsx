@@ -4,16 +4,11 @@ import { authClient } from "@/app/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { userSession } from "@/utils/types/session";
 
-type Session = typeof authClient.$Infer.Session;
 
-export default function Admin_dashboard_header({
-  session: serverSession,
-}: {
-  session: Session | null;
-}) {
+export default function Admin_dashboard_header() {
   const { data: clientSession } = authClient.useSession();
 
-  const session = serverSession || clientSession;
+  const session = clientSession;
   const user = session?.user as userSession;
   const router = useRouter();
 
@@ -26,6 +21,11 @@ export default function Admin_dashboard_header({
       },
     });
   };
+
+ const avatarSrc =
+   user?.image && user.image.startsWith("http")
+     ? user.image
+     : "/images/avatar.png";
 
   return (
     <div className="bg-white shadow-md py-4.5 rounded-br-lg rounded-bl-lg mb-5 w-full">
@@ -48,11 +48,11 @@ export default function Admin_dashboard_header({
           <Menu as="div" className="relative">
             <MenuButton className="inline-flex items-center justify-center gap-x-1.5 rounded-md px-1 py-1 text-sm font-semibold bg-white outline-none focus:outline-none">
               <Image
-                src={"/images/avatar.png"}
+                src={avatarSrc}
                 width={35}
                 height={35}
                 alt="User Profile"
-                className="rounded-full"
+                className="rounded-full w-8.5 h-8.5" 
               />
               <div className="hidden md:flex items-center gap-1 text-start">
                 <i className="bi bi-chevron-down text-gray-500 text-xs"></i>
@@ -60,7 +60,7 @@ export default function Admin_dashboard_header({
             </MenuButton>
             <MenuItems
               transition
-              className="absolute right-0 z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
+              className="absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
             >
               <div className="py-1">
                 <MenuItem>

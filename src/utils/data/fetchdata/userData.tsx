@@ -17,4 +17,11 @@ export interface UserType {
     zipcode: string;
   };
   username: string;
+  designation: string;
+  experiences: string[];
+  credentials: string;
+  bio: string;
+  skills: string[];
+  languages: string[];
+  availability: string;
 }

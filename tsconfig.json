@@ -26,7 +26,8 @@
       "@/*": [
         "./src/*"
       ]
-    }
+    },
+    
   },
   "include": [
     "next-env.d.ts",
@@ -39,7 +40,7 @@
     "src/app/models/admin/admin.ts",
     "src/app/api/routes/admin.ss",
     ".next/dev/types/**/*.ts"
-  ],
+, "src/utils/data/fetchdata/users.tsx"  ],
   "exclude": [
     "node_modules"
   ]

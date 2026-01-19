@@ -50,7 +50,7 @@ export const AdminShell = ({ children }: AdmiShell) => {
           isSidebarOpen ? "ml-56" : "ml-20"
         }`}
       >
-        <Admin_dashboard_header session={session} />
+        <Admin_dashboard_header />
         {children}
         <div id="modal-root"></div>
       </main>

@@ -51,6 +51,7 @@ export default function View_user({ userId }: { userId: string }) {
         const data = await response.json();
         const userData = data.data.find((user: any) => user._id === userId);
         console.log(userData);
+        console.log(userData.image);
 
         setUserData(userData);
       } catch (err: any) {
@@ -74,45 +75,46 @@ export default function View_user({ userId }: { userId: string }) {
 
   return (
     <div
-      className="max-h-[85vh] overflow-y-auto px-1 pb-10"
+      className="max-h-[85vh] overflow-y-auto px-4 pb-10 bg-slate-50/50 rounded-xl"
       style={{ scrollbarWidth: "none" }}
     >
-      <div className="max-w-7xl mx-auto space-y-6">
+      <div className="max-w-7xl mx-auto space-y-6 pt-4">
         {/* Header Section */}
-        <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 flex flex-col md:flex-row items-center gap-6 relative overflow-hidden">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-50 rounded-bl-full -mr-16 -mt-16 opacity-50"></div>
+        <div className="bg-linear-to-br from-white to-blue-50/40 rounded-2xl shadow-sm border border-blue-100/50 p-6 flex flex-col md:flex-row items-center gap-8 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-32 h-32 bg-blue-600/5 rounded-bl-full -mr-16 -mt-16 blur-xl"></div>
 
-          <div className="relative">
-            <div className="w-32 h-32 rounded-full p-1 bg-white shadow-lg ring-4 ring-blue-50">
+          <div className="relative group">
+            <div className="absolute -inset-1 bg-linear-to-r from-blue-600 to-indigo-600 rounded-full blur opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <div className="relative w-32 h-32 rounded-full p-1 bg-white shadow-md ring-4 ring-blue-50">
               <Image
-                src={userData?.avatar?.trim() || "/images/avatar.png"}
+                src={userData?.image?.trim() || "/images/avatar.png"}
                 width={150}
                 height={150}
                 alt="User Profile"
                 className="rounded-full w-full h-full object-cover"
-                loading="lazy"
+                loading="eager"
               />
             </div>
-            <div className="absolute bottom-1 right-2 w-4 h-4 bg-green-500 border-2 border-white rounded-full"></div>
+            <div className="absolute bottom-1 right-2 w-5 h-5 bg-green-500 border-4 border-white rounded-full shadow-sm"></div>
           </div>
 
-          <div className="flex-1 text-center md:text-left z-10">
-            <h1 className="text-2xl font-bold text-gray-900">
+          <div className="flex-1 text-center md:text-left z-10 space-y-1">
+            <h1 className="text-3xl font-extrabold text-[#01012e] tracking-tight">
               {userData?.name || "Unknown User"}
             </h1>
-            <p className="text-gray-500 font-medium mb-3">
+            <p className="text-blue-600/70 font-bold text-sm">
               @{userData?.username || "username"}
             </p>
-            <div className="flex flex-wrap gap-2 justify-center md:justify-start">
-              <span className="px-3 py-1 bg-blue-50 text-blue-700 rounded-full text-xs font-semibold uppercase tracking-wide border border-blue-100">
+            <div className="flex flex-wrap gap-2 justify-center md:justify-start mt-4">
+              <span className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-[10px] font-black uppercase tracking-widest border border-blue-200/50">
                 {userData?.role || "Student"}
               </span>
               {userData?.emailVerified ? (
-                <span className="px-3 py-1 bg-green-50 text-green-700 rounded-full text-xs font-semibold border border-green-100 flex items-center gap-1">
+                <span className="px-3 py-1 bg-green-50 text-green-700 rounded-lg text-[10px] font-black border border-green-100 flex items-center gap-1 uppercase tracking-widest">
                   <i className="bi bi-check-circle-fill"></i> Verified
                 </span>
               ) : (
-                <span className="px-3 py-1 bg-amber-50 text-amber-700 rounded-full text-xs font-semibold border border-amber-100 flex items-center gap-1">
+                <span className="px-3 py-1 bg-amber-50 text-amber-700 rounded-lg text-[10px] font-black border border-amber-100 flex items-center gap-1 uppercase tracking-widest">
                   <i className="bi bi-exclamation-circle-fill"></i> Unverified
                 </span>
               )}
@@ -121,12 +123,12 @@ export default function View_user({ userId }: { userId: string }) {
 
           <div className="flex items-center gap-3 z-10">
             <Link href={`/dashboard/admin/edituser/${userData?._id}`}>
-              <button className="bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 hover:text-blue-600 px-5 py-2.5 rounded-xl font-medium transition-all shadow-sm flex items-center gap-2">
-                <i className="bi bi-pencil"></i> Edit Profile
+              <button className="bg-blue-50 border border-blue-100 text-blue-700 hover:bg-blue-600 hover:text-white px-5 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-sm flex items-center gap-2">
+                <i className="bi bi-pencil"></i>
               </button>
             </Link>
             <Link href="/dashboard/admin/userlist">
-              <button className="bg-gray-100 hover:bg-gray-200 text-gray-600 px-4 py-2.5 rounded-xl transition-all">
+              <button className="bg-red-50 hover:bg-red-500 text-red-600 hover:text-white px-4 py-2.5 rounded-xl border border-red-100 transition-all duration-300 shadow-sm">
                 <i className="bi bi-x-lg"></i>
               </button>
             </Link>
@@ -137,44 +139,52 @@ export default function View_user({ userId }: { userId: string }) {
           {/* Left Column: Personal & Bio */}
           <div className="space-y-6">
             {/* Bio */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <i className="bi bi-card-text text-blue-500"></i> Biography
-              </h3>
-              <p className="text-gray-600 text-sm leading-relaxed">
-                {userData?.bio || "NA"}
-              </p>
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden group hover:shadow-md transition-shadow">
+              <div className="bg-slate-50 border-b border-slate-100 px-6 py-3">
+                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                  <i className="bi bi-card-text text-blue-500"></i> Biography
+                </h3>
+              </div>
+              <div className="p-6">
+                <p className="text-slate-600 text-sm leading-relaxed font-medium">
+                  {userData?.bio || "No biography provided."}
+                </p>
+              </div>
             </div>
 
             {/* Personal Info */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <i className="bi bi-person text-purple-500"></i> Personal Info
-              </h3>
-              <div className="space-y-4">
-                <div className="flex items-center justify-between border-b border-gray-50 pb-3 last:border-0 last:pb-0">
-                  <span className="text-gray-500 text-sm">Email</span>
-                  <span className="text-gray-900 font-medium text-sm">
-                    {userData?.email || "NA"}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden group hover:shadow-md transition-shadow">
+              <div className="bg-slate-50 border-b border-slate-100 px-6 py-3">
+                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                  <i className="bi bi-person text-purple-500"></i> Personal Info
+                </h3>
+              </div>
+              <div className="p-6 space-y-4">
+                {[
+                  { label: "Email", value: userData?.email, icon: "envelope" },
+                  { label: "Phone", value: userData?.phone, icon: "telephone" },
+                  {
+                    label: "Birth Date",
+                    value: userData?.birthDate,
+                    icon: "calendar3",
+                  },
+                ].map((item, idx) => (
+                  <div key={idx} className="flex flex-col gap-1">
+                    <span className="text-[10px] font-bold text-blue-600/60 uppercase tracking-wider">
+                      {item.label}
+                    </span>
+                    <span className="text-sm text-slate-700 font-semibold">
+                      {item.value || "NA"}
+                    </span>
+                  </div>
+                ))}
+                <div className="flex flex-col gap-1">
+                  <span className="text-[10px] font-bold text-blue-600/60 uppercase tracking-wider">
+                    Website
                   </span>
-                </div>
-                <div className="flex items-center justify-between border-b border-gray-50 pb-3 last:border-0 last:pb-0">
-                  <span className="text-gray-500 text-sm">Phone</span>
-                  <span className="text-gray-900 font-medium text-sm">
-                    {userData?.phone || "NA"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between border-b border-gray-50 pb-3 last:border-0 last:pb-0">
-                  <span className="text-gray-500 text-sm">Birth Date</span>
-                  <span className="text-gray-900 font-medium text-sm">
-                    {userData?.birthDate || "NA"}
-                  </span>
-                </div>
-                <div className="flex items-center justify-between border-b border-gray-50 pb-3 last:border-0 last:pb-0">
-                  <span className="text-gray-500 text-sm">Website</span>
                   <a
                     href="#"
-                    className="text-blue-600 font-medium text-sm hover:underline"
+                    className="text-blue-600 font-bold text-sm hover:text-blue-800 transition-colors"
                   >
                     {userData?.website || "NA"}
                   </a>
@@ -186,101 +196,117 @@ export default function View_user({ userId }: { userId: string }) {
           {/* Middle & Right Columns: Address & System Info */}
           <div className="lg:col-span-2 space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Address */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <i className="bi bi-geo-alt text-orange-500"></i> Address
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex flex-col gap-1">
-                    <span className="text-xs text-gray-400 uppercase font-semibold">
+              {/* Address Section */}
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden group hover:shadow-md transition-shadow">
+                <div className="bg-slate-50 border-b border-slate-100 px-6 py-3">
+                  <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <i className="bi bi-geo-alt text-orange-500"></i> Location
+                  </h3>
+                </div>
+                <div className="p-6 space-y-5">
+                  <div className="space-y-1">
+                    <span className="text-[10px] font-bold text-blue-600/60 uppercase tracking-wider">
                       Street
                     </span>
-                    <span className="text-gray-700 font-medium bg-gray-50 p-2 rounded-lg">
+                    <p className="bg-slate-50/80 p-3 rounded-xl text-sm font-semibold text-slate-700 border border-slate-100">
                       {userData?.street || "NA"}
-                    </span>
+                    </p>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-gray-400 uppercase font-semibold">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold text-blue-600/60 uppercase tracking-wider">
                         City
                       </span>
-                      <span className="text-gray-700 font-medium bg-gray-50 p-2 rounded-lg">
+                      <p className="bg-slate-50/80 p-3 rounded-xl text-sm font-semibold text-slate-700 border border-slate-100">
                         {userData?.city || "NA"}
-                      </span>
+                      </p>
                     </div>
-                    <div className="flex flex-col gap-1">
-                      <span className="text-xs text-gray-400 uppercase font-semibold">
+                    <div className="space-y-1">
+                      <span className="text-[10px] font-bold text-blue-600/60 uppercase tracking-wider">
                         Zip Code
                       </span>
-                      <span className="text-gray-700 font-medium bg-gray-50 p-2 rounded-lg">
+                      <p className="bg-slate-50/80 p-3 rounded-xl text-sm font-semibold text-slate-700 border border-slate-100">
                         {userData?.zipcode || "NA"}
-                      </span>
+                      </p>
                     </div>
                   </div>
                 </div>
               </div>
 
-              {/* Login Info */}
-              <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-                <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                  <i className="bi bi-shield-lock text-emerald-500"></i>{" "}
-                  Security
-                </h3>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-center bg-gray-50 p-3 rounded-xl">
-                    <span className="text-gray-500 text-sm">UUID</span>
-                    <span className="text-gray-900 font-mono text-xs truncate max-w-[150px]">
-                      {userData?._id || "NA"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center bg-gray-50 p-3 rounded-xl">
-                    <span className="text-gray-500 text-sm">Username</span>
-                    <span className="text-gray-900 font-medium text-sm">
-                      {userData?.username || "NA"}
-                    </span>
-                  </div>
-                  <div className="flex justify-between items-center bg-gray-50 p-3 rounded-xl">
-                    <span className="text-gray-500 text-sm">Registered</span>
-                    <span className="text-gray-900 font-medium text-sm">
-                      {userData?.createdAt || "NA"}
-                    </span>
-                  </div>
+              {/* Security/Login Info Section */}
+              <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden group hover:shadow-md transition-shadow">
+                <div className="bg-slate-50 border-b border-slate-100 px-6 py-3">
+                  <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                    <i className="bi bi-shield-lock text-emerald-500"></i>{" "}
+                    Security
+                  </h3>
+                </div>
+                <div className="p-6 space-y-4">
+                  {[
+                    { label: "UUID", value: userData?._id, mono: true },
+                    { label: "Username", value: userData?.username },
+                    { label: "Registered Since", value: userData?.createdAt },
+                  ].map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex justify-between items-center bg-slate-50/50 p-3 rounded-xl border border-slate-100/50"
+                    >
+                      <span className="text-[10px] font-bold text-slate-500 uppercase tracking-wider">
+                        {item.label}
+                      </span>
+                      <span
+                        className={`text-[#01012e] font-bold text-xs ${item.mono ? "font-mono text-[10px] truncate max-w-[120px]" : ""}`}
+                      >
+                        {item.value || "NA"}
+                      </span>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Company Info */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h3 className="text-lg font-bold text-gray-800 mb-4 flex items-center gap-2">
-                <i className="bi bi-building text-indigo-500"></i> Company
-                Details
-              </h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-                  <p className="text-indigo-600 text-xs font-bold uppercase mb-1">
-                    Company
-                  </p>
-                  <p className="text-gray-800 font-semibold">
-                    {userData?.company || "NA"}
-                  </p>
-                </div>
-                <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-                  <p className="text-indigo-600 text-xs font-bold uppercase mb-1">
-                    Catch Phrase
-                  </p>
-                  <p className="text-gray-800 italic">
-                    {userData?.catchPhrase || "NA"}
-                  </p>
-                </div>
-                <div className="bg-indigo-50 p-4 rounded-xl border border-indigo-100">
-                  <p className="text-indigo-600 text-xs font-bold uppercase mb-1">
-                    Strategy
-                  </p>
-                  <p className="text-gray-800 font-medium">
-                    {userData?.strategy || "NA"}
-                  </p>
-                </div>
+            {/* Company Info Section */}
+            <div className="bg-white rounded-2xl shadow-sm border border-slate-200/60 overflow-hidden group hover:shadow-md transition-shadow">
+              <div className="bg-slate-50 border-b border-slate-100 px-6 py-3">
+                <h3 className="text-[10px] font-black text-slate-400 uppercase tracking-widest flex items-center gap-2">
+                  <i className="bi bi-building text-indigo-500"></i>{" "}
+                  Professional Affiliation
+                </h3>
+              </div>
+              <div className="p-6 grid grid-cols-1 md:grid-cols-3 gap-6">
+                {[
+                  {
+                    label: "Company",
+                    value: userData?.company,
+                    accent: "blue",
+                  },
+                  {
+                    label: "Catch Phrase",
+                    value: userData?.catchPhrase,
+                    accent: "indigo",
+                    italic: true,
+                  },
+                  {
+                    label: "Strategy",
+                    value: userData?.strategy,
+                    accent: "purple",
+                  },
+                ].map((item, idx) => (
+                  <div
+                    key={idx}
+                    className="bg-linear-to-br from-blue-50/50 to-indigo-50/30 p-5 rounded-2xl border border-blue-100/40 relative overflow-hidden"
+                  >
+                    <div className="absolute top-0 right-0 w-16 h-16 bg-blue-100/20 rounded-full -mr-8 -mt-8"></div>
+                    <p className="text-[10px] font-black text-blue-600/70 uppercase tracking-widest mb-3">
+                      {item.label}
+                    </p>
+                    <p
+                      className={`text-slate-800 font-bold text-sm leading-relaxed ${item.italic ? "italic font-medium" : ""}`}
+                    >
+                      {item.value || "No data available."}
+                    </p>
+                  </div>
+                ))}
               </div>
             </div>
           </div>

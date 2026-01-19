@@ -4,7 +4,7 @@ import connect from "@/app/lib/db";
 export async function GET() {
   try {
     const { db } = await connect();
-    const courses = await db.collection("courses").find({}).toArray();
+    const courses = await db.collection("course").find({}).toArray();
 
     // SUCCESS PATH
     return NextResponse.json({

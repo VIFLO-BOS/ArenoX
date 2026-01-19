@@ -55,9 +55,9 @@ const Admin_dashboard_sidebar = ({
               src="/images/small-logo.jpg"
               width={100}
               height={100}
-              style={{ height: "auto" }}
               alt="images"
-              loading="lazy"
+              loading="eager"
+              className="w-auto h-auto"
             />
           ) : (
             <Image
@@ -65,8 +65,8 @@ const Admin_dashboard_sidebar = ({
               alt="Logo"
               width={30}
               height={30}
-              style={{ height: "auto" }}
               loading="lazy"
+              className="w-auto h-auto"
             />
           )}
         </div>

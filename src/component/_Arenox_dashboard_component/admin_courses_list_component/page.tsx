@@ -1,7 +1,9 @@
 "use client";
 import { useEffect, useMemo, useState } from "react";
 import toast from "react-hot-toast";
-import { course, coursesDetails } from "@/utils/types/course/course";
+import { course } from "@/utils/types/course/course";
+import Link from "next/link";
+import { useParams } from "next/navigation";
 
 /* @ sort-config-interface : define sorting configuration type */
 
@@ -12,6 +14,9 @@ interface sortConfig {
 /* @ admin-courses-component : main admin courses management component with table, modals, and CRUD operations */
 
 export default function Admin_courses() {
+  const params = useParams();
+  const dashboard = params.dashboard as string;
+
   /* @ courses-state : manage courses data and table display */
   const [courses, setcourses] = useState<course[]>([]);
   const [coursesToTable, setcourseToTable] = useState<course[]>([]);
@@ -75,7 +80,9 @@ export default function Admin_courses() {
 
   const handleDelete = (id: string) => {
     if (id) {
-      setcourseToTable(coursesToTable.filter((item) => item.id !== id));
+      setcourseToTable(
+        coursesToTable.filter((item) => (item._id || item.id) !== id),
+      );
     }
   };
 
@@ -87,7 +94,7 @@ export default function Admin_courses() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentCourses = coursesToTable.slice(
     indexOfFirstItem,
-    indexOfLastItem
+    indexOfLastItem,
   );
   const totalPages = Math.ceil(coursesToTable.length / itemsPerPage);
 
@@ -140,7 +147,9 @@ export default function Admin_courses() {
 
   const [courseDataToView, setcourseDataToView] = useState<course | null>(null);
   const handleViewCourseForm = (id: string) => {
-    const selectCourses = sortedData.find((item) => item.id === id);
+    const selectCourses = sortedData.find(
+      (item) => (item._id || item.id) === id,
+    );
     if (selectCourses) {
       setcourseDataToView(selectCourses);
       openviewCourseForm();
@@ -237,7 +246,7 @@ export default function Admin_courses() {
                     </td>
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="flex-shrink-0 w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shadow-sm group-hover:scale-105 transition-transform">
+                        <div className="shrink-0 w-10 h-10 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center font-bold text-xs shadow-sm group-hover:scale-105 transition-transform">
                           {c.title.slice(0, 2).toUpperCase()}
                         </div>
                         <span className="font-semibold text-gray-800">
@@ -255,8 +264,8 @@ export default function Admin_courses() {
                           c.level === "Beginner"
                             ? "bg-green-100 text-green-700"
                             : c.level === "Intermediate"
-                            ? "bg-yellow-100 text-yellow-700"
-                            : "bg-red-100 text-red-700"
+                              ? "bg-yellow-100 text-yellow-700"
+                              : "bg-red-100 text-red-700"
                         }`}
                       >
                         {c.level}
@@ -269,20 +278,20 @@ export default function Admin_courses() {
                     <td className="px-6 py-4 text-gray-500">English</td>
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">
-                        <button
+                        <Link
+                          href={`/${dashboard}/admin/courses/view/${c._id || c.id}`}
                           className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm"
-                          onClick={() => handleViewCourseForm(c.id)}
                           title="View"
                         >
                           <i className="bi bi-eye-fill"></i>
-                        </button>
-                        <button
+                        </Link>
+                        <Link
+                          href={`/${dashboard}/admin/courses/edit/${c._id || c.id}`}
                           className="p-2 rounded-lg bg-orange-50 text-orange-600 hover:bg-orange-100 transition-colors shadow-sm"
-                          onClick={() => openEditCourseForm()}
                           title="Edit"
                         >
                           <i className="bi bi-pencil-fill"></i>
-                        </button>
+                        </Link>
                         <button
                           className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors shadow-sm"
                           onClick={() => handleDelete(c.id)}

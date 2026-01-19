@@ -24,7 +24,7 @@ export interface ITutor {
   availability: string;
 }
 
-export interface coursesDetails {
+export interface coursesTypes {
   id: number;
   category: string;
   bgColor: string;
@@ -33,20 +33,22 @@ export interface coursesDetails {
   description: string;
   courseImageUrl: string;
   tutor: ITutor;
+  highlights: string;
   rating: number;
   hrs: number;
   price: number;
   cta: string;
+  language: string;
+  level: string;
 }
 
 export interface course {
-  id: string;
+  _id?: string;
   title: string;
   description: string;
   instructor: string;
   duration: string;
   category: string;
-  level: string;
   language: string;
   price: string;
 }

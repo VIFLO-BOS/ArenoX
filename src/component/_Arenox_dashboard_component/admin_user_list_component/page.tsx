@@ -85,7 +85,7 @@ export default function Admin_user_list() {
     const firstName = dataToDelete[0].name.split(" ")[0];
     const lastName = dataToDelete[0].name.split(" ")[1] || "";
     const confirmDelete = window.confirm(
-      `Are you sure you want to delete this user ${firstName} ${lastName}`
+      `Are you sure you want to delete this user ${firstName} ${lastName}`,
     );
 
     if (confirmDelete) {
@@ -157,10 +157,10 @@ export default function Admin_user_list() {
   /* @ render : main component render with table and modals */
   return (
     <>
-      <div className="min-h-screen  p-6 lg:p-10">
+      <div className="min-h-screen ">
         <div className="mx-auto max-w-7xl">
           {/* MAIN TABLE */}
-          <div className="bg-white border border-gray-100 rounded-3xl shadow-xl shadow-gray-200/50 overflow-hidden mb-10">
+          <div className="bg-white border border-gray-100 rounded-xl shadow-xl shadow-gray-200/50 overflow-hidden mb-10">
             <div className="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-center justify-between bg-white/50 backdrop-blur-xl sticky top-0 z-20">
               <div className="flex items-center gap-3">
                 <div className="p-2 bg-blue-50 text-blue-600 rounded-xl">
@@ -286,20 +286,24 @@ export default function Admin_user_list() {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center gap-3">
                             <span className="w-10 h-10 bg-linear-to-br from-blue-500 to-indigo-600 text-white text-sm font-bold rounded-full flex items-center justify-center shadow-md ring-2 ring-white">
-                              {u.name.split(" ")[0] && u.name.split(" ")[1]
+                              {u.name && u.name.split(" ").length >= 2
                                 ? (
                                     u.name.split(" ")[0][0] +
                                     u.name.split(" ")[1][0]
                                   ).toUpperCase()
-                                : "NA"}
+                                : u.firstName && u.lastName
+                                  ? (
+                                      u.firstName[0] + u.lastName[0]
+                                    ).toUpperCase()
+                                  : "NA"}
                             </span>
                             <div className="flex flex-col">
                               <span className="text-sm font-bold text-gray-900 group-hover:text-blue-600 transition-colors">
-                                {u.name.split(" ")[0] && u.name.split(" ")[1]
-                                  ? u.name.split(" ")[0] +
-                                    " " +
-                                    u.name.split(" ")[1]
-                                  : "Unknown User"}
+                                {u.name && u.name.split(" ").length >= 2
+                                  ? u.name
+                                  : u.firstName && u.lastName
+                                    ? `${u.firstName} ${u.lastName}`
+                                    : "Unknown User"}
                               </span>
                               <span className="text-xs text-gray-500">
                                 User ID: {u._id.slice(-4)}
@@ -338,7 +342,9 @@ export default function Admin_user_list() {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <div className="flex items-center justify-end gap-2 opacity-80 group-hover:opacity-100 transition-opacity">
-                            <Link href={`/${dashboard}/admin/${u._id}`}>
+                            <Link
+                              href={`/${dashboard}/admin/userlist/view/${u._id}`}
+                            >
                               <button
                                 className="p-2 rounded-lg text-blue-600 bg-blue-50 hover:bg-blue-100 transition-colors tooltip"
                                 title="View Details"
@@ -346,7 +352,9 @@ export default function Admin_user_list() {
                                 <i className="bi bi-eye"></i>
                               </button>
                             </Link>
-                            <Link href={`/dashboard/admin/edituser/${u._id}`}>
+                            <Link
+                              href={`/${dashboard}/admin/edituser/${u._id}`}
+                            >
                               <button
                                 className="p-2 rounded-lg text-orange-600 bg-orange-50 hover:bg-orange-100 transition-colors"
                                 title="Edit User"
@@ -401,7 +409,7 @@ export default function Admin_user_list() {
                           <button
                             onClick={() =>
                               setCurrentPage((prev) =>
-                                Math.min(prev + 1, totalPages)
+                                Math.min(prev + 1, totalPages),
                               )
                             }
                             disabled={currentPage === totalPages}
