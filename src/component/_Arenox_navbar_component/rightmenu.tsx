@@ -15,7 +15,6 @@ export default async function Gen_session() {
   return (
     <>
       <RightMenu session={session} />
-      <Admin_dashboard_header session={session} />
     </>
   );
 }
