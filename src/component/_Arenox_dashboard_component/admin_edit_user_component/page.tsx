@@ -30,6 +30,7 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
     city: "",
     zipcode: "",
     image: "",
+    bio: "",
   });
   //   state for user image
   const [avatarUrl, setAvatarUrl] = useState<string>("");
@@ -98,7 +99,7 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
         email: userData?.email || "",
         phone: userData?.phone || "",
         website: userData?.website || "",
-        role: userData?.role|| "student",
+        role: userData?.role || "student",
         birthDate: userData?.birthDate || "",
         gender: userData?.gender || "",
         street: userData?.address?.street || "",
@@ -106,6 +107,7 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
         city: userData?.address?.city || "",
         zipcode: userData?.address?.zipcode || "",
         image: userData?.image || "",
+        bio: userData?.bio || "",
       });
       setAvatarUrl(userData?.image || "");
     }
@@ -114,7 +116,7 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
   /* @ handle-change : update form state when input values change */
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -259,7 +261,7 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
                       className="w-full h-full object-cover"
                     />
                   ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
+                    <div className="w-full h-full bg-linear-to-br from-blue-400 to-indigo-500 flex items-center justify-center">
                       <i className="bi bi-person text-white text-5xl"></i>
                     </div>
                   )}
@@ -407,6 +409,17 @@ export default function Edit_user_form({ userId }: EditUserFormProps) {
                       User Role
                     </label>
                     <i className="bi bi-chevron-down absolute right-4 top-4 text-gray-400 pointer-events-none"></i>
+                  </div>
+                  {/* @ Bio : user bio */}
+                  <div className="py-6">
+                    <textarea
+                      name="bio"
+                      value={formData.bio}
+                      onChange={handleChange}
+                      className="w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-purple-500 focus:ring-4 focus:ring-purple-100 outline-none transition-all duration-300 appearance-none bg-white"
+                   placeholder="Enter bio here"
+                    />
+                    
                   </div>
                 </div>
               </div>

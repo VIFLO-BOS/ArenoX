@@ -41,7 +41,6 @@ export default function RightMenu({
       ? user.image
       : "/images/avatar.png";
 
-
   return (
     <div className="flex items-center ">
       {user && (
@@ -62,7 +61,7 @@ export default function RightMenu({
           <MenuItems
             transition
             modal={false}
-            className="absolute right-0 z-10 mt-3 w-48 origin-top-right rounded-2xl bg-white/95 backdrop-blur-xl outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 shadow-2xl transition-all ease-in-out duration-200 p-1.5"
+            className="absolute right-0 z-10 mt-3 w-40 origin-top-right rounded-2xl bg-white/95 backdrop-blur-xl outline-1 -outline-offset-1 outline-white/10 ring-1 ring-black/5 shadow-2xl transition-all ease-in-out duration-200 p-1.5"
           >
             <div className="flex flex-col gap-1">
               <MenuItem>
@@ -70,17 +69,10 @@ export default function RightMenu({
                   href={getDashboardLink(user?.role)}
                   className="block px-4 py-2 text-sm text-gray-700 font-medium rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
                 >
-                  <i className="bi bi-speedometer2 mr-2"></i> Dashboard
+                  <i className="bi bi-grid mr-2"></i> Dashboard
                 </Link>
               </MenuItem>
-              <MenuItem>
-                <Link
-                  href="/profile"
-                  className="block w-full text-left px-4 py-2 text-sm text-gray-700 font-medium rounded-xl hover:bg-blue-50 hover:text-blue-600 transition-colors"
-                >
-                  <i className="bi bi-person mr-2"></i> Profile
-                </Link>
-              </MenuItem>
+
               <MenuItem>
                 <button
                   onClick={handleSignOut}

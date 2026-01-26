@@ -100,15 +100,7 @@ export default function View_course({ courseId }: { courseId: string }) {
   }, []); // Only re-run when courseId changes
 
   // This is to get the user who is the tutor of the course
-  const tutor = instructorInfo?.find(
-    (user: UserType) =>
-      user.designation.toLowerCase() === courseInfo?.title.toLowerCase() ||
-      user.designation
-        .toLowerCase()
-        .includes(courseInfo?.title?.toLowerCase() as string),
-  );
 
-  console.log(tutor, "tutor of the course");
 
   // Render states
   if (loading)
@@ -143,7 +135,7 @@ export default function View_course({ courseId }: { courseId: string }) {
               alt="Course Image"
               width={400}
               height={400}
-              className="relative w-40 h-40 object-cover rounded-full border-4 border-white shadow-md"
+              className="relative w-50 h-40 object-cover rounded-full border-4 border-white shadow-md"
               priority
             />
           </div>
@@ -189,8 +181,8 @@ export default function View_course({ courseId }: { courseId: string }) {
                   <span className="font-semibold text-blue-900/70">
                     Level:{" "}
                   </span>
-                  <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md text-xs font-bold uppercase">
-                    {courseInfo?.level}
+                  <span className="px-2 py-0.5 bg-blue-100 text-blue-700 rounded-md text-xs font-bold uppercase italic">
+                    {courseInfo?.level || "Null"}
                   </span>
                 </p>
                 <p className="text-sm text-slate-600">
@@ -205,7 +197,7 @@ export default function View_course({ courseId }: { courseId: string }) {
             </div>
             <div>
               <div className="flex items-center gap-3 z-10">
-                <Link href={`/dashboard/admin/courses/edit/${courseInfo?.id}`}>
+                <Link href={`/dashboard/admin/courses/edit/${courseInfo?._id}`}>
                   <button className="text-blue-700 bg-blue-50 hover:bg-blue-600 hover:text-white px-4 py-2.5 rounded-xl font-bold transition-all duration-300 shadow-sm border border-blue-100 flex items-center gap-2">
                     <i className="bi bi-pencil"></i>
                   </button>
@@ -226,7 +218,7 @@ export default function View_course({ courseId }: { courseId: string }) {
         <div className="px-6 py-4 bg-linear-to-r from-blue-900 to-[#01012e] shadow-md rounded-xl flex items-center justify-between">
           <div className="flex items-center gap-4">
             <Image
-              src={tutor?.image as string}
+              src={courseInfo.tutor.imageUrl}
               alt="Tutor Image"
               width={100}
               height={100}
@@ -235,10 +227,10 @@ export default function View_course({ courseId }: { courseId: string }) {
             />
             <div>
               <p className="font-bold text-blue-100 leading-tight">
-                {tutor?.username}
+                {courseInfo.tutor.name}
               </p>
               <p className="text-[10px] text-blue-300/70 font-mono tracking-wider">
-                {tutor?._id}
+                {courseInfo._id}
               </p>
             </div>
           </div>
@@ -252,24 +244,24 @@ export default function View_course({ courseId }: { courseId: string }) {
             {
               label: "Personal Info",
               items: [
-                { key: "Name", value: tutor?.name },
-                { key: "Designation", value: tutor?.designation },
-                { key: "Credentials", value: tutor?.credentials },
+                { key: "Name", value: courseInfo.tutor.name },
+                { key: "Designation", value: courseInfo.tutor.designation },
+                { key: "Credentials", value: courseInfo.tutor.credentials },
               ],
             },
             {
               label: "Biography & Experience",
               items: [
-                { key: "Bio", value: tutor?.bio },
-                { key: "Experiences", value: tutor?.experiences.join(", ") },
+                { key: "Bio", value: courseInfo.tutor.bio },
+                { key: "Experiences", value: courseInfo.tutor.experiences.join(", ") },
               ],
             },
             {
               label: "Expertise & Availability",
               items: [
-                { key: "Skills", value: tutor?.skills.join(", ") },
-                { key: "Languages", value: tutor?.languages.join(", ") },
-                { key: "Availability", value: tutor?.availability },
+                { key: "Skills", value: courseInfo.tutor.skills.join(", ") },
+                { key: "Languages", value: courseInfo.tutor.languages.join(", ") },
+                { key: "Availability", value: courseInfo.tutor.availability },
               ],
             },
           ].map((section, idx) => (
@@ -301,9 +293,9 @@ export default function View_course({ courseId }: { courseId: string }) {
 
       {/* Course Content Section */}
       <div className="w-full space-y-4 mb-5">
-        <div className="px-6 py-4 bg-white shadow-sm border border-slate-200/60 rounded-xl flex items-center justify-between">
-          <h1 className="text-xl font-bold text-[#01012e] flex items-center gap-2">
-            <span className="w-1.5 h-6 bg-blue-600 rounded-full"></span>
+        <div className="px-6 py-4 bg-linear-to-r from-[#01012e] to-blue-900 shadow-sm border border-slate-200/60 rounded-xl flex items-center justify-between">
+          <h1 className="text-xl font-bold text-white flex items-center gap-2">
+            <span className="w-1.5 h-6  rounded-full"></span>
             Course Description
           </h1>
         </div>

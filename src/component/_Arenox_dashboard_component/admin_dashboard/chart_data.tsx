@@ -1,3 +1,6 @@
+"use client"
+import { useEffect, useState } from "react";
+
 const studentData = [
   { name: "Web Dev", students: 1240 },
   { name: "Data Science", students: 987 },
@@ -15,3 +18,4 @@ const revenueData = [
 ];
 
 export { revenueData, studentData };
+

@@ -62,26 +62,14 @@ export default function Admin_courses() {
     return () => clearTimeout(timer);
   }, []);
 
-  /* @ modal-state : manage modal visibility for create, edit, and view operations */
-
-  const [isCreateCourseForm, setisCreateCourseForm] = useState(false);
-  const [isEditCourseForm, setisEditCourseForm] = useState(false);
-  const [isviewCourseModal, setisviewCourseModal] = useState(false);
-  const openCreateCourseForm = () => setisCreateCourseForm(true);
-  const openEditCourseForm = () => setisEditCourseForm(true);
-  const openviewCourseForm = () => setisviewCourseModal(true);
-  const closeModal = () => {
-    setisCreateCourseForm(false);
-    setisEditCourseForm(false);
-    setisviewCourseModal(false);
-  };
+ 
 
   /* @ delete-handler : remove course from table */
 
   const handleDelete = (id: string) => {
     if (id) {
       setcourseToTable(
-        coursesToTable.filter((item) => (item._id || item.id) !== id),
+        coursesToTable.filter((item) => (item._id || item._id) !== id),
       );
     }
   };
@@ -148,11 +136,10 @@ export default function Admin_courses() {
   const [courseDataToView, setcourseDataToView] = useState<course | null>(null);
   const handleViewCourseForm = (id: string) => {
     const selectCourses = sortedData.find(
-      (item) => (item._id || item.id) === id,
+      (item) => (item._id || item._id) === id,
     );
     if (selectCourses) {
       setcourseDataToView(selectCourses);
-      openviewCourseForm();
     }
   };
   return (
@@ -177,7 +164,6 @@ export default function Admin_courses() {
             </div>
             <button
               className="flex items-center gap-2 px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl shadow-lg shadow-blue-200 hover:-translate-y-0.5 transition-all duration-300"
-              onClick={openCreateCourseForm}
             >
               <i className="bi bi-plus-lg text-sm"></i> Add Course
             </button>
@@ -271,7 +257,7 @@ export default function Admin_courses() {
                         {c.level}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-600">{c.duration}h</td>
+                    <td className="px-6 py-4 text-gray-600">{c.duration}</td>
                     <td className="px-6 py-4 font-bold text-gray-800">
                       ${c.price}
                     </td>
@@ -279,22 +265,29 @@ export default function Admin_courses() {
                     <td className="px-6 py-4">
                       <div className="flex items-center justify-center gap-2">
                         <Link
-                          href={`/${dashboard}/admin/courses/view/${c._id || c.id}`}
+                          href={`/${dashboard}/admin/courses/view/${c._id}`}
                           className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm"
                           title="View"
                         >
                           <i className="bi bi-eye-fill"></i>
                         </Link>
                         <Link
-                          href={`/${dashboard}/admin/courses/edit/${c._id || c.id}`}
-                          className="p-2 rounded-lg bg-orange-50 text-orange-600 hover:bg-orange-100 transition-colors shadow-sm"
+                          href={`/${dashboard}/admin/courses/edit/${c._id}`}
+                          className="p-2 rounded-lg bg-blue-50 text-blue-600 hover:bg-blue-100 transition-colors shadow-sm"
                           title="Edit"
                         >
                           <i className="bi bi-pencil-fill"></i>
                         </Link>
+                        {/* <Link
+                          href={`/${dashboard}/admin/courses/edit/${c._id}`}
+                          className="p-2 rounded-lg bg-orange-50 text-orange-600 hover:bg-orange-100 transition-colors shadow-sm"
+                          title="Edit"
+                        >
+                          <i className="bi bi-pencil-fill"></i>
+                        </Link> */}
                         <button
                           className="p-2 rounded-lg bg-red-50 text-red-600 hover:bg-red-100 transition-colors shadow-sm"
-                          onClick={() => handleDelete(c.id)}
+                          onClick={() => handleDelete(c._id as string)}
                           title="Delete"
                         >
                           <i className="bi bi-trash-fill"></i>
