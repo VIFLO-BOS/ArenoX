@@ -169,13 +169,13 @@ export default function Message_box({ toggleTab }: MessageBoxProps) {
   });
 
   return (
-    <div className="bg-white dark:bg-var(--bg-card) rounded-xl shadow-lg border border-gray-100 dark:border-gray-700 overflow-hidden w-xl">
+    <div className="bg-white dark:bg-var(--bg-card) rounded-xl shadow-lg  overflow-hidden w-xl">
       {/* Header */}
       <div className="bg-linear-to-r from-indigo-500 to-purple-600 dark:from-indigo-600 dark:to-purple-700 p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <i className="bi bi-chat-dots-fill text-white"></i>
-            <h3 className="text-white font-semibold">Messages</h3>
+            <h3 className="text-white! font-semibold">Messages</h3>
             {unreadMessageCount > 0 && (
               <span className="badge-danger text-white text-xs px-2 py-0.5 rounded-full animate-pulse">
                 {unreadMessageCount}
@@ -338,5 +338,5 @@ export default function Message_box({ toggleTab }: MessageBoxProps) {
         </div>
       </div>
     </div>
-  );
+  )
 }

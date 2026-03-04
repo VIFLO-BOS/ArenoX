@@ -5,12 +5,12 @@ import React, { useState, useEffect } from "react";
 import { authClient } from "@/app/lib/auth-client";
 
 // @ admin-shell-interface : define props interface for admin shell component
-interface AdmiShell {
+interface AdminShell {
   children: React.ReactNode;
 }
 
 // @ admin-shell-component : main admin dashboard shell with sidebar and header
-export const AdminShell = ({ children }: AdmiShell) => {
+export const AdminShell = ({ children }: AdminShell) => {
   // @ sidebar-state : manage sidebar visibility and mobile responsiveness
   const [isSidebarOpen, setSidebarOpen] = useState(true);
   const [isMobile, setIsMobile] = useState(false);

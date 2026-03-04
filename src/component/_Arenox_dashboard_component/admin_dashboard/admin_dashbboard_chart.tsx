@@ -5,7 +5,7 @@ import Monthly_user_data from "./charts/monthly_user_data";
 import Dashboard_notification from "./dashboard_notification";
 import Reports_chart from "./charts/report_chart";
 
-export default function Admin_dashbboard_chart() {
+export default function Admin_dashboard_chart() {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
@@ -16,9 +16,7 @@ export default function Admin_dashbboard_chart() {
 
       <Reports_chart />
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-        <Dashboard_notification />
-      </div>
+      
     </div>
   );
 }
