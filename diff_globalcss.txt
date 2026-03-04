@@ -1,0 +1,466 @@
+﻿diff --git a/src/app/globals.css b/src/app/globals.css
+index 34bc247..827103c 100644
+--- a/src/app/globals.css
++++ b/src/app/globals.css
+@@ -1,16 +1,460 @@
+ @import "tailwindcss";
+ 
++/* ============================================= */
++/*  BACKGROUND THEME SYSTEM  */
++/* ============================================= */
++
++:root {
++  /* DEFAULT THEME (White) */
++  --bg-body: #ffffff;
++  --bg-main: #e5e7eb; /* gray-200 ΓÇö dashboard shell background */
++  --bg-card: #ffffff; /* white ΓÇö cards, sidebar, header */
++  --bg-card-hover: #f9fafb; /* gray-50 ΓÇö card hover states */
++  --bg-input: #f9fafb; /* gray-50 ΓÇö input fields */
++  --bg-section: #f9fafb; /* gray-50 ΓÇö marketing page sections */
++  --text-primary: #1f2937; /* gray-800 */
++  --text-secondary: #6b7280; /* gray-500 */
++  --border-color: #f3f4f6; /* gray-100 */
++}
++
++/* DARK THEME - Premium SaaS Design System */
++html[data-bg-theme="dark"] {
++  /* Deep, sophisticated dark backgrounds */
++  --bg-body: #0f1115;
++  --bg-main: #131820;
++  --bg-card: #1a1f2e;
++  --bg-card-hover: #222935;
++  --bg-input: #1e252f;
++  --bg-section: #16192a;
++  
++  /* Premium typography colors with high contrast */
++  --text-primary: #f5f7fa;
++  --text-secondary: #a1aac5;
++  --text-tertiary: #7a84a0;
++  --border-color: #252d3d;
++  
++  /* Glass morphism layers */
++  --glass-bg-light: rgba(255, 255, 255, 0.04);
++  --glass-bg-lighter: rgba(255, 255, 255, 0.02);
++  --glass-border: rgba(255, 255, 255, 0.08);
++  --glass-shadow: rgba(0, 0, 0, 0.4);
++  
++  /* Accent colors - modern palette */
++  --accent-primary: #3b82f6; /* blue */
++  --accent-secondary: #8b5cf6; /* violet */
++  --accent-success: #10b981; /* emerald */
++  --accent-warning: #f59e0b; /* amber */
++  --accent-danger: #dc2626; /* richer/darker red (Tailwind red-600) */
++}
++
++/* ============================================= */
++/*  APPLICATION OF CSS VARIABLES TO BASE ELEMENTS         */
++/* ============================================= */
++
+ html {
+   scroll-behavior: smooth;
+   scrollbar-width: thin; /* Firefox */
+ }
++body {
++  background-color: var(--bg-body);
++  color: var(--text-primary);
++  transition:
++    background-color 0.3s ease,
++    color 0.3s ease;
++}
+ 
++/*============================================= */
++/*  EXISTING CUSTOM CLASSES   */
++/* ============================================= */
+ .bg-deepblue {
+   background: #01012e;
+ }
+ 
+ .text-deepblue {
+   color: #01012e;
+-  
++}
++/* reusable badge for danger/unread counts */
++.badge-danger {
++  background-color: #ef4444; /* red-500 */
++  color: #fff;
++  display: inline-flex;
++  align-items: center;
++  justify-content: center;
++}
++
++html[data-bg-theme="dark"] .badge-danger {
++  background-color: var(--accent-danger) !important;
++}
++
++/* danger button variant for both themes */
++.btn-danger {
++  background-color: #ef4444;
++  color: #fff;
++  padding: 0.5rem 1rem;
++  border-radius: 0.5rem;
++  font-weight: 500;
++  transition: background-color 0.2s ease, box-shadow 0.2s ease;
++}
++.btn-danger:hover {
++  background-color: #dc2626;
++}
++/* ============================================= */
++/*  DARK MODE: PREMIUM SAAS DESIGN SYSTEM        */
++/*  Modern, sleek, professional aesthetic        */
++/* ============================================= */
++
++/* IMPROVED TEXT HIERARCHY (applies in both themes) */
++html {
++  font-size: 15px;
++  line-height: 1.6;
++}
++
++/* Headings with better hierarchy */
++h1 {
++  font-size: 2.25rem;
++  font-weight: 700;
++  letter-spacing: -0.02em;
++  color: var(--text-primary);
++  margin-bottom: 1rem;
++}
++
++h2 {
++  font-size: 1.875rem;
++  font-weight: 600;
++  letter-spacing: -0.01em;
++  color: var(--text-primary);
++  margin-bottom: 0.875rem;
++}
++
++h3 {
++  font-size: 1.25rem;
++  font-weight: 600;
++  color: var(--text-primary);
++  margin-bottom: 0.75rem;
++}
++
++h4 {
++  font-size: 1rem;
++  font-weight: 600;
++  color: var(--text-primary);
++  margin-bottom: 0.5rem;
++}
++
++p {
++  color: var(--text-secondary);
++  line-height: 1.65;
++}
++
++/* CARD STYLING: Soft glassmorphism */
++html[data-bg-theme="dark"] .bg-white,
++html[data-bg-theme="dark"] [class*="bg-white"] {
++  background: linear-gradient(135deg, var(--glass-bg-light) 0%, var(--glass-bg-lighter) 100%);
++  -webkit-backdrop-filter: blur(12px);
++  backdrop-filter: blur(12px);
++  border: 1px solid var(--glass-border);
++  box-shadow: 0 8px 32px var(--glass-shadow);
++}
++
++/* Card containers */
++html[data-bg-theme="dark"] .rounded-lg,
++html[data-bg-theme="dark"] .rounded-xl,
++html[data-bg-theme="dark"] .rounded-2xl {
++  overflow: hidden;
++}
++
++html[data-bg-theme="dark"] .shadow-md,
++html[data-bg-theme="dark"] .shadow-lg {
++  box-shadow: 0 10px 35px var(--glass-shadow) !important;
++}
++
++html[data-bg-theme="dark"] .shadow-sm {
++  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
++}
++
++/* INPUT FIELDS: Clean, modern focus states */
++html[data-bg-theme="dark"] input,
++html[data-bg-theme="dark"] textarea,
++html[data-bg-theme="dark"] select {
++  background-color: var(--bg-input);
++  border-color: var(--border-color);
++  color: var(--text-primary);
++  transition: all 0.2s ease;
++}
++
++html[data-bg-theme="dark"] input::placeholder,
++html[data-bg-theme="dark"] textarea::placeholder {
++  color: var(--text-tertiary);
++}
++
++html[data-bg-theme="dark"] input:focus,
++html[data-bg-theme="dark"] textarea:focus,
++html[data-bg-theme="dark"] select:focus {
++  background-color: var(--bg-card);
++  border-color: var(--accent-primary);
++  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
++}
++
++/* BUTTON STYLING: Smooth animations */
++html[data-bg-theme="dark"] button {
++  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
++}
++
++/* danger variant for buttons in dark mode */
++html[data-bg-theme="dark"] .btn-danger {
++  background: linear-gradient(135deg, var(--accent-danger), #b91c1c);
++  box-shadow: 0 6px 20px rgba(220, 38, 38, 0.2);
++  color: #fff !important;
++}
++html[data-bg-theme="dark"] .btn-danger:hover {
++  box-shadow: 0 8px 28px rgba(220, 38, 38, 0.3);
++}
++
++html[data-bg-theme="dark"] button:hover {
++  transform: translateY(-2px);
++}
++
++/* Primary buttons - only apply to explicit button classes */
++html[data-bg-theme="dark"] .btn-primary,
++html[data-bg-theme="dark"] .btn-accent {
++  background: linear-gradient(135deg, var(--accent-primary), #2563eb);
++  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.2);
++}
++
++html[data-bg-theme="dark"] .btn-primary:hover,
++html[data-bg-theme="dark"] .btn-accent:hover {
++  box-shadow: 0 8px 28px rgba(59, 130, 246, 0.3);
++}
++
++/* table footer should be transparent */
++html[data-bg-theme="dark"] tfoot {
++  background: transparent !important;
++}
++
++/* override utility gray backgrounds used in cells */
++html[data-bg-theme="dark"] .bg-gray-50\/50 {
++  background: transparent !important;
++  color: var(--text-secondary) !important;
++}
++
++/* normalize blue hover utility to accent without heavy stripe */
++html[data-bg-theme="dark"] .hover\:bg-blue-50\/20:hover {
++  background-color: rgba(59, 130, 246, 0.08) !important;
++}
++
++
++/* TABLE STYLING: bold dark backgrounds for strong readability */
++html[data-bg-theme="dark"] table {
++  width: 100%;
++  border-collapse: separate;
++  border-spacing: 0;
++  background: var(--bg-card);
++}
++
++html[data-bg-theme="dark"] thead {
++  /* slightly lighter than card to differentiate header */
++  background: #222435;
++}
++
++html[data-bg-theme="dark"] th {
++  color: var(--text-secondary);
++  font-weight: 600;
++  font-size: 0.875rem;
++  text-transform: uppercase;
++  letter-spacing: 0.05em;
++  padding: 0.75rem 1rem;
++  text-align: left;
++  border-bottom: 1px solid var(--border-color);
++}
++
++html[data-bg-theme="dark"] tbody tr {
++  background: var(--bg-card);
++  border-bottom: 1px solid var(--border-color);
++}
++
++
++html[data-bg-theme="dark"] td {
++  padding: 0.75rem 1rem;
++  color: var(--text-primary);
++  border-bottom: 1px solid var(--border-color);
++}
++
++html[data-bg-theme="dark"] tbody tr:hover {
++  background-color: rgba(59, 130, 246, 0.08);
++}
++
++html[data-bg-theme="dark"] tbody tr:last-child td {
++  border-bottom: none;
++}
++
++/* SIDEBAR STYLING: Dark, elegant */
++html[data-bg-theme="dark"] aside {
++  background: linear-gradient(180deg, var(--bg-card) 0%, #15192a 100%);
++  border-right: 1px solid var(--border-color);
++}
++
++html[data-bg-theme="dark"] nav a {
++  color: var(--text-secondary);
++  transition: all 0.2s ease;
++  position: relative;
++}
++
++html[data-bg-theme="dark"] nav a:hover {
++  color: var(--text-primary);
++  background-color: rgba(59, 130, 246, 0.08);
++}
++
++html[data-bg-theme="dark"] nav a.active {
++  color: var(--accent-primary);
++  background-color: rgba(59, 130, 246, 0.1);
++  border-left: 3px solid var(--accent-primary);
++  padding-left: calc(0.75rem - 3px);
++}
++
++/* HEADER STYLING: Sleek bar with glass effect */
++html[data-bg-theme="dark"] [class*="header"],
++html[data-bg-theme="dark"] .fixed.top-0 {
++  background: linear-gradient(135deg, var(--glass-bg-light) 0%, var(--glass-bg-lighter) 100%);
++  -webkit-backdrop-filter: blur(15px);
++  backdrop-filter: blur(15px);
++  border-bottom: 1px solid var(--glass-border);
++  box-shadow: 0 8px 32px var(--glass-shadow);
++}
++
++/* ICON STYLING: consistent accent colour in dark mode, but respect explicit utility colors */
++/* only apply default accent if no other text color is provided */
++i[class*="bi"]:not([class*="text-"]) {
++  color: var(--accent-primary) !important;
++  transition: all 0.2s ease;
++  font-size: 1.25rem;
++}
++
++i[class*="bi"]:not([class*="text-"]):hover {
++  color: var(--accent-secondary) !important;
++}
++
++/* icons with text- utility classes keep their intended color */
++
++/* Icon backgrounds - subtle containers */
++html[data-bg-theme="dark"] [class*="p-2"][class*="rounded"] i {
++  color: var(--text-secondary);
++}
++
++html[data-bg-theme="dark"] .p-2.bg-sky-50,
++html[data-bg-theme="dark"] .p-2.rounded-sm {
++  background-color: rgba(59, 130, 246, 0.1) !important;
++  border: 1px solid rgba(59, 130, 246, 0.2);
++}
++
++html[data-bg-theme="dark"] .p-2.bg-sky-50 i,
++html[data-bg-theme="dark"] .p-2.rounded-sm i {
++  color: var(--accent-primary);
++}
++
++html[data-bg-theme="dark"] .p-2.bg-sky-50:hover,
++html[data-bg-theme="dark"] .p-2.rounded-sm:hover {
++  background-color: rgba(59, 130, 246, 0.15);
++}
++
++/* MENU/DROPDOWN: Premium styling */
++html[data-bg-theme="dark"] [role="menu"],
++html[data-bg-theme="dark"] .ring-black\/5 {
++  background: linear-gradient(135deg, var(--glass-bg-light) 0%, var(--glass-bg-lighter) 100%);
++  -webkit-backdrop-filter: blur(12px);
++  backdrop-filter: blur(12px);
++  border: 1px solid var(--glass-border);
++  box-shadow: 0 12px 40px var(--glass-shadow);
++}
++
++html[data-bg-theme="dark"] [role="menuitem"] {
++  color: var(--text-primary);
++  transition: all 0.15s ease;
++}
++
++html[data-bg-theme="dark"] [role="menuitem"]:hover {
++  background-color: rgba(59, 130, 246, 0.1);
++}
++
++/* BADGES & NOTIFICATIONS: scoped styles */
++/* Use explicit utility classes in components instead of touching every
++   element with a red utility. this prevents unrelated buttons and links
++   from being recolored unexpectedly in dark mode. */
++html[data-bg-theme="dark"] .badge-danger,
++html[data-bg-theme="dark"] .unread-dot {
++  background-color: var(--accent-danger) !important;
++  color: #fff !important;
++}
++
++/* if authors still use raw Tailwind reds we provide a mild override to
++   tone them down but not hijack every element. */
++html[data-bg-theme="dark"] .bg-red-500,
++html[data-bg-theme="dark"] .bg-red-600 {
++  background-color: var(--accent-danger) !important;
++}
++
++/* darker hover states so reds don't go electric under the glass */
++html[data-bg-theme="dark"] .bg-red-500:hover,
++html[data-bg-theme="dark"] .bg-red-600:hover,
++html[data-bg-theme="dark"] .hover\:bg-red-50:hover {
++  background-color: rgba(220, 38, 38, 0.8) !important;
++}
++
++/* BORDER & DIVIDER: Subtle separations */
++html[data-bg-theme="dark"] [class*="border"] {
++  border-color: var(--border-color) !important;
++}
++
++html[data-bg-theme="dark"] hr {
++  border-color: rgba(255, 255, 255, 0.06);
++}
++
++/* FOCUS STATES: Accessible & beautiful */
++html[data-bg-theme="dark"] *:focus {
++  outline: none;
++  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
++}
++
++/* SCROLLBAR: Styled for dark mode */
++html[data-bg-theme="dark"] ::-webkit-scrollbar {
++  width: 8px;
++  height: 8px;
++}
++
++html[data-bg-theme="dark"] ::-webkit-scrollbar-track {
++  background: transparent;
++}
++
++html[data-bg-theme="dark"] ::-webkit-scrollbar-thumb {
++  background: rgba(139, 92, 246, 0.5);
++  border-radius: 4px;
++}
++
++html[data-bg-theme="dark"] ::-webkit-scrollbar-thumb:hover {
++  background: rgba(139, 92, 246, 0.7);
++}
++
++/* TEXT COLOR OVERRIDES: Ensure visibility without breaking layout */
++html[data-bg-theme="dark"] .text-gray-500 {
++  color: var(--text-secondary) !important;
++}
++
++html[data-bg-theme="dark"] .text-gray-600 {
++  color: var(--text-secondary) !important;
++}
++
++html[data-bg-theme="dark"] .text-gray-700,
++html[data-bg-theme="dark"] .text-gray-800,
++html[data-bg-theme="dark"] .text-gray-900 {
++  color: var(--text-primary) !important;
++}
++
++html[data-bg-theme="dark"] .text-gray-400 {
++  color: var(--text-tertiary) !important;
++}
++
++/* soften explicit red text in dark mode to match danger palette */
++html[data-bg-theme="dark"] .text-red-500,
++html[data-bg-theme="dark"] .text-red-600,
++html[data-bg-theme="dark"] .text-red-700 {
++  color: var(--accent-danger) !important;
+ }
+ 

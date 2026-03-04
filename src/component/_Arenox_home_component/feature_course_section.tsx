@@ -7,7 +7,7 @@ import { coursesDetails } from "@/utils/data/coursesData/courses";
 export default function Feature_Course_section() {
   const courses = coursesDetails.slice(0, 4);
   const [isHeartRed, setIsHeartRed] = useState(
-    new Array(courses.length).fill(false)
+    new Array(courses.length).fill(false),
   );
   const toggleHeartColor = (index: number) => {
     const newHeartRed = [...isHeartRed];
@@ -110,14 +110,14 @@ export default function Feature_Course_section() {
                 <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
                   <div className="flex items-center gap-2">
                     <Image
-                      src={course.tutor.imageUrl}
-                      alt={course.tutor.name}
+                      src={course.tutor?.imageUrl || "/images/avatar.png"}
+                      alt={course.tutor?.name || "Tutor"}
                       width={30}
                       height={30}
                       className="w-8 h-8 object-cover rounded-full ring-2 ring-white shadow-sm"
                     />
                     <p className="text-gray-600 text-sm font-medium truncate max-w-[80px]">
-                      {course.tutor.name}
+                      {course.tutor?.name || "Arenox Tutor"}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">

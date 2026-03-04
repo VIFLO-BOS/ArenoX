@@ -142,10 +142,12 @@ export default function Admin_courses() {
       setcourseDataToView(selectCourses);
     }
   };
+
+  
   return (
     <>
       <div className="bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 mb-8 overflow-hidden">
-        <div className="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-center justify-between pb-6">
+        <div className="px-0 py-6 border-b border-gray-100 flex flex-wrap gap-4 items-center justify-between pb-6">
           <div>
             <h1 className="text-2xl font-bold text-gray-800">Courses Record</h1>
             <p className="text-sm text-gray-500 mt-1">

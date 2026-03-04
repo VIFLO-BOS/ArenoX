@@ -1,0 +1,233 @@
+﻿diff --git a/src/component/_Arenox_dashboard_component/admin_course_view_component/page.tsx b/src/component/_Arenox_dashboard_component/admin_course_view_component/page.tsx
+index 54b3ce4..153ba06 100644
+--- a/src/component/_Arenox_dashboard_component/admin_course_view_component/page.tsx
++++ b/src/component/_Arenox_dashboard_component/admin_course_view_component/page.tsx
+@@ -1,14 +1,16 @@
+ "use client";
+ import { useState, useEffect } from "react";
+-import { coursesTypes } from "@/utils/types/course/course";
++import { CourseType } from "@/utils/types/course/course";
+ import toast from "react-hot-toast";
+-import { UserType } from "@/utils/data/fetchdata/userData";
++import { EnrollmentUser } from "@/utils/types/user/user";
+ import Image from "next/image";
+ import Link from "next/link";
+ 
+ export default function View_course({ courseId }: { courseId: string }) {
+-  const [courseInfo, setCourseInfo] = useState<coursesTypes | null>(null);
+-  const [instructorInfo, setInstructorInfo] = useState<UserType[]>([]);
++  const [courseInfo, setCourseInfo] = useState<CourseType | null>(null);
++  const [instructorInfo, setInstructorInfo] = useState<EnrollmentUser | null>(
++    null,
++  );
+   const [loading, setLoading] = useState(true);
+   const [loadingInstructor, setLoadingInstructor] = useState(true);
+   const [error, setError] = useState<string | null>(null);
+@@ -29,30 +31,41 @@ export default function View_course({ courseId }: { courseId: string }) {
+ 
+     const fetchCourse = async () => {
+       try {
+-        const response = await fetch(`/api/data/courses`, {
+-          method: "GET",
+-          headers: {
+-            "Content-Type": "application/json",
+-          },
+-          // Optional: cache settings
+-          cache: "no-store", // fresh data every time
+-        });
++        const [courseRes, userEnrolledRes] = await Promise.all([
++          fetch(`/api/data/courses`),
++          fetch(`/api/data/enrollments?courseId=${courseId}`),
++        ]);
+ 
+-        if (!response.ok) {
+-          const errorText = await response.text();
+-          toast.error(errorText);
++        // 1. Check if either request failed
++        if (!courseRes.ok || !userEnrolledRes.ok) {
++          const errorMsg = !userEnrolledRes.ok
++            ? "User not found"
++            : "Course not found";
++          toast.error(errorMsg);
+           throw new Error(
+-            `Course not found (${response.status}): ${errorText}`,
++            `Fetch failed: ${courseRes.status} / ${userEnrolledRes.status}`,
+           );
+         }
+-        const data = await response.json();
+-        const courseInfo = data.data.find(
+-          (course: any) => course._id === courseId,
++
++        // 2. Parse JSON only ONCE
++        const courseData = await courseRes.json();
++        const userData = await userEnrolledRes.json();
++
++        // 3. Find the specific course in the returned array
++        const courseInfo = courseData.data.find(
++          (c: CourseType) => c._id === courseId,
+         );
+-        console.log(courseInfo);
+-        console.log(courseInfo.courseImageUrl);
+ 
++        if (!courseInfo) {
++          toast.error("Specific course ID not found in data");
++          return;
++        }
++
++        // 4. Update your state
+         setCourseInfo(courseInfo);
++        setInstructorInfo(userData.data[0] as EnrollmentUser);
++        console.log(courseInfo);
++        console.log(userData.data);
+       } catch (err: any) {
+         console.error("Fetch error:", err);
+         setError(err.message || "Failed to load course");
+@@ -64,31 +77,36 @@ export default function View_course({ courseId }: { courseId: string }) {
+     fetchCourse();
+   }, [courseId]); // Only re-run when courseId changes
+ 
+-  // THIS IS TO FETCH THE INSTRUCTOR
+   useEffect(() => {
++    setLoadingInstructor(true);
++    setErrorInstructor(null);
++    setInstructorInfo(null);
++
++    // Guard: prevent fetch if courseId is missing or invalid
++    if (!courseId || courseId === "undefined" || courseId.trim() === "") {
++      setErrorInstructor("Invalid course ID");
++      setLoadingInstructor(false);
++      return;
++    }
++
+     const fetchInstructor = async () => {
+       try {
+-        const response = await fetch(`/api/data/users`, {
+-          method: "GET",
+-          headers: {
+-            "Content-Type": "application/json",
+-          },
+-          // Optional: cache settings
+-          cache: "no-store", // fresh data every time
+-        });
++        const userEnrolledRes = await fetch(
++          `/api/data/enrollments?courseId=${courseId}`,
++        );
+ 
+-        if (!response.ok) {
+-          const errorText = await response.text();
+-          toast.error(errorText);
+-          throw new Error(`User not found (${response.status}): ${errorText}`);
++        // 1. Check if either request failed
++        if (!userEnrolledRes.ok) {
++          const errorMsg = "User not found";
++          toast.error(errorMsg);
++          throw new Error(`Fetch failed: ${userEnrolledRes.status}`);
+         }
+-        const data = await response.json();
+-        const instructorInfo = data.data.filter(
+-          (user: any) => user.role === "instructor",
+-        );
+-        console.log(instructorInfo);
+ 
+-        setInstructorInfo(instructorInfo);
++        // 2. Parse JSON only ONCE
++        const userData = await userEnrolledRes.json();
++
++        // 4. Update your state
++        setInstructorInfo(userData.data[0] as EnrollmentUser);
+       } catch (err: any) {
+         console.error("Fetch error:", err);
+         setErrorInstructor(err.message || "Failed to load course");
+@@ -97,12 +115,20 @@ export default function View_course({ courseId }: { courseId: string }) {
+       }
+     };
+     fetchInstructor();
+-  }, []); // Only re-run when courseId changes
++  }, [courseId]);
+ 
+-  // This is to get the user who is the tutor of the course
++  const image =
++    instructorInfo?.userImage && instructorInfo?.userImage.startsWith("http")
++      ? instructorInfo?.userImage
++      : "/images/avatar.png";
+ 
++  const avatarSrc =
++    instructorInfo?.userAvatar && instructorInfo?.userAvatar.startsWith("http")
++      ? instructorInfo?.userAvatar
++      : "/images/avatar.png";
+ 
+-  // Render states
++  console.log("Instructor:", instructorInfo);
++  // Render states"
+   if (loading)
+     return <p className="text-center py-8">Loading course data...</p>;
+ 
+@@ -218,7 +244,7 @@ export default function View_course({ courseId }: { courseId: string }) {
+         <div className="px-6 py-4 bg-linear-to-r from-blue-900 to-[#01012e] shadow-md rounded-xl flex items-center justify-between">
+           <div className="flex items-center gap-4">
+             <Image
+-              src={courseInfo.tutor.imageUrl}
++              src={avatarSrc || image}
+               alt="Tutor Image"
+               width={100}
+               height={100}
+@@ -227,10 +253,14 @@ export default function View_course({ courseId }: { courseId: string }) {
+             />
+             <div>
+               <p className="font-bold text-blue-100 leading-tight">
+-                {courseInfo.tutor.name}
++                {instructorInfo?.userName}
++              </p>
++              <p className="font-bold text-blue-100 leading-tight">
++                Status:{" "}
++                <span className="font-normal"> {instructorInfo?.status}</span>
+               </p>
+               <p className="text-[10px] text-blue-300/70 font-mono tracking-wider">
+-                {courseInfo._id}
++                {instructorInfo?.userId}
+               </p>
+             </div>
+           </div>
+@@ -244,24 +274,33 @@ export default function View_course({ courseId }: { courseId: string }) {
+             {
+               label: "Personal Info",
+               items: [
+-                { key: "Name", value: courseInfo.tutor.name },
+-                { key: "Designation", value: courseInfo.tutor.designation },
+-                { key: "Credentials", value: courseInfo.tutor.credentials },
++                { key: "Email", value: instructorInfo?.userEMail },
++                { key: "Credentials", value: instructorInfo?.userEducation },
++                { key: "Skills", value: instructorInfo?.userSkills },
+               ],
+             },
+             {
+               label: "Biography & Experience",
+               items: [
+-                { key: "Bio", value: courseInfo.tutor.bio },
+-                { key: "Experiences", value: courseInfo.tutor.experiences.join(", ") },
++                { key: "Bio", value: instructorInfo?.userBio },
++                {
++                  key: "Experiences",
++                  value: instructorInfo?.userExperience,
++                },
+               ],
+             },
+             {
+-              label: "Expertise & Availability",
++              label: "Others",
+               items: [
+-                { key: "Skills", value: courseInfo.tutor.skills.join(", ") },
+-                { key: "Languages", value: courseInfo.tutor.languages.join(", ") },
+-                { key: "Availability", value: courseInfo.tutor.availability },
++                {
++                  key: "Availability",
++                  value: instructorInfo?.userAvailability,
++                },
++                {
++                  key: "Languages",
++                  value: instructorInfo?.userLanguage,
++                },
++                { key: "Address", value: instructorInfo?.userAddress },
+               ],
+             },
+           ].map((section, idx) => (

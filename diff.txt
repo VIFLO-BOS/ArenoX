@@ -1,0 +1,224 @@
+diff --git a/src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header.tsx b/src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header.tsx
+index 3b286ec..3b4a5bd 100644
+--- a/src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header.tsx
++++ b/src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header.tsx
+@@ -1,9 +1,14 @@
++"use  client";
+ import { Menu, MenuButton, MenuItem, MenuItems } from "@headlessui/react";
+ import Image from "next/image";
+ import { authClient } from "@/app/lib/auth-client";
+ import { useRouter } from "next/navigation";
+ import { userSession } from "@/utils/types/session";
+-
++import { useState, useEffect } from "react";
++import Message_box from "./message_box";
++import Notification from "./dashboard_notification";
++import { useSocket } from "@/hooks/useSocket";
++import { useTheme } from "@/utils/types/context/ThemeContext";
+ 
+ export default function Admin_dashboard_header() {
+   const { data: clientSession } = authClient.useSession();
+@@ -12,6 +17,12 @@ export default function Admin_dashboard_header() {
+   const user = session?.user as userSession;
+   const router = useRouter();
+ 
++  // @ mounted-state : prevent hydration mismatch
++  const [mounted, setMounted] = useState(false);
++  useEffect(() => {
++    setMounted(true);
++  }, []);
++
+   const handleSignOut = async () => {
+     await authClient.signOut({
+       fetchOptions: {
+@@ -22,51 +33,161 @@ export default function Admin_dashboard_header() {
+     });
+   };
+ 
+- const avatarSrc =
+-   user?.image && user.image.startsWith("http")
+-     ? user.image
+-     : "/images/avatar.png";
++  const avatarSrc =
++    user?.image && user.image.startsWith("http")
++      ? user.image
++      : "/images/avatar.png";
++
++  // State to track active popup
++  const [activeTab, setActiveTab] = useState<"message" | "notification" | null>(
++    null,
++  );
++  // Helper function to toggle popup and close other popups
++  const toggleTab = (tab: "message" | "notification") => {
++    if (activeTab === tab) {
++      setActiveTab(null);
++    } else {
++      setActiveTab(tab);
++    }
++  };
++
++  const { unreadNotificationCount, unreadMessageCount } = useSocket({
++    userId: user?.id || "",
++    onNewNotification: (notification) => {
++      // Play sound or show toast notification
++      if (typeof window !== "undefined" && "Notification" in window) {
++        if (window.Notification.permission === "granted") {
++          new window.Notification(notification.title, {
++            body: notification.message,
++          });
++        }
++      }
++    },
++  });
++
++  const { isDark, toggleTheme } = useTheme();
+ 
+   return (
+-    <div className="bg-white shadow-md py-4.5 rounded-br-lg rounded-bl-lg mb-5 w-full">
++    <div
++      className="shadow-md py-4.5 rounded-br-lg rounded-bl-lg mb-5 w-full fixe top-0 z-50"
++      style={{
++        backgroundColor: "var(--bg-card)",
++        color: "var(--text-primary)",
++      }}
++    >
+       <header className="flex flex-wrap items-center justify-between gap-4 px-4">
+         <div className="hidden lg:flex items-center gap-2">
+-          <p className="text-gray-600">Welcome back,</p>
+-          <p className="font-medium text-gray-800">{user?.name}</p>
+-        </div>
+-        <div className="flex items-center justify-end gap-4 w-full lg:w-auto">
++          <p style={{ color: "var(--text-secondary)" }}>Welcome back,</p>
++          <p className="font-medium" style={{ color: "var(--text-primary)" }}>
++            {mounted ? user?.name : ""}
++          </p>
++         <div className="flex items-center justify-end gap-4 w-full lg:w-auto">
+           <div className="flex items-center gap-3">
+-            <div className="relative">
+-              <i className="bi bi-envelope p-2 bg-sky-50 rounded-sm text-gray-500"></i>
+-              <span className="absolute -top-1 -right-0.5 text-red-500 text-lg font-medium rounded-full h-5 w-5 flex items-center justify-center">
+-                *
+-              </span>
+-            </div>
+-            <i className="bi bi-bell p-2 bg-sky-50 rounded-sm text-gray-500"></i>
++            <button
++              onClick={() => toggleTab("message")}
++              className="p-2 rounded-lg transition-all duration-200 hover:opacity-80 relative z-50"
++              style={{
++                backgroundColor: "rgba(59, 130, 246, 0.1)",
++                border: "1px solid rgba(59, 130, 246, 0.2)",
++                color: "var(--accent-primary)",
++              }}
++              title="Messages"
++            >
++              <i
++                className="bi bi-envelope text-base"
++                style={{ color: "var(--accent-primary)" }}
++              ></i>
++            </button>
++            <button
++              onClick={() => toggleTab("notification")}
++              className="p-2 rounded-lg transition-all duration-200 hover:opacity-80 relative z-50"
++              style={{
++                backgroundColor: "rgba(59, 130, 246, 0.1)",
++                border: "1px solid rgba(59, 130, 246, 0.2)",
++                color: "var(--accent-primary)",
++              }}
++              title="Notifications"
++            >
++              <i className="bi bi-bell text-base" style={{ color: "var(--accent-primary)" }}></i>
++              {unreadNotificationCount > 0 && (
++                <span className="absolute -top-1 -right-1 w-5 h-5 badge-danger text-xs font-bold rounded-full flex items-center justify-center">
++                  {unreadNotificationCount > 9 ? "9+" : unreadNotificationCount}
++                </span>
++              )}
++            </button>
++            <button
++              onClick={toggleTheme}
++              className="p-2 rounded-lg transition-all duration-200 hover:opacity-80 relative z-50"
++              style={{
++                backgroundColor: "rgba(59, 130, 246, 0.1)",
++                border: "1px solid rgba(59, 130, 246, 0.2)",
++                color: "var(--accent-primary)",
++              }}
++              title={isDark ? "Switch to Light Mode" : "Switch to Dark Mode"}
++            >
++              <i
++                className={`bi ${isDark ? "bi-sun" : "bi-moon"} text-base`}
++                style={{ color: "var(--accent-primary)" }}
++              ></i>
++            </button>
++            {/* Message Popup */}
++            {activeTab === "message" && (
++              <div className="absolute top-13 right-46 z-50">
++                <Message_box toggleTab={toggleTab} />
++              </div>
++            )}
++            {/* Notification Popup */}
++            {activeTab === "notification" && (
++              <div className="absolute top-13 right-46 z-50 w-120">
++                <Notification toggleTab={toggleTab} />
++              </div>
++            )}
+           </div>
+ 
+           <Menu as="div" className="relative">
+-            <MenuButton className="inline-flex items-center justify-center gap-x-1.5 rounded-md px-1 py-1 text-sm font-semibold bg-white outline-none focus:outline-none">
++            <MenuButton
++              className="inline-flex items-center justify-center gap-x-1.5 rounded-md px-1 py-1 text-sm font-semibold outline-none focus:outline-none"
++              style={{
++                backgroundColor: "var(--bg-card)",
++                color: "var(--text-primary)",
++              }}
++            >
+               <Image
+                 src={avatarSrc}
+                 width={35}
+                 height={35}
+                 alt="User Profile"
+-                className="rounded-full w-8.5 h-8.5" 
++                className="rounded-full w-8.5 h-8.5"
+               />
+               <div className="hidden md:flex items-center gap-1 text-start">
+-                <i className="bi bi-chevron-down text-gray-500 text-xs"></i>
++                <i
++                  className="bi bi-chevron-down text-xs"
++                  style={{ color: "var(--accent-primary)" }}
++                ></i>
+               </div>
+             </MenuButton>
+             <MenuItems
+               transition
+-              className="absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black/5 transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
++              className="absolute right-0 z-50 mt-2 w-40 origin-top-right rounded-md shadow-lg transition duration-100 ease-out data-closed:scale-95 data-closed:opacity-0"
++              style={{
++                backgroundColor: "var(--bg-card)",
++                color: "var(--text-primary)",
++              }}
+             >
+               <div className="py-1">
+                 <MenuItem>
+                   <button
+                     onClick={handleSignOut}
+-                    className="block px-4 py-2 text-sm text-gray-700 data-focus:bg-gray-100 data-focus:text-gray-900 outline-none w-full text-left"
++                    className="block px-4 py-2 text-sm outline-none w-full text-left transition-colors duration-200"
++                    style={{ color: "var(--text-primary)" }}
++                    onMouseEnter={(e) => {
++                      (e.currentTarget as HTMLElement).style.backgroundColor =
++                        "rgba(59, 130, 246, 0.08)";
++                    }}
++                    onMouseLeave={(e) => {
++                      (e.currentTarget as HTMLElement).style.backgroundColor =
++                        "transparent";
++                    }}
+                   >
+                     Sign-Out
+                   </button>
+@@ -75,6 +196,7 @@ export default function Admin_dashboard_header() {
+             </MenuItems>
+           </Menu>
+         </div>
++        </div>
+       </header>
+     </div>
+   );

@@ -9,7 +9,7 @@ export default async function courseId({
   const resolvedParams = await params;
   // 2. Extract the string value from the object    
   const Id = resolvedParams.courseId;
-  // console.log(Id);
+  console.log(Id);
 
   return (
     <div>

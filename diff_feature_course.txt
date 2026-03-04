@@ -1,0 +1,22 @@
+﻿diff --git a/src/component/_Arenox_home_component/feature_course_section.tsx b/src/component/_Arenox_home_component/feature_course_section.tsx
+index 5e5361f..ee96516 100644
+--- a/src/component/_Arenox_home_component/feature_course_section.tsx
++++ b/src/component/_Arenox_home_component/feature_course_section.tsx
+@@ -110,14 +110,14 @@ export default function Feature_Course_section() {
+                 <div className="mt-auto pt-4 border-t border-gray-50 flex items-center justify-between">
+                   <div className="flex items-center gap-2">
+                     <Image
+-                      src={course.tutor.imageUrl}
+-                      alt={course.tutor.name}
++                      src={"/images/avatar.png"}
++                      alt={"avatar"}
+                       width={30}
+                       height={30}
+                       className="w-8 h-8 object-cover rounded-full ring-2 ring-white shadow-sm"
+                     />
+                     <p className="text-gray-600 text-sm font-medium truncate max-w-[80px]">
+-                      {course.tutor.name}
++                      {"NULL"}
+                     </p>
+                   </div>
+                   <div className="flex items-center gap-2">

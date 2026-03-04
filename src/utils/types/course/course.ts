@@ -1,3 +1,4 @@
+
 export interface ITutorContact {
   email: string;
   phone: string;
@@ -22,25 +23,28 @@ export interface ITutor {
   skills: string[];
   languages: string[];
   availability: string;
+  Image: string;
+  [key: string]: unknown;
 }
 
-export interface coursesTypes {
-  _id: string;
+export interface CourseType {
+  _id?: string;
+  id?: number; // Added to support static data
   category: string;
   bgColor: string;
   title: string;
   paragraph: string;
   description: string;
   courseImageUrl: string;
-  tutor: ITutor;
-  highlights: string;
+  tutor?: ITutor; // Optional for static data
+  highlights?: string; // Optional
   rating: string;
-  hrs:number;
+  hrs: number;
   price: string;
   cta: string;
-  language: string;
-  level: string;
-  duration: number;
+  language?: string; // Optional
+  level?: string; // Optional
+  duration?: number; // Optional
 }
 
 export interface course {
@@ -54,3 +58,5 @@ export interface course {
   level: string;
   duration: number;
 }
+
+export type CourseInput = course;

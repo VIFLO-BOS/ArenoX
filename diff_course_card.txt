@@ -1,0 +1,22 @@
+﻿diff --git a/src/component/_Arenox_courses_component/courses_card.tsx b/src/component/_Arenox_courses_component/courses_card.tsx
+index 705f261..8cc1ffa 100644
+--- a/src/component/_Arenox_courses_component/courses_card.tsx
++++ b/src/component/_Arenox_courses_component/courses_card.tsx
+@@ -79,14 +79,14 @@ export default function Courses_card() {
+             <div className="px-5 py-3 border-t border-gray-50 mt-auto">
+               <div className="flex items-center gap-3 mb-4">
+                 <Image
+-                  src={course.tutor.imageUrl}
+-                  alt={course.tutor.name}
++                  src={"/images/avatar.png"}
++                  alt={course.title}
+                   width={30}
+                   height={30}
+                   className="w-8 h-8 object-cover rounded-full ring-2 ring-white shadow-sm"
+                 />
+                 <p className="text-gray-600 text-sm font-medium">
+-                  {course.tutor.name}
++                  {"NULL"}
+                 </p>
+               </div>
+ 

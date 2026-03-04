@@ -40,7 +40,7 @@
     "src/app/models/admin/admin.ts",
     "src/app/api/routes/admin.ss",
     ".next/dev/types/**/*.ts"
-, "src/utils/data/fetchdata/users.tsx"  ],
+, "src/utils/data/fetchdata/users.tsx", "seed.ts"  ],
   "exclude": [
     "node_modules"
   ]

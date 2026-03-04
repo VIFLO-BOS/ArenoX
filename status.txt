@@ -1,0 +1,66 @@
+﻿ M next.config.ts
+ M package-lock.json
+ M package.json
+ D scripts/test-db.js
+ M seed.ts
+ M src/app/[dashboard]/admin/adminShell.tsx
+ M src/app/[dashboard]/admin/courses/view/[courseId]/page.tsx
+ M src/app/[dashboard]/admin/layout.tsx
+ M src/app/api/courses/route.ts
+ M src/app/globals.css
+ M src/app/layout.tsx
+ M src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_header.tsx
+ M src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_sidebar.tsx
+ M src/component/_Arenox_dashboard_component/admin_dashboard/admin_dashboard_stats.tsx
+ D src/component/_Arenox_dashboard_component/admin_dashboard/charts/dashboard_notification.tsx
+ M src/component/_Arenox_dashboard_component/admin_dashboard/page.tsx
+ M src/component/_Arenox_dashboard_component/admin_edit_course_component/page.tsx
+ M src/utils/data/coursesData/courses.tsx
+ M src/utils/data/fetchdata/userData.tsx
+ M src/utils/types/course/course.ts
+ M src/utils/types/session.ts
+ M tsconfig.json
+?? .vscode/
+?? BACKGROUND_CHANGE_GUIDE.md
+?? all_diffs.txt
+?? diff.txt
+?? diff2.txt
+?? diff_admin_chart.txt
+?? diff_course_card.txt
+?? diff_course_list.txt
+?? diff_course_view.txt
+?? diff_dash1.txt
+?? diff_dash3.txt
+?? diff_edit_user.txt
+?? diff_enrollment.txt
+?? diff_feature_course.txt
+?? diff_globalcss.txt
+?? diff_message.txt
+?? diff_setting.txt
+?? diff_signin.txt
+?? files.txt
+?? src/app/api/auth/forget-password/
+?? src/app/api/courses/patch/
+?? src/app/api/data/contacts/
+?? src/app/api/data/enrollments/
+?? src/app/api/data/messages/
+?? src/app/api/data/notifications/
+?? src/app/api/email/
+?? src/app/api/message/
+?? src/app/api/notification/
+?? src/app/api/password-reset/
+?? src/app/api/preferences/
+?? src/app/forget-password/
+?? src/component/_Arenox_Instructor_dashboard_component/
+?? src/component/_Arenox_Student_dashboard_component/
+?? src/component/_Arenox_dashboard_component/admin_dashboard/dashboard_notification.tsx
+?? src/component/_Arenox_dashboard_component/admin_dashboard/message_box.tsx
+?? src/component/_Arenox_forgot_password/
+?? src/component/_arenox_email_component/
+?? src/hooks/
+?? src/server/
+?? src/utils/types/context/
+?? src/utils/types/enrollment/
+?? src/utils/types/message/
+?? src/utils/types/user/
+?? status.txt

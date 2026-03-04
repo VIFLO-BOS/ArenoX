@@ -11,7 +11,8 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "socket": "tsx src/server/socket-server.ts"
   },
   "proxy": "https://jsonplaceholder.org",
   "dependencies": {
@@ -37,18 +38,23 @@
     "react-hook-form": "^7.68.0",
     "react-hot-toast": "^2.6.0",
     "recharts": "^3.2.1",
+    "socket.io": "^4.8.3",
+    "socket.io-client": "^4.8.3",
     "swiper": "^11.2.10",
     "zod": "^4.1.13"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@tailwindcss/postcss": "^4",
+    "@types/bcrypt": "^6.0.0",
     "@types/express": "^5.0.5",
     "@types/node": "^20",
+    "@types/nodemailer": "^7.0.10",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "^16.0.10",
+    "nodemailer": "^8.0.1",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"

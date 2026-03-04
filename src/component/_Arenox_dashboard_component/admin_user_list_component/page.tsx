@@ -158,7 +158,7 @@ export default function Admin_user_list() {
   return (
     <>
       <div className="min-h-screen ">
-        <div className="mx-auto max-w-7xl">
+        <div className="mx-auto max-w-10xl">
           {/* MAIN TABLE */}
           <div className="bg-white border border-gray-100 rounded-xl shadow-xl shadow-gray-200/50 overflow-hidden mb-10">
             <div className="p-6 border-b border-gray-100 flex flex-wrap gap-4 items-center justify-between bg-white/50 backdrop-blur-xl sticky top-0 z-20">

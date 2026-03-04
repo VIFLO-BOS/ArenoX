@@ -135,11 +135,11 @@ export default function Admin_enrollment() {
     });
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white rounded-lg">
       <motion.div
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="max-w-7xl mx-auto"
+        className="max-w-9xl mx-auto"
       >
         {/* Header */}
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-4 p-2">
@@ -149,6 +149,7 @@ export default function Admin_enrollment() {
               Manage student course enrollments
             </p>
           </div>
+          
           <div className="flex items-center gap-3">
             <div className="text-sm text-gray-600">
               Total:{" "}

@@ -1,0 +1,25 @@
+diff --git a/src/app/[dashboard]/admin/adminShell.tsx b/src/app/[dashboard]/admin/adminShell.tsx
+index 4f333f7..1343828 100644
+--- a/src/app/[dashboard]/admin/adminShell.tsx
++++ b/src/app/[dashboard]/admin/adminShell.tsx
+@@ -38,7 +38,10 @@ export const AdminShell = ({ children }: AdmiShell) => {
+ 
+   // @ render : admin dashboard layout with sidebar, header, and content area
+   return (
+-    <div className="flex justify-between gap-50 bg-gray-200">
++    <div
++      className="flex justify-between gap-50 "
++      style={{ backgroundColor: "var(--bg-main)" }}
++    >
+       <Admin_dashboard_sidebar
+         isSidebarOpen={isSidebarOpen}
+         setisSidebarOpen={setSidebarOpen}
+@@ -51,7 +54,7 @@ export const AdminShell = ({ children }: AdmiShell) => {
+         }`}
+       >
+         <Admin_dashboard_header />
+-        {children}
++        <div className="mt-25">{children}</div>
+         <div id="modal-root"></div>
+       </main>
+     </div>

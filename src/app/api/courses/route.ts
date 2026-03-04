@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import connect from "@/app/lib/db";
+import { ObjectId } from "mongodb";
 
 // @ post-handler : handle course creation requests
 export async function POST(req: NextRequest) {
@@ -29,7 +30,7 @@ export async function POST(req: NextRequest) {
     if (existing) {
       return NextResponse.json(
         { message: "Course title already exists" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -39,20 +40,21 @@ export async function POST(req: NextRequest) {
     if (result.acknowledged) {
       return NextResponse.json(
         { message: "Course submitted successfully", data: courseData },
-        { status: 201 }
+        { status: 201 },
       );
     }
 
     return NextResponse.json(
       { message: "Failed to save courses" },
-      { status: 500 }
+      { status: 500 },
     );
     // @ error-handling : catch and handle any errors during course creation
   } catch (error) {
     console.error("Error in POST /api/courses:", error);
     return NextResponse.json(
       { message: "Internal Server Error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
+

@@ -32,9 +32,11 @@ export default async function AdminLayout({
   const user = session.user as userSession;
   const role = user.role;
 
-  if (role !== "admin") redirect("/dashboard/user");
+  if (role !== "admin") redirect("/");
 
   if (role !== "admin" && role !== "student") redirect("/dashboard/instructor");
+
+  if (role !== "admin" && role !== "instructor") redirect("/dashboard/student");
 
   return <AdminShell>{children}</AdminShell>;
 }

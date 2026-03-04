@@ -11,13 +11,13 @@ export default function Courses_card() {
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
   const currentCourses = coursesDetails.slice(
     indexOfFirstItem,
-    indexOfLastItem
+    indexOfLastItem,
   );
 
   const totalPages = Math.ceil(coursesDetails.length / itemsPerPage);
 
   const [isHeartRed, setisHeartRed] = useState(
-    new Array(coursesDetails.length).fill(false)
+    new Array(coursesDetails.length).fill(false),
   );
 
   const toggleHeartColor = (index: number) => {
@@ -79,14 +79,14 @@ export default function Courses_card() {
             <div className="px-5 py-3 border-t border-gray-50 mt-auto">
               <div className="flex items-center gap-3 mb-4">
                 <Image
-                  src={course.tutor.imageUrl}
-                  alt={course.tutor.name}
+                  src={course.tutor?.imageUrl || "/images/avatar.png"}
+                  alt={course.tutor?.name || "Tutor"}
                   width={30}
                   height={30}
                   className="w-8 h-8 object-cover rounded-full ring-2 ring-white shadow-sm"
                 />
                 <p className="text-gray-600 text-sm font-medium">
-                  {course.tutor.name}
+                  {course.tutor?.name || "Arenox Tutor"}
                 </p>
               </div>
 

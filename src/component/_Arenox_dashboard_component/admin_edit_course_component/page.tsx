@@ -1,5 +1,5 @@
 "use client";
-import { coursesTypes } from "@/utils/types/course/course";
+import { CourseType } from "@/utils/types/course/course";
 import { upload } from "@vercel/blob/client";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
@@ -27,7 +27,7 @@ export default function Edit_course_form({ courseId }: { courseId: string }) {
   const [uploading, setUploading] = useState(false);
 
   //   state for user data
-  const [courseData, setCourseData] = useState<coursesTypes | null>(null);
+  const [courseData, setCourseData] = useState<CourseType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -61,7 +61,7 @@ export default function Edit_course_form({ courseId }: { courseId: string }) {
 
         const data = await response.json();
         const course = data.data.find(
-          (course: coursesTypes) => course._id === courseId,
+          (course: CourseType) => course._id === courseId,
         );
         setCourseData(course);
         setLoading(false);
@@ -92,14 +92,13 @@ export default function Edit_course_form({ courseId }: { courseId: string }) {
         price: courseData?.price || "",
         level: courseData?.level || "",
         hrs: courseData?.hrs || 0,
-        rating: courseData?.rating || "",
+        rating: courseData?.rating,
       });
       setAvatarUrl(courseData?.courseImageUrl || "");
     }
   }, [courseData]);
 
   /* @ handle-change : update form state when input values change */
-
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
@@ -150,13 +149,12 @@ export default function Edit_course_form({ courseId }: { courseId: string }) {
   };
 
   /* @ handle-submit : submit updated user data to API */
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!courseData?._id) return;
 
     try {
-      const res = await fetch("/api/course", {
+      const res = await fetch("/api/courses/patch", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -388,21 +386,6 @@ export default function Edit_course_form({ courseId }: { courseId: string }) {
                     Course Specifics
                   </h3>
                   <div className="space-y-4">
-                    {/* @ instructor-input */}
-                    <div className="relative">
-                      <input
-                        type="text"
-                        name="instructor"
-                        value={formData.instructor}
-                        onChange={handleChange}
-                        placeholder=" "
-                        className="peer w-full px-4 py-3 border border-gray-200 rounded-lg focus:border-purple-500 focus:ring-4 focus:ring-purple-100 outline-none transition-all duration-300"
-                      />
-                      <label className="absolute left-4 -top-2.5 bg-white px-2 text-sm font-medium text-gray-500 peer-placeholder-shown:top-3 peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-400 peer-focus:-top-2.5 peer-focus:text-sm peer-focus:text-purple-600 transition-all duration-300">
-                        Instructor Name
-                      </label>
-                    </div>
-
                     {/* @ level-selector */}
                     <div className="relative">
                       <select
